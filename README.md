@@ -1,1 +1,1 @@
-# GKP-and-Sons-Project
+# GKP & Sons Jewellers Project

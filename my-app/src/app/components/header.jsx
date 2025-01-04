@@ -1,4 +1,16 @@
 import Image from 'next/image';
+import { Inter } from 'next/font/google';
+import { Parisienne, Montserrat } from 'next/font/google';
+
+const parisienne = Parisienne({
+  weight: '400',
+  subsets: ['latin'],
+});
+
+const montserrat = Montserrat({
+  weight: '400',
+  subsets: ['latin'],
+});
 
 export default function Header() {
   return (
@@ -15,8 +27,8 @@ export default function Header() {
       </div>
       <Image src="/Polygon.svg" alt="Triangle" className="horizontal-center" width="100" height="100" />
       <div className='bg-white w-full h-52 flex flex-col items-center justify-center'>
-        <h1 className="text-gold  font-parisienne text-7xl">Elegance</h1>
-        <p className="h-4 text-slate-800  text-4xl">A Gallery Of</p>
+        <h1 className={`text-gold text-8xl ${parisienne.className}`}>Elegance</h1>
+        <p className={`h-4 text-slate-800 text-4xl ${montserrat.className} `}>A Gallery Of</p>
       </div>
     </div>
   );

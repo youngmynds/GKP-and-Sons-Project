@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Header from "./components/header";
 import Card from "./components/Card";
+
 export default function Home() {
   const Items = [
     { src: "/pendants.png", title: "PENDANTS" },

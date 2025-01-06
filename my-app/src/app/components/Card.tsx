@@ -1,5 +1,13 @@
+"use client";
+
 import Image from "next/image";
-export default function Card({ src, title }) {
+
+interface CardProps {
+  src: string;
+  title: string;
+}
+
+export default function Card({ src, title }: CardProps) {
   return (
     <div className="bg-black text-center p-4 rounded-lg w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.33%-12px)]">
       <Image

@@ -1,35 +1,70 @@
-import Image from 'next/image';
-import { Inter } from 'next/font/google';
-import { Parisienne, Montserrat } from 'next/font/google';
-
-const parisienne = Parisienne({
-  weight: '400',
-  subsets: ['latin'],
-});
-
-const montserrat = Montserrat({
-  weight: '400',
-  subsets: ['latin'],
-});
+import React, { useState } from "react";
+import Image from "next/image";
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <div className="flex flex-col items-center">
+    <div className="relative">
       <header className="flex items-center justify-between p-4 bg-gray-800 w-full">
-        <Image src="/MenuIcon.svg" alt="MenuIcon" className=" " width={25} height={25} />
-        <div className="flex-grow text-center">
-          <Image src="/Logo.svg" alt="Logo" className="inline-block" width={200} height={200} />
+        {/* Menu Icon */}
+        <button onClick={toggleMenu} className="md:hidden focus:outline-none">
+          <Image src="/MenuIcon.svg" alt="MenuIcon" width={25} height={25} />
+        </button>
+
+        <div className="absolute left-1/2 transform -translate-x-1/2">
+          <Image src="/Logo.svg" alt="Logo" width={150} height={150} />
         </div>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex gap-6">
+          {["Home", "About Us", "Contact Us", "FAQs"].map((item, index) => (
+            <a
+              href="#"
+              key={index}
+              className="hover:underline text-sm tracking-wide text-white"
+            >
+              {item}
+            </a>
+          ))}
+        </nav>
       </header>
-      <div className='bg-black w-full h-52 flex flex-col items-center justify-center'>
-        <h1 className="text-white font-serif text-7xl">Gallery</h1>
-        <p className="h-4 text-gold">_______________________</p>
+
+      {/* Mobile Side Navbar */}
+      <div
+        className={`fixed top-0 left-0 h-full bg-gray-900 text-white z-50 transform ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          } transition-transform duration-300 w-64`}
+      >
+        <div className="p-4 flex items-center justify-between border-b border-gray-700">
+          <h2 className="text-lg font-semibold">Menu</h2>
+          <button onClick={toggleMenu} className="focus:outline-none">
+            <Image src="/CloseIcon.svg" alt="CloseIcon" width={20} height={20} />
+          </button>
+        </div>
+        <nav className="flex flex-col p-4 gap-4">
+          {["Home", "About Us", "Products", "Collections", "Contact Us", "FAQs"].map((item, index) => (
+            <a
+              href="#"
+              key={index}
+              className="hover:underline text-base tracking-wide"
+            >
+              {item}
+            </a>
+          ))}
+        </nav>
       </div>
-      <Image src="/Polygon.svg" alt="Triangle" className="horizontal-center" width="100" height="100" />
-      <div className='bg-white w-full h-52 flex flex-col items-center justify-center'>
-        <h1 className={`text-gold text-8xl ${parisienne.className}`}>Elegance</h1>
-        <p className={`h-4 text-slate-800 text-4xl ${montserrat.className} `}>A Gallery Of</p>
-      </div>
+
+      {/* Overlay when menu is open */}
+      {isMenuOpen && (
+        <div
+          onClick={toggleMenu}
+          className="fixed inset-0 bg-black opacity-50 z-40"
+        ></div>
+      )}
     </div>
   );
 }

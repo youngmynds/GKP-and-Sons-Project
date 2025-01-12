@@ -1,7 +1,16 @@
 "use client";
 
-import Image from "next/image";
+import { Parisienne, Montserrat } from "next/font/google";
 
+const parisienne = Parisienne({
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const montserrat = Montserrat({
+  weight: ['100', '300', '400', '700', '900'],
+  subsets: ["latin"],
+});
 interface CardProps {
   src: string;
   title: string;
@@ -9,15 +18,13 @@ interface CardProps {
 
 export default function Card({ src, title }: CardProps) {
   return (
-    <div className="bg-black text-center p-4 rounded-lg w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.33%-12px)]">
-      <Image
+    <div className="bg-black text-center mb-5 w-1/3 sm:w-[calc(30%-12px)] md:w-[calc(30%-12px)]">
+      <img
         src={src}
         alt={title}
-        width={400}
-        height={400}
-        className="rounded-lg shadow-lg object-cover"
+        className="object-cover"
       />
-      <p className="text-lg mt-2 text-white">{title}</p>
+      <p className={`bg-black text-white py-2 my-0 sm:text-lg md:text-xl ${montserrat.className}`}>{title}</p>
     </div>
   );
 }

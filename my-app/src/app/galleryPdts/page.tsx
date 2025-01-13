@@ -50,10 +50,10 @@ export default function Home() {
                 </div>
                 {/* Content */}
                 <div className="flex flex-col items-center z-10">
-                    <h1 className={`text-white text-center font-normal font-serif text-3xl md:text-4xl ${montserrat.className}`}>
+                    <h1 className={`text-white text-center font-normal font-serif text-2xl md:text-4xl ${montserrat.className}`}>
                         RINGS
                     </h1>
-                    <div className="h-1 w-20 bg-gold mt-4"></div>
+                    <div className="h-1 w-16 bg-gold mt-3"></div>
                 </div>
             </div>
 
@@ -61,12 +61,12 @@ export default function Home() {
             <div className="flex justify-center -mt-1">
                 <Image src="/Polygon.svg" alt="Triangle" width="100" height="100" />
             </div>
-            <div className='w-full h-36 flex flex-col items-center justify-center'>
-                <h1 className={`text-gold text-6xl md:text-8xl text-center w-[70%] ${parisienne.className}`}>Best Gold Ring Designs</h1>
+            <div className='w-full h-72 md:h-36 flex flex-col items-center justify-center'>
+                <h1 className={`text-gold text-6xl md:text-8xl text-center w-[95%] ${parisienne.className}`}>Best Gold Ring Designs</h1>
                 <p className={`h-4 text-slate-800 text-2xl md:text-3xl font-light -mt-2  ${montserrat.className} `}>IN COIMBATORE</p>
             </div>
 
-            <div className="flex gap-10 justify-center mt-10">
+            <div className="flex gap-10 justify-center md:mt-10">
                 {/* Buttons to select category */}
                 <button
                     className={`border-b-2 ${selectedCategory === "Casting" ? "border-b-gold text-black" : "border-transparent text-gray-400"
@@ -85,7 +85,7 @@ export default function Home() {
             </div>
 
             {/* Display the selected category's items */}
-            <div className="flex flex-wrap justify-evenly gap-3 mt-10">
+            <div className="flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
                 {displayedItems.map((item, index) => (
                     <Card key={index} src={item.src} title={item.title} />
                 ))}

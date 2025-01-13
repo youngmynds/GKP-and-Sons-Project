@@ -62,7 +62,7 @@ export default function Header() {
       {/* Mobile Side Navbar */}
       <div
         className={`md:hidden fixed top-0 left-0 h-full bg-white text-white z-50 transform ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300 w-[60%]`}
+          } transition-transform duration-300 w-[70%]`}
       >
         <div className=" p-4 md:flex items-center justify-between border-black mb-5">
           <h2 className={`text-xl text-black font-semibold tracking-wide ${montserrat.className}`}>Welcome to <br></br> GKP & Sons Jewellers</h2>

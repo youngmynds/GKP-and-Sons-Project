@@ -18,7 +18,7 @@ interface CardProps {
 
 export default function Card({ src, title }: CardProps) {
   return (
-    <div className="bg-black text-center mb-5 w-1/3 sm:w-[calc(30%-12px)] md:w-[calc(30%-12px)]">
+    <div className="bg-black text-center mb-5 w-[calc(50%-16px)] sm:w-[calc(30%-12px)] md:w-[calc(30%-12px)]">
       <img
         src={src}
         alt={title}

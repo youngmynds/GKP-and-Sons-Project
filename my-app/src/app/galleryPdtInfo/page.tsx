@@ -50,10 +50,10 @@ export default function Home() {
                 </div>
                 {/* Content */}
                 <div className="flex flex-col items-center z-10">
-                    <h1 className={`text-white text-center font-normal font-serif text-3xl md:text-4xl ${montserrat.className}`}>
+                    <h1 className={`text-white text-center font-normal font-serif text-2xl md:text-4xl ${montserrat.className}`}>
                         CASTING GOLD RINGS
                     </h1>
-                    <div className="h-1 w-20 bg-gold mt-4"></div>
+                    <div className="h-1 w-16 bg-gold mt-3"></div>
                 </div>
             </div>
             <div className="flex justify-center -mt-1">
@@ -65,24 +65,24 @@ export default function Home() {
                 </div>
                 <div className="md:w-[30%] justify-center md:ml-10 mt-5 md:mt-0">
                     <h1 className={`text-3xl md:text-4xl text-center text-black font-medium ${montserrat.className}`}>Golden Grace</h1>
-                    <p className={`mt-5 text-base text-gray-600 ${cardo.className}`}>This exquisite casting gold ring is a masterpiece of craftsmanship, blending tradition with modern artistry. Radiating a brilliant golden luster, its intricate details highlight the precision of expert artisanship. Whether adorned with delicate engravings or left in its pure, minimalist form, this ring exudes sophistication and charm.</p>
+                    <p className={`mt-5 text-center md:text-none text-base text-gray-600 ${cardo.className}`}>This exquisite casting gold ring is a masterpiece of craftsmanship, blending tradition with modern artistry. Radiating a brilliant golden luster, its intricate details highlight the precision of expert artisanship. Whether adorned with delicate engravings or left in its pure, minimalist form, this ring exudes sophistication and charm.</p>
                 </div>
             </div>
             <div className="flex items-center justify-center">
-                <div className="border-2 border-gray-500 rounded-2xl mt-10 mb-5 p-6 inline-block justify-center">
-                    <p className={`text-black text-xl md:text-2xl ${montserrat.className}`}>Product Details</p>
-                    <div className="flex mt-8 gap-28 md:gap-80">
+                <div className="border-2 border-gray-500 rounded-2xl mt-5 mb-5 p-4 md:p-8 inline-block justify-center">
+                    <p className={`text-black text-lg md:text-2xl ${montserrat.className}`}>Product Details</p>
+                    <div className="flex mt-6 md:mt-8 gap-14 md:gap-80">
                         <div>
-                            <p className={`text-black font-semibold text-lg md:text-xl ${cardo.className}`}>22grms</p>
-                            <p className={`text-gray-600 text-lg md:text-xl ${montserrat.className}`}>Weight</p>
+                            <p className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}>22grms</p>
+                            <p className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}>Weight</p>
                         </div>
                         <div>
-                            <p className={`text-black font-semibold text-lg md:text-xl ${cardo.className}`}>32</p>
-                            <p className={`text-gray-600 text-lg md:text-xl ${montserrat.className}`}>Size</p>
+                            <p className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}>32</p>
+                            <p className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}>Size</p>
                         </div>
                         <div>
-                            <p className={`text-black font-semibold text-lg md:text-xl ${cardo.className}`}>24 Karat</p>
-                            <p className={`text-gray-600 text-lg md:text-xl ${montserrat.className}`}>Carat</p>
+                            <p className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}>24 Karat</p>
+                            <p className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}>Carat</p>
                         </div>
                     </div>
                 </div>

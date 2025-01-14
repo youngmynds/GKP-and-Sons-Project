@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import InstaCard from "../components/instaCard";
+import InstaCard from "./instaCard";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
 
 const parisienne = Parisienne({

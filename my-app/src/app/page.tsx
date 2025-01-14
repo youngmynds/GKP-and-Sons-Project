@@ -3,7 +3,9 @@
 import Image from "next/image";
 import Header from "./components/header";
 import Card from "./components/Card";
+import Footer from "./components/footer";
 import { Parisienne, Montserrat } from "next/font/google";
+import Rights from "./components/rights";
 
 const parisienne = Parisienne({
   weight: "400",
@@ -11,7 +13,7 @@ const parisienne = Parisienne({
 });
 
 const montserrat = Montserrat({
-  weight: ['100', '300', '400', '700', '900'],
+  weight: ["100", "300", "400", "700", "900"],
   subsets: ["latin"],
 });
 
@@ -38,26 +40,37 @@ export default function Home() {
         </div>
         {/* Content */}
         <div className="flex flex-col items-center z-10">
-          <h1 className={`text-white text-center font-normal font-serif text-2xl md:text-4xl ${montserrat.className}`}>
+          <h1
+            className={`text-white text-center font-normal font-serif text-2xl md:text-4xl ${montserrat.className}`}
+          >
             COLLECTIONS
           </h1>
           <div className="h-1 w-16 bg-gold mt-3"></div>
         </div>
       </div>
 
-
       <div className="flex justify-center -mt-1">
         <Image src="/Polygon.svg" alt="Triangle" width="100" height="100" />
       </div>
-      <div className='w-full h-36 flex flex-col items-center justify-center'>
-        <h1 className={`text-gold text-6xl md:text-8xl ${parisienne.className}`}>Elegance</h1>
-        <p className={`h-4 text-slate-800 text-2xl md:text-3xl font-light -mt-2 ${montserrat.className} `}>A COLLECTION OF</p>
+      <div className="w-full h-36 flex flex-col items-center justify-center">
+        <h1
+          className={`text-gold text-6xl md:text-8xl ${parisienne.className}`}
+        >
+          Elegance
+        </h1>
+        <p
+          className={`h-4 text-slate-800 text-2xl md:text-3xl font-light -mt-2 ${montserrat.className} `}
+        >
+          A COLLECTION OF
+        </p>
       </div>
       <div className="flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
         {Items.map((item, index) => (
           <Card key={index} src={item.src} title={item.title} />
         ))}
       </div>
+      <Footer />
+      <Rights />
     </div>
   );
 }

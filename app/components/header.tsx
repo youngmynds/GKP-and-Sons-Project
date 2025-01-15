@@ -28,7 +28,7 @@ export default function Header() {
                     className="lg:hidden focus:outline-none"
                 >
                     <Image
-                        src="/MenuIcon.svg"
+                        src="/Others/MenuIcon.svg"
                         alt="MenuIcon"
                         width={25}
                         height={25}

@@ -1,12 +1,6 @@
-import React, { useState } from "react";
 import Image from "next/image";
-import InstaCard from "./instaCard";
-import { Parisienne, Montserrat, Cardo } from "next/font/google";
-
-const parisienne = Parisienne({
-    weight: "400",
-    subsets: ["latin"],
-});
+import InstaCard from "./instagramPostsCard";
+import { Montserrat, Cardo } from "next/font/google";
 
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
@@ -20,10 +14,10 @@ const cardo = Cardo({
 
 export default function Footer() {
     const Items = [
-        { src: "/pendants.png", title: "PENDANTS" },
-        { src: "/chains.png", title: "CHAINS" },
-        { src: "/bangles.png", title: "BANGLES" },
-        { src: "/Bracelets.png", title: "BRACELETS" },
+        { src: "/Collections/pendants.png", title: "PENDANTS" },
+        { src: "/Collections/chains.png", title: "CHAINS" },
+        { src: "/Collections/bangles.png", title: "BANGLES" },
+        { src: "/Collections/Bracelets.png", title: "BRACELETS" },
     ];
 
     return (
@@ -47,19 +41,19 @@ export default function Footer() {
                         <p className={`text-gold`}>Follow Us</p>
                         <div className="flex gap-4 mt-1">
                             <Image
-                                src="/Facebook.svg"
+                                src="SocialMediaIcons/Facebook.svg"
                                 alt="Facebook"
                                 width="12"
                                 height="12"
                             />
                             <Image
-                                src="/Instagram.svg"
+                                src="SocialMediaIcons/Instagram.svg"
                                 alt="Instagram"
                                 width="25"
                                 height="25"
                             />
                             <Image
-                                src="/Whatsapp.svg"
+                                src="SocialMediaIcons/Whatsapp.svg"
                                 alt="Whatsapp"
                                 width="25"
                                 height="25"

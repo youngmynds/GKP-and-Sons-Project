@@ -1,11 +1,7 @@
 "use client";
 
-import { Parisienne, Montserrat, Cardo } from "next/font/google";
-
-const parisienne = Parisienne({
-    weight: "400",
-    subsets: ["latin"],
-});
+import { Montserrat, Cardo } from "next/font/google";
+import Image from "next/image";
 
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
@@ -27,22 +23,24 @@ interface CardProps {
 export default function Reviews({ src, name, review, stars }: CardProps) {
     return (
         <div className="min-w-[350px] drop-shadow-lg">
-            <div className="flex-row bg-white p-4 h-48">
-                <img
-                    src="/annotate.svg"
+            <div className="flex-row bg-white p-4 h-48 rounded-t-lg">
+                <Image
+                    src="/Others/TestimonialIcon.svg"
                     alt="testimonialIcon"
                     width={40}
+                    height={40}
                     className="mb-3"
                 />
                 <p className={`text-gray-500 md:text-lg ${cardo.className}`}>
                     {review}
                 </p>
             </div>
-            <div className="bg-[#F0F0F0] flex p-4 items-center">
-                <img
+            <div className="bg-[#F0F0F0] flex p-4 items-center rounded-b-lg">
+                <Image
                     src={src}
                     alt={name}
                     width={45}
+                    height={45}
                     className="object-cover mr-2"
                 />
                 <div className="flex-row">

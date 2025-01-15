@@ -1,16 +1,6 @@
 "use client";
 
-import { Parisienne, Montserrat, Cardo } from "next/font/google";
-
-const parisienne = Parisienne({
-    weight: "400",
-    subsets: ["latin"],
-});
-
-const montserrat = Montserrat({
-    weight: ["100", "300", "400", "700", "900"],
-    subsets: ["latin"],
-});
+import { Cardo } from "next/font/google";
 
 const cardo = Cardo({
     weight: "400",

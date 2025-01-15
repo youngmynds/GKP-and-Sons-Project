@@ -1,16 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import Rights from "../components/rights";
-import { Parisienne, Montserrat, Cardo } from "next/font/google";
-
-const parisienne = Parisienne({
-    weight: "400",
-    subsets: ["latin"],
-});
+import Header from "../Components/header";
+import Footer from "../Components/footer";
+import Rights from "../Components/rights";
+import { Montserrat, Cardo } from "next/font/google";
 
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
@@ -22,25 +16,7 @@ const cardo = Cardo({
     subsets: ["latin"],
 });
 
-export default function Home() {
-    const [selectedCategory, setSelectedCategory] = useState("Casting");
-
-    // Data for each category
-    const castingItems = [
-        { src: "/CastRing1.png", title: "Casting 1" },
-        { src: "/CastRing2.png", title: "Casting 2" },
-    ];
-
-    const antiqueItems = [
-        { src: "/AntiqueRing1.png", title: "Antique 1" },
-        { src: "/AntiqueRing2.png", title: "Antique 2" },
-        { src: "/AntiqueRing3.png", title: "Antique 3" },
-        { src: "/AntiqueRing4.png", title: "Antique 4" },
-    ];
-
-    const displayedItems =
-        selectedCategory === "Casting" ? castingItems : antiqueItems;
-
+export default function ProductsDescription() {
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
@@ -70,7 +46,7 @@ export default function Home() {
             <div className="md:flex p-4 justify-center items-center mt-5">
                 <div className="flex justify-center items-center">
                     <Image
-                        src="/CastRing1.png"
+                        src="/CastingRings/CastingRing1.png"
                         alt="CastingRing1"
                         className="object-cover w-[450px] md:w-[400px] h-[280px]"
                         width="250"

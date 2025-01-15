@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Header from "../components/header";
-import Card from "../components/Card";
-import Footer from "../components/footer";
-import Rights from "../components/rights";
+import Header from "../Components/header";
+import Card from "../Components/galleryProductsCard";
+import Footer from "../Components/footer";
+import Rights from "../Components/rights";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
 
 const parisienne = Parisienne({
@@ -23,20 +23,20 @@ const cardo = Cardo({
     subsets: ["latin"],
 });
 
-export default function Home() {
+export default function Products() {
     const [selectedCategory, setSelectedCategory] = useState("Casting");
 
     // Data for each category
     const castingItems = [
-        { src: "/CastRing1.png", title: "Casting 1" },
-        { src: "/CastRing2.png", title: "Casting 2" },
+        { src: "/CastingRings/CastingRing1.png", title: "Casting 1" },
+        { src: "/CastingRings/CastingRing2.png", title: "Casting 2" },
     ];
 
     const antiqueItems = [
-        { src: "/AntiqueRing1.png", title: "Antique 1" },
-        { src: "/AntiqueRing2.png", title: "Antique 2" },
-        { src: "/AntiqueRing3.png", title: "Antique 3" },
-        { src: "/AntiqueRing4.png", title: "Antique 4" },
+        { src: "/AntiqueRings/AntiqueRing1.png", title: "Antique 1" },
+        { src: "/AntiqueRings/AntiqueRing2.png", title: "Antique 2" },
+        { src: "/AntiqueRings/AntiqueRing3.png", title: "Antique 3" },
+        { src: "/AntiqueRings/AntiqueRing4.png", title: "Antique 4" },
     ];
 
     const displayedItems =
@@ -76,7 +76,7 @@ export default function Home() {
                     Best Gold Ring Designs
                 </h1>
                 <p
-                    className={`h-4 text-slate-800 text-2xl md:text-3xl font-light -mt-2  ${montserrat.className} `}
+                    className={`h-4 text-gray-800 text-2xl md:text-3xl font-light -mt-2  ${montserrat.className} `}
                 >
                     IN COIMBATORE
                 </p>

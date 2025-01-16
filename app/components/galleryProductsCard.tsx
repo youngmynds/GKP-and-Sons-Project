@@ -10,11 +10,15 @@ const montserrat = Montserrat({
 interface CardProps {
     src: string;
     title: string;
+    onClick?: () => void; // Add the onClick prop here
 }
 
-export default function Card({ src, title }: CardProps) {
+export default function Card({ src, title, onClick }: CardProps) {
     return (
-        <div className="bg-black text-center mb-5 w-[calc(50%-16px)] sm:w-[calc(30%-12px)] md:w-[calc(30%-12px)]">
+        <div
+            className="bg-black text-center mb-5 w-[calc(50%-16px)] sm:w-[calc(30%-12px)] md:w-[calc(30%-12px)]"
+            onClick={onClick} // Bind onClick to the div element
+        >
             <Image
                 src={src}
                 alt={title}

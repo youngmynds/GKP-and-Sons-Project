@@ -1,4 +1,6 @@
 import { Carousel } from "@material-tailwind/react";
+import Image from "next/image";
+import React from "react";
 
 interface CarouselItem {
     src: string;
@@ -10,22 +12,23 @@ interface CarouselProps {
     placeholder?: string;
 }
 
-export function Advertisements({ items }: CarouselProps) {
+export function Advertisements({ items, placeholder }: CarouselProps) {
     return (
-        <Carousel
-            autoplay={true}
-            loop={true}
-            transition={{ duration: 2000 }}
-            placeholder="Carousel Placeholder" // Example placeholder
-        >
-            {items.map((item, index) => (
-                <img
-                    key={index}
-                    src={item.src}
-                    alt={item.title}
-                    className="w-full h-[350px] object-cover"
-                />
-            ))}
-        </Carousel>
+        <>
+            <Carousel
+                placeholder={placeholder}
+                transition={{ duration: 2000 }}
+                className="rounded-xl"
+            >
+                {items.map((item, index) => (
+                    <img
+                        key={index}
+                        src={item.src}
+                        alt={item.title}
+                        className="w-full h-[350px] object-cover"
+                    />
+                ))}
+            </Carousel>
+        </>
     );
 }

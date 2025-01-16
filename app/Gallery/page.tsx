@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import Header from "../Components/header";
-import Card from "../Components/galleryProductsCard";
-import Footer from "../Components/footer";
+import Header from "../components/header";
+import Card from "../components/galleryProductsCard";
+import Footer from "../components/footer";
 import { Parisienne, Montserrat } from "next/font/google";
-import Rights from "../Components/rights";
-
+import Rights from "../components/rights";
+import { useRouter } from "next/navigation";
 const parisienne = Parisienne({
     weight: "400",
     subsets: ["latin"],
@@ -30,6 +30,7 @@ export default function Gallery() {
         { src: "/Collections/giftItems.png", title: "GIFT ITEMS" },
     ];
 
+    const router = useRouter();
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
@@ -71,7 +72,15 @@ export default function Gallery() {
             </div>
             <div className="flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
                 {Items.map((item, index) => (
-                    <Card key={index} src={item.src} title={item.title} />
+                    <Card
+                        key={index}
+                        src={item.src}
+                        title={item.title}
+                        onClick={() => {
+                            const encodedTitle = encodeURIComponent(item.title);
+                            router.push(`/Products/?cat=${encodedTitle}`);
+                        }}
+                    />
                 ))}
             </div>
             <Footer />

@@ -1,13 +1,15 @@
 "use client";
 
-import Header from "./Components/header";
+import Header from "./components/header";
 import Image from "next/image";
-import { Advertisements } from "./Components/advertisementSlider";
-import Footer from "./Components/footer";
-import Rights from "./Components/rights";
-import Reviews from "./Components/reviews";
-import Pdtcard from "./Components/productCategoryCard";
+import { Advertisements } from "./components/advertisementSlider";
+import Footer from "./components/footer";
+import Rights from "./components/rights";
+import Reviews from "./components/reviews";
+import Pdtcard from "./components/productCategoryCard";
+import { Members, Ads, Products } from "./utils/data";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
+import { useRouter } from "next/navigation";
 
 const parisienne = Parisienne({
     weight: "400",
@@ -25,61 +27,14 @@ const cardo = Cardo({
 });
 
 export default function Home() {
-    const Members = [
-        {
-            src: "/ReviewersDP/review1.svg",
-            name: "Jebason Manickam",
-            review: "Bought gents rings here, and they perfectly met my needs! Great variety of collections and top-notch customer service – will visit again!",
-            stars: "★★★★★",
-        },
-        {
-            src: "/ReviewersDP/review5.svg",
-            name: "Agillan DG",
-            review: "Amazing service,They really listen to what you want and make sure you're happy with your purchase😁",
-            stars: "★★★★★",
-        },
-        {
-            src: "/ReviewersDP/review4.svg",
-            name: "Bala Subramanian",
-            review: "Friendly behaviour by the owners where they treat me with kind and showed variety of collections. I am so happy for it!!",
-            stars: "★★★★★",
-        },
-        {
-            src: "/ReviewersDP/review2.svg",
-            name: "Suriya Prabha K",
-            review: "Great experience and exclusive collections! Loved it❤️",
-            stars: "★★★★☆",
-        },
-        {
-            src: "/ReviewersDP/review3.svg",
-            name: "Priyanka Yadav",
-            review: "Quality of the product is very nice and extremely trust worthy, I really appreciate.",
-            stars: "★★★★★",
-        },
-    ];
-    const Products = [
-        { src: "/ProductCategories/gold.png", title: "Gold Jewellery" },
-        { src: "/ProductCategories/bridal.png", title: "Bridal Jewellery" },
-        { src: "/ProductCategories/diamond.png", title: "Diamond Jewellery" },
-        { src: "/ProductCategories/custom.png", title: "Custom Jewellery" },
-    ];
-    const Ads = [
-        { src: "/ProductCategories/gold.png", title: "Ad1" },
-        { src: "/ProductCategories/bridal.png", title: "Ad2" },
-        { src: "/ProductCategories/diamond.png", title: "Ad3" },
-        { src: "/ProductCategories/custom.png", title: "Ad4" },
-    ];
+    const router = useRouter();
+    console.log("Router:", router);
 
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
+            <Advertisements items={Ads} />
             <div className="">
-                <Advertisements
-                    items={Ads.map((ad) => ({ src: ad.src, title: ad.title }))}
-                />
-            </div>
-            <div className="">
-                {/* Discounts Section */}
                 <section className="lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center">
                     {/* Title */}
                     <div className="text-center mb-5 lg:mb-5">
@@ -126,6 +81,9 @@ export default function Home() {
                             {/* Explore Button */}
                             <button
                                 className={`absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-xl py-2 px-6 hover:bg-opacity-80 transition ${montserrat.className}`}
+                                onClick={() => {
+                                    router.push("/Gallery");
+                                }}
                             >
                                 Explore →
                             </button>
@@ -258,6 +216,9 @@ export default function Home() {
                     />
                     <button
                         className={`absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-xl hover:bg-opacity-80 transition ${montserrat.className}`}
+                        onClick={() => {
+                            router.push("/Gallery");
+                        }}
                     >
                         Explore →
                     </button>

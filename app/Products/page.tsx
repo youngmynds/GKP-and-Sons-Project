@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Header from "../Components/header";
-import Card from "../Components/galleryProductsCard";
-import Footer from "../Components/footer";
-import Rights from "../Components/rights";
+import Header from "../components/header";
+import Card from "../components/galleryProductsCard";
+import Footer from "../components/footer";
+import Rights from "../components/rights";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const parisienne = Parisienne({
     weight: "400",
@@ -24,6 +25,11 @@ const cardo = Cardo({
 });
 
 export default function Products() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const encodedcat = searchParams.get("cat");
+    const cat = encodedcat ? decodeURIComponent(encodedcat) : "";
+    // console.log(cat)
     const [selectedCategory, setSelectedCategory] = useState("Casting");
 
     // Data for each category
@@ -109,7 +115,14 @@ export default function Products() {
             {/* Display the selected category's items */}
             <div className="flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
                 {displayedItems.map((item, index) => (
-                    <Card key={index} src={item.src} title={item.title} />
+                    <Card
+                        key={index}
+                        src={item.src}
+                        title={item.title}
+                        onClick={() => {
+                            router.push(`/ProductsDescription`);
+                        }}
+                    />
                 ))}
             </div>
             <Footer />

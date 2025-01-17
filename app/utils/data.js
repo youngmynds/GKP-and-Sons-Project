@@ -44,3 +44,5 @@ export const Ads = [
     { src: "/ProductCategories/diamond.png", title: "Ad3" },
     { src: "/ProductCategories/custom.png", title: "Ad4" },
 ];
+
+

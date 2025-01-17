@@ -1,23 +1,31 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {getCategories , getSubCategories } from '../utils/queries'
 
-// make an admin page where I can add images to the gallery
 const AdminPage = () => {
     const [category, setCategory] = useState("");
     const [subcategory, setSubcategory] = useState("");
     const [operation, setOperation] = useState("");
+    const [subCategoryItems, setSubCategoryItems] = useState<string[]>([]);
     const Items = [
         { src: "/pendants.png", title: "PENDANTS" },
         { src: "/chains.png", title: "CHAINS" },
         { src: "/bangles.png", title: "BANGLES" },
         { src: "/necklaces.png", title: "NECKLACES" },
     ];
-    const subCategoryItems = [{ title: "sub1" }, { title: "sub2" }];
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const categories : string[] = await getCategories();
+            setSubCategoryItems(categories);
+        };
+        fetchCategories();
+    }, []);
 
     return (
         <div>
             <h1>Admin Page</h1>
-            <div className="flex flex-row items-center justify-center">
+            {/* <div className="flex flex-row items-center justify-center">
                 <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
@@ -46,13 +54,13 @@ const AdminPage = () => {
                         ))}
                     </select>
                 )}
-            </div>
+            </div> */}
             <div className="flex flex-row items-center justify-center m-5 space-x-5">
                 <button
                     className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-800 transition duration-300"
                     onClick={() => setOperation("Add")}
                 >
-                    Add
+                    Add Image 
                 </button>
                 <button
                     className="bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-900 transition duration-300"

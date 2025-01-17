@@ -10,6 +10,9 @@ import Pdtcard from "./components/productCategoryCard";
 import { Members, Ads, Products } from "./utils/data";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
 import { useRouter } from "next/navigation";
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "./utils/firebase";
+import { useEffect } from "react";
 
 const parisienne = Parisienne({
     weight: "400",
@@ -28,7 +31,21 @@ const cardo = Cardo({
 
 export default function Home() {
     const router = useRouter();
-    console.log("Router:", router);
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const colRef = collection(db, 'products');
+                const snapshot = await getDocs(colRef);
+                const products = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+                console.log("DB:", products);
+            } catch (error) {
+                console.error("Error fetching documents:", error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
 
     return (
         <div className="bg-[#FFFCF8]">

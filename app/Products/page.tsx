@@ -29,10 +29,8 @@ export default function Products() {
     const searchParams = useSearchParams();
     const encodedcat = searchParams.get("cat");
     const cat = encodedcat ? decodeURIComponent(encodedcat) : "";
-    // console.log(cat)
     const [selectedCategory, setSelectedCategory] = useState("Casting");
 
-    // Data for each category
     const castingItems = [
         { src: "/CastingRings/CastingRing1.png", title: "Casting 1" },
         { src: "/CastingRings/CastingRing2.png", title: "Casting 2" },

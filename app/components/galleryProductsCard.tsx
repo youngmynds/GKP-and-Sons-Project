@@ -10,27 +10,29 @@ const montserrat = Montserrat({
 interface CardProps {
     src: string;
     title: string;
-    onClick?: () => void; // Add the onClick prop here
+    onClick?: () => void; 
 }
 
 export default function Card({ src, title, onClick }: CardProps) {
     return (
+
         <div
-            className="bg-black text-center mb-5 w-[calc(50%-16px)] sm:w-[calc(30%-12px)] md:w-[calc(30%-12px)]"
-            onClick={onClick} // Bind onClick to the div element
-        >
-            <Image
-                src={src}
-                alt={title}
-                width={1000}
-                height={1000}
-                className="object-cover"
-            />
-            <p
-                className={`bg-black text-white py-2 my-0 sm:text-lg md:text-xl ${montserrat.className}`}
-            >
-                {title}
-            </p>
-        </div>
+            className="bg-black text-center mb-5 w-[calc(50%-16px)] sm:w-[calc(30%-12px)] md:w-[calc(30%-12px)] hover:scale-105 transition-transform duration-300">
+            <button onClick={onClick} >
+                <Image
+                    src={src}
+                    alt={title}
+                    width={1000}
+                    height={1000}
+                    className="object-cover"
+                />
+                <p
+                    className={`bg-black text-white py-2 my-0 sm:text-lg md:text-xl ${montserrat.className}`}
+                >
+                    {title}
+                </p>
+            </button>
+        </div >
+
     );
 }

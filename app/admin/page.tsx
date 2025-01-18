@@ -60,7 +60,7 @@ const AdminPage: React.FC = () => {
                 "Select either a subcategory from the dropdown or enter a new subcategory, not both!",
             );
         }
-        if (newCategory == "" && selectedCategory == "") {
+        if ( !newCategory && !selectedCategory) {
             return toast.error("Please select or enter a category.");
         }
         if (!newSubcategory && !selectedSubcategory) {
@@ -73,6 +73,7 @@ const AdminPage: React.FC = () => {
         }
 
         setLoading(true);
+
         try {
             const category = newCategory || selectedCategory;
             const subcategory = newSubcategory || selectedSubcategory;
@@ -94,6 +95,7 @@ const AdminPage: React.FC = () => {
             setNewSubcategory("");
             setSelectedCategory("");
             setSelectedSubcategory("");
+            toast.success("Product added successfully!");
         } catch (error) {
             toast.error("Failed to add product. Please try again.");
         } finally {

@@ -5,6 +5,8 @@ import {
     where,
     getDocs,
     updateDoc,
+    QuerySnapshot,
+    deleteDoc
 } from "firebase/firestore";
 import db from "./firebase";
 import { toast } from "react-toastify";
@@ -38,25 +40,12 @@ export async function getbyCat(category: string, subcategory?: string) {
     }
 }
 
-export async function getbyImageSlider() {
-    try {
-        const products = collection(db, "products");
-        const q = query(products, where("isImageSlider", "==", true));
-        const querySnapshot = await getDocs(q);
-        const data = querySnapshot.docs.map((element) => {
-            element.data;
-        });
-        return data;
-    } catch (e) {
-        console.log("Error in getting products by image slider", e);
-        return [];
-    }
-}
 export async function addImageSlider(productId1: string) {
  try{
         const products = collection(db, "products");
         const q = query(products, where("productId", "==", productId1));
         const querySnapshot = await getDocs(q);
+        console.log(querySnapshot);
         querySnapshot.forEach(async (doc) => {
             await updateDoc(doc.ref, {
                 isImageSlider: true,
@@ -87,8 +76,8 @@ export async function deleteImageSlider(productId1: string) {
 export async function writebyCat(product: Product) {
     try {
         const category = product.category;
-        const data = getbyCat(category);
-        const productId = category + (await data).length;
+        const data = await getbyCat(category);
+        const productId = category + (data.length + 1).toString();
         product = { ...product, productId: productId };
         const docRef = await addDoc(collection(db, "products"), product);
     } catch (e) {
@@ -127,5 +116,21 @@ export async function getSubCategories() {
     } catch (e) {
         console.log("Error in getting subcategories", e);
         return [];
+    }
+}
+
+
+export async function deleteProduct(productId1: string) {
+    try {
+        const products = collection(db, "products");
+        const q = query(products, where("productId", "==", productId1));
+        const querySnapshot = await getDocs(q);
+        console.log(querySnapshot);
+        querySnapshot.forEach(async (doc) =>{
+            await deleteDoc(doc.ref);   
+        })
+        return toast.success("Success in deleting product");
+    } catch (e:any) {
+        toast.error("Error in deleting product", e);
     }
 }

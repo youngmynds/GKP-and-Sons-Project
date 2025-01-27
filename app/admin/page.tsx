@@ -15,6 +15,8 @@ import {
     getSubCategories,
     writebyCat,
     addImageSlider,
+    deleteImageSlider,
+    deleteProduct
 } from "../utils/queries";
 
 const AdminPage: React.FC = () => {
@@ -55,6 +57,11 @@ const AdminPage: React.FC = () => {
                             renderInput={(params) => (
                                 <TextField {...params} label="Type or select Categories" variant="outlined" />
                             )}
+                            onInputChange={(_, value) => {
+                                // Triggered when the user types in the input
+                                setSelectedCategory(value); // Update the selected category with typed input
+                                console.log("Input Changed:", value);
+                            }}
                         />
                         <Autocomplete
                             style={{ width: '215px' }}
@@ -63,7 +70,11 @@ const AdminPage: React.FC = () => {
                             renderInput={(params) => (
                                 <TextField {...params} label="Type or select Subcategories" variant="outlined" />
                             )}
-                        />
+                            onInputChange={(_, value) => {
+                                // Triggered when the user types in the input
+                                setSelectedSubcategory(value); // Update the selected category with typed input
+                                console.log("Subcat Input Changed:", value);
+                            }}                        />
                         <TextField
 
                             label="Product Name"
@@ -80,7 +91,7 @@ const AdminPage: React.FC = () => {
                             variant="outlined"
                             value={imageURL}
                             onChange={(e) => setImageURL(e.target.value)} />
-                        <Checkbox onChange={(e: any) => setisImageSlider(e.target.checked)} />
+                        <Checkbox onChange={(e) => { setisImageSlider(e.target.checked) }} name="Set as Image Slider?" />
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                             onClick={() => {
                                 if (selectedCategory === "" || selectedSubcategory === "" || imageName === "" || imageDescription === "" || imageURL === "") {
@@ -118,12 +129,40 @@ const AdminPage: React.FC = () => {
                                 setProductId1("");
                             }}>Add to Image Slider</button>
                     </div>)) || (
-                        (operations==="deleteImageSlider") && (
-                        <div>
-                            
+                    (operations === "deleteImageSlider") && (
+                        <div className="flex flex-col items-center justify-center">
+                            <TextField
+                                label=""
+                                variant="outlined"
+                                value={productId1}
+                                onChange={(e) => setProductId1(e.target.value)} />
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                onClick={() => {
+                                    if (productId1 === "")
+                                        return toast.error("Please Select a Product");
+                                    deleteImageSlider(productId1);
+                                    setProductId1("");
+                                }}>Add to Image Slider</button>
                         </div>
-                        )
                     )
+                ) || (
+                    (operations === 'deleteProduct') && (
+                        <div className="flex flex-col items-center justify-center">
+                            <TextField
+                                label=""
+                                variant="outlined"
+                                value={productId1}
+                                onChange={(e) => setProductId1(e.target.value)} />
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                onClick={() => {
+                                    if (productId1 === "")
+                                        return toast.error("Please Select a Product");
+                                    deleteProduct(productId1);
+                                    setProductId1("");
+                                }}>Delete Product</button>
+                        </div>
+                    )
+                )
             }
 
         </>

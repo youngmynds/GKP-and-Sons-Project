@@ -7,7 +7,8 @@ import {
     ButtonGroup,
     TextField,
     Checkbox,
-    Autocomplete
+    Autocomplete,
+    FormControlLabel
 } from "@mui/material";
 import { toast } from "react-hot-toast";
 import {
@@ -62,6 +63,7 @@ const AdminPage: React.FC = () => {
                                 setSelectedCategory(value); // Update the selected category with typed input
                                 console.log("Input Changed:", value);
                             }}
+                            value={selectedCategory}
                         />
                         <Autocomplete
                             style={{ width: '215px' }}
@@ -70,11 +72,12 @@ const AdminPage: React.FC = () => {
                             renderInput={(params) => (
                                 <TextField {...params} label="Type or select Subcategories" variant="outlined" />
                             )}
+                            value={selectedSubcategory}
                             onInputChange={(_, value) => {
                                 // Triggered when the user types in the input
                                 setSelectedSubcategory(value); // Update the selected category with typed input
                                 console.log("Subcat Input Changed:", value);
-                            }}                        />
+                            }} />
                         <TextField
 
                             label="Product Name"
@@ -91,7 +94,16 @@ const AdminPage: React.FC = () => {
                             variant="outlined"
                             value={imageURL}
                             onChange={(e) => setImageURL(e.target.value)} />
-                        <Checkbox onChange={(e) => { setisImageSlider(e.target.checked) }} name="Set as Image Slider?" />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    onChange={(e) => setisImageSlider(e.target.checked)}
+                                    name="Set as Image Slider?"
+                                />
+                            }
+                            label="Set as Image Slider?" // Text label associated with the checkbox
+                        />
+
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                             onClick={() => {
                                 if (selectedCategory === "" || selectedSubcategory === "" || imageName === "" || imageDescription === "" || imageURL === "") {

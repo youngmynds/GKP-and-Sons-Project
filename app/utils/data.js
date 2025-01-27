@@ -2,7 +2,7 @@ export const Members = [
     {
         src: "/ReviewersDP/review1.svg",
         name: "Jebason Manickam",
-        review: "Bought gents rings here, and they perfectly met my needs! Great variety of collections and top-notch customer service – will visit again!",
+        review: "Bought gents rings here, and they perfectly met my needs! Great variety of collections and top-notch customer service - will visit again!",
         stars: "★★★★★",
     },
     {
@@ -20,7 +20,7 @@ export const Members = [
     {
         src: "/ReviewersDP/review2.svg",
         name: "Suriya Prabha K",
-        review: "Great experience and exclusive collections! Loved it❤️",
+        review: "Great experience and exclusive collections! Loved it",
         stars: "★★★★☆",
     },
     {

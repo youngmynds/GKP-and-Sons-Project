@@ -10,8 +10,6 @@ import Pdtcard from "./components/productCategoryCard";
 import { Members, Ads, Products } from "./utils/data";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
 import { useRouter } from "next/navigation";
-import { getDocs, collection } from "firebase/firestore";
-import { useEffect } from "react";
 
 const parisienne = Parisienne({
     weight: "400",

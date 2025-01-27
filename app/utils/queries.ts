@@ -6,7 +6,7 @@ import {
     getDocs,
     updateDoc,
 } from "firebase/firestore";
-import db  from "./firebase";
+import db from "./firebase";
 
 interface Product {
     name: string;
@@ -71,9 +71,8 @@ export async function updateImageSlider(
             await updateDoc(doc.ref, { isImageSlider: false });
         });
     } catch (e) {
-        console.log("Error in updating image Slider", e)
+        console.log("Error in updating image Slider", e);
     }
-
 }
 
 export async function writebyCat(product: Product) {
@@ -84,7 +83,7 @@ export async function writebyCat(product: Product) {
         product = { ...product, productId: productId };
         const docRef = await addDoc(collection(db, "products"), product);
     } catch (e) {
-        console.log("Error in adding product", e)
+        console.log("Error in adding product", e);
     }
 }
 
@@ -97,7 +96,7 @@ export async function getCategories() {
             const data = element.data() as Product;
             categories.add(data.category);
         });
-        console.log("Success in getting categories")
+        console.log("Success in getting categories");
         return [...categories];
     } catch (e) {
         console.log("Error in getting categories", e);
@@ -114,7 +113,7 @@ export async function getSubCategories() {
             const data = element.data() as Product;
             subcategories.add(data.subcategory);
         });
-        console.log("Success in getting subcategories")
+        console.log("Success in getting subcategories");
         return Array.from(subcategories);
     } catch (e) {
         console.log("Error in getting subcategories", e);

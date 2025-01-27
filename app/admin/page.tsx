@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import { toast } from "react-hot-toast";
 import {
-    getbyCat,
     getCategories,
     getSubCategories,
     writebyCat,
@@ -36,17 +35,8 @@ const AdminPage: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        const loadData = async () => {
-            try {
-                const categories = await getCategories();
-                const subcategories = await getSubCategories();
-                setCategories(categories);
-                setSubcategories(subcategories);
-            } catch (error) {
-                toast.error("Failed to load categories or subcategories.");
-            }
-        };
-        loadData();
+        getCategories().then((data) => setCategories(data));
+        getSubCategories().then((data) => setSubcategories(data));
     }, []);
 
     const handleAddProduct = async () => {
@@ -60,7 +50,7 @@ const AdminPage: React.FC = () => {
                 "Select either a subcategory from the dropdown or enter a new subcategory, not both!",
             );
         }
-        if ( !newCategory && !selectedCategory) {
+        if (!newCategory && !selectedCategory) {
             return toast.error("Please select or enter a category.");
         }
         if (!newSubcategory && !selectedSubcategory) {

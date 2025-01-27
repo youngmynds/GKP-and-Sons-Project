@@ -7,12 +7,14 @@ import {
     updateDoc,
 } from "firebase/firestore";
 import db from "./firebase";
+import { toast } from "react-toastify";
 
 interface Product {
     name: string;
     category: string;
     subcategory: string;
     description: string;
+    imageUrl: string;
     isImageSlider?: boolean;
     productId?: string;
 }
@@ -50,28 +52,35 @@ export async function getbyImageSlider() {
         return [];
     }
 }
-export async function updateImageSlider(
-    productid1: string,
-    productid2: string,
-) {
+export async function addImageSlider(productId1: string) {
+ try{
+        const products = collection(db, "products");
+        const q = query(products, where("productId", "==", productId1));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (doc) => {
+            await updateDoc(doc.ref, {
+                isImageSlider: true,
+            });
+        });
+        return toast.success("Success in adding image slider");
+ }catch(e:any){
+        toast.error("Error in adding image slider", e);
+ }
+}
+
+export async function deleteImageSlider(productId1: string) {
     try {
         const products = collection(db, "products");
-
-        // Update product with productid1 to set isImageSlider to true
-        const q1 = query(products, where("productId", "==", productid1));
-        const querySnapshot1 = await getDocs(q1);
-        querySnapshot1.forEach(async (doc) => {
-            await updateDoc(doc.ref, { isImageSlider: true });
+        const q = query(products, where("productId", "==", productId1));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (doc) => {
+            await updateDoc(doc.ref, {
+                isImageSlider: false,
+            });
         });
-
-        // Update product with productid2 to set isImageSlider to false
-        const q2 = query(products, where("productId", "==", productid2));
-        const querySnapshot2 = await getDocs(q2);
-        querySnapshot2.forEach(async (doc) => {
-            await updateDoc(doc.ref, { isImageSlider: false });
-        });
-    } catch (e) {
-        console.log("Error in updating image Slider", e);
+        return toast.success("Success in deleting image slider");
+    } catch (e:any) {
+        toast.error("Error in deleting image slider", e);
     }
 }
 

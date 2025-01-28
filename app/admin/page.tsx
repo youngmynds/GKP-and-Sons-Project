@@ -17,7 +17,8 @@ import {
     writebyCat,
     addImageSlider,
     deleteImageSlider,
-    deleteProduct
+    deleteProduct,
+    getProductId
 } from "../utils/queries";
 
 const AdminPage: React.FC = () => {
@@ -30,6 +31,7 @@ const AdminPage: React.FC = () => {
     const [imageDescription, setImageDescription] = useState<string>("");
     const [imageURL, setImageURL] = useState<string>("");
     const [isImageSlider, setisImageSlider] = useState<boolean>(false);
+    const [productId, setproductId] = useState<string[]>([]);
     const [productId1, setProductId1] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -37,6 +39,12 @@ const AdminPage: React.FC = () => {
         if (operations === 'addProduct') {
             getCategories().then((data) => setCategories(data));
             getSubCategories().then((data) => setSubcategories(data));
+        }
+        if (operations === 'deleteProduct') {
+            getProductId().then((data) => {
+                console.log(data);
+                setproductId(data as string[]);
+            });
         }
     }, [operations]);
 
@@ -160,17 +168,25 @@ const AdminPage: React.FC = () => {
                 ) || (
                     (operations === 'deleteProduct') && (
                         <div className="flex flex-col items-center justify-center">
-                            <TextField
-                                label=""
-                                variant="outlined"
+                            <Autocomplete
+                                style={{ width: '215px' }}
+                                options={productId}
+                                freeSolo
+                                renderInput={(params) => (
+                                    <TextField {...params} label="Type or select ProductId" variant="outlined" />
+                                )}
                                 value={productId1}
-                                onChange={(e) => setProductId1(e.target.value)} />
+                                onInputChange={(_, value) => {
+                                    // Triggered when the user types in the input
+                                    setProductId1(value) // Update the selected category with typed input
+                                    console.log("Product Id Input Changed:", value);
+                                }} />
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                onClick={() => {
+                                onClick={async () => {
                                     if (productId1 === "")
                                         return toast.error("Please Select a Product");
                                     deleteProduct(productId1);
-                                    setProductId1("");
+                                    setProductId1('');
                                 }}>Delete Product</button>
                         </div>
                     )

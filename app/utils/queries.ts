@@ -41,7 +41,7 @@ export async function getbyCat(category: string, subcategory?: string) {
 }
 
 export async function addImageSlider(productId1: string) {
- try{
+    try {
         const products = collection(db, "products");
         const q = query(products, where("productId", "==", productId1));
         const querySnapshot = await getDocs(q);
@@ -52,9 +52,9 @@ export async function addImageSlider(productId1: string) {
             });
         });
         return toast.success("Success in adding image slider");
- }catch(e:any){
+    } catch (e: any) {
         toast.error("Error in adding image slider", e);
- }
+    }
 }
 
 export async function deleteImageSlider(productId1: string) {
@@ -68,7 +68,7 @@ export async function deleteImageSlider(productId1: string) {
             });
         });
         return toast.success("Success in deleting image slider");
-    } catch (e:any) {
+    } catch (e: any) {
         toast.error("Error in deleting image slider", e);
     }
 }
@@ -126,11 +126,27 @@ export async function deleteProduct(productId1: string) {
         const q = query(products, where("productId", "==", productId1));
         const querySnapshot = await getDocs(q);
         console.log(querySnapshot);
-        querySnapshot.forEach(async (doc) =>{
-            await deleteDoc(doc.ref);   
-        })
+        querySnapshot.forEach(async (doc) => {
+            await deleteDoc(doc.ref);
+        });
         return toast.success("Success in deleting product");
-    } catch (e:any) {
+    } catch (e: any) {
         toast.error("Error in deleting product", e);
+    }
+}
+
+export async function getProductId() {
+    try {
+        const products = collection(db, "products");
+        const querySnapshot = await getDocs(products);
+        let data = new Set();
+        querySnapshot.forEach((doc) => {
+            data.add(doc.data().productId);
+        });
+        
+        return [...data];
+    } catch (e) {
+        console.log("Error in getting products", e);
+        return [];
     }
 }

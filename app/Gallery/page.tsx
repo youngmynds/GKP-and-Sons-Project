@@ -78,7 +78,7 @@ export default function Gallery() {
                         title={item.title}
                         onClick={() => {
                             const encodedTitle = encodeURIComponent(item.title);
-                            router.push(`/Products/?cat=${encodedTitle}`);
+                            router.push(`/products/?cat=${encodedTitle}`);
                         }}
                     />
                 ))}

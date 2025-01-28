@@ -57,13 +57,9 @@ export default function Header() {
                         "Contact Us",
                     ].map((item, index) => (
                         <a
-                            href="#"
+                            href={`#${item}`}
                             key={index}
-                            className={`hover:underline text-base tracking-wide ${
-                                item === "Collections"
-                                    ? "text-gold"
-                                    : "text-white"
-                            }`}
+                            className={`hover:underline text-base tracking-wide text-white hover:text-gold`}
                         >
                             {item}
                         </a>

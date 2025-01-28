@@ -80,7 +80,7 @@ export default function Home() {
                             <button
                                 className={`absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-xl py-2 px-6 hover:bg-opacity-80 transition ${montserrat.className}`}
                                 onClick={() => {
-                                    router.push("/Gallery");
+                                    router.push("/gallery");
                                 }}
                             >
                                 Explore →
@@ -142,7 +142,8 @@ export default function Home() {
                     </div>
                 </section>
             </div>
-            <div className="text-center">
+            <div className="text-center" id="Products">
+
                 <p
                     className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
                 >
@@ -160,7 +161,7 @@ export default function Home() {
                 ))}
             </div>
 
-            <div className="text-center mt-10">
+            <div className="text-center mt-10" id="Collections">
                 <p
                     className={`h-4 text-black text-xl md:text-2xl -mt-2 ${montserrat.className} `}
                 >
@@ -215,7 +216,7 @@ export default function Home() {
                     <button
                         className={`absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-xl hover:bg-opacity-80 transition ${montserrat.className}`}
                         onClick={() => {
-                            router.push("/Gallery");
+                            router.push("/gallery");
                         }}
                     >
                         Explore →
@@ -241,7 +242,7 @@ export default function Home() {
                 ))}
             </div>
             <div className="md:flex mb-10 pl-4 pr-4 items-center gap-5">
-                <div className="md:w-[50%] text-center">
+                <div className="md:w-[50%] text-center" id="Contact Us">
                     <p
                         className={`h-4 text-black text-center text-xl md:text-2xl mb-5 ${montserrat.className}`}
                     >

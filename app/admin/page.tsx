@@ -58,9 +58,9 @@ const AdminPage: React.FC = () => {
             </div>
             {
                 (operations === 'addProduct') && (
-                    <div className="flex flex-row items-center justify-center space-x-5">
+                    <div className="flex flex-col sm:flex-row space-y-5 items-center justify-center space-x-5">
                         <Autocomplete
-                            style={{ width: '215px' }}
+                            style={{ width: '216px' }}
                             options={categories}
                             freeSolo
                             renderInput={(params) => (
@@ -162,7 +162,7 @@ const AdminPage: React.FC = () => {
                                         return toast.error("Please Select a Product");
                                     deleteImageSlider(productId1);
                                     setProductId1("");
-                                }}>Add to Image Slider</button>
+                                }}>Delete in Image Slider</button>
                         </div>
                     )
                 ) || (

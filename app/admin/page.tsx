@@ -185,7 +185,8 @@ const AdminPage: React.FC = () => {
                                 onClick={async () => {
                                     if (productId1 === "")
                                         return toast.error("Please Select a Product");
-                                    deleteProduct(productId1);
+                                    await deleteProduct(productId1);
+                                    setOperations('');
                                     setProductId1('');
                                 }}>Delete Product</button>
                         </div>

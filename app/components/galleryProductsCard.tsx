@@ -15,21 +15,22 @@ interface CardProps {
 
 export default function Card({ src, title, onClick }: CardProps) {
     return (
-        <div className="bg-black text-center mb-5 w-[calc(50%-16px)] sm:w-[calc(30%-12px)] md:w-[calc(30%-12px)] hover:scale-105 transition-transform duration-300">
-            <button onClick={onClick}>
-                <Image
-                    src={src}
-                    alt={title}
-                    width={1000}
-                    height={1000}
-                    className="object-cover"
-                />
-                <p
-                    className={`bg-black text-white py-2 my-0 sm:text-lg md:text-xl bottom-0 ${montserrat.className}`}
-                >
-                    {title}
-                </p>
+        <div className="bg-black text-center mb-5 w-[calc(50%-16px)] sm:w-[calc(30%-12px)] md:w-[calc(30%-12px)] hover:scale-105 transition-transform duration-300 relative">
+            <button onClick={onClick} className="w-full h-full flex flex-col">
+                <div className="relative w-full h-full">
+                    <Image
+                        src={src}
+                        alt={title}
+                        width={1000}
+                        height={1000}
+                        className="object-cover w-full h-full"
+                    />
+                    <p className={`absolute bottom-0 left-0 w-full bg-black text-white py-2 my-0 sm:text-lg md:text-xl ${montserrat.className}`}>
+                        {title}
+                    </p>
+                </div>
             </button>
         </div>
     );
 }
+

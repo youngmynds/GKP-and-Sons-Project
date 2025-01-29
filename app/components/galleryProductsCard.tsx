@@ -25,7 +25,7 @@ export default function Card({ src, title, onClick }: CardProps) {
                     className="object-cover"
                 />
                 <p
-                    className={`bg-black text-white py-2 my-0 sm:text-lg md:text-xl ${montserrat.className}`}
+                    className={`bg-black text-white py-2 my-0 sm:text-lg md:text-xl bottom-0 ${montserrat.className}`}
                 >
                     {title}
                 </p>

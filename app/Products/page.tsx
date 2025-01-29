@@ -36,6 +36,7 @@ export default function Products() {
     useEffect(() => {
         getbyCat(cat).then((res: any) => {
             setData(res)
+            console.log(res);
         })
     }, [])
 

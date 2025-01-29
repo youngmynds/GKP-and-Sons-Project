@@ -87,7 +87,7 @@ export async function deleteImageSlider(productId1: string) {
 export async function writebyCat(product: Product) {
     try {
         const category = product.category;
-        const data:String[] = await getbyCat(category);
+        const data:Product[] = await getbyCat(category);
         console.log(data);
         const productId = category + (data.length + 1).toString();
         product = { ...product, productId: productId };
@@ -135,8 +135,8 @@ export async function getSubCategories() {
 export async function deleteProduct(productId1: string) {
     try {
         const products = collection(db, "products");
-        const q = query(products, where("productId", "==", productId1));
-        const querySnapshot = await getDocs(q);
+        let q = query(products,where("productId", "==", productId1));
+        let querySnapshot = await getDocs(q);
         querySnapshot.forEach(async (doc) => {
             await deleteDoc(doc.ref);
         });
@@ -162,18 +162,15 @@ export async function getProductId() {
     }
 }
 
-export async function getProduct(productId1: string) {
+export async function getProduct(productId: string) {
     try {
         const products = collection(db, "products");
-        const q = query(products, where("productId", "==", productId1));
+        const q = query(products, where("productId", "==", productId));
         const querySnapshot = await getDocs(q);
-        let data: Product[] = [];
-        querySnapshot.forEach((doc) => {
-            data.push(doc.data() as Product);
-        });
+        let data: Product = querySnapshot.docs[0].data() as Product;
         return data;
     } catch (e) {
         console.log("Error in getting product", e);
-        return [];
+        return null;
     }
 }

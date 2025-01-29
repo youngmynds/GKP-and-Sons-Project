@@ -8,7 +8,8 @@ import Footer from "../components/footer";
 import Rights from "../components/rights";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
 import { useSearchParams, useRouter } from "next/navigation";
-
+import { getbyCat } from "../utils/queries";
+import { useEffect } from "react";
 const parisienne = Parisienne({
     weight: "400",
     subsets: ["latin"],
@@ -29,7 +30,14 @@ export default function Products() {
     const searchParams = useSearchParams();
     const encodedcat = searchParams.get("cat");
     const cat = encodedcat ? decodeURIComponent(encodedcat) : "";
+    const [data, setData] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("Casting");
+
+    useEffect(() => {
+        getbyCat(cat).then((res: any) => {
+            setData(res)
+        })
+    }, [])
 
     const castingItems = [
         { src: "/CastingRings/CastingRing1.png", title: "Casting 1" },
@@ -45,7 +53,6 @@ export default function Products() {
 
     const displayedItems =
         selectedCategory === "Casting" ? castingItems : antiqueItems;
-
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
@@ -89,21 +96,19 @@ export default function Products() {
             <div className="flex gap-10 justify-center md:mt-10">
                 {/* Buttons to select category */}
                 <button
-                    className={`border-b-2 ${
-                        selectedCategory === "Casting"
+                    className={`border-b-2 ${selectedCategory === "Casting"
                             ? "border-b-gold text-black"
                             : "border-transparent text-gray-400"
-                    } text-lg md:text-xl ${cardo.className}`}
+                        } text-lg md:text-xl ${cardo.className}`}
                     onClick={() => setSelectedCategory("Casting")}
                 >
                     Casting
                 </button>
                 <button
-                    className={`border-b-2 ${
-                        selectedCategory === "Antique"
+                    className={`border-b-2 ${selectedCategory === "Antique"
                             ? "border-b-gold text-black"
                             : "border-transparent text-gray-400"
-                    } text-lg md:text-xl ${cardo.className}`}
+                        } text-lg md:text-xl ${cardo.className}`}
                     onClick={() => setSelectedCategory("Antique")}
                 >
                     Antique
@@ -118,7 +123,7 @@ export default function Products() {
                         src={item.src}
                         title={item.title}
                         onClick={() => {
-                            router.push(`/ProductsDescription`);
+                            router.push(`/productsDescription`);
                         }}
                     />
                 ))}

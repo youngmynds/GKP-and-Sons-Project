@@ -6,7 +6,8 @@ import {
     getDocs,
     updateDoc,
     QuerySnapshot,
-    deleteDoc
+    deleteDoc,
+    doc
 } from "firebase/firestore";
 import db from "./firebase";
 import { toast } from "react-toastify";
@@ -24,16 +25,26 @@ interface Product {
 export async function getbyCat(category: string, subcategory?: string) {
     try {
         const products = collection(db, "products");
-        const q = query(
-            products,
-            where("category", "==", category),
-            where("subcategory", "==", subcategory),
-        );
+        let q :any;
+        if (subcategory) {
+             q = query(
+                products,
+                where("category", "==", category),
+                where("subcategory", "==", subcategory)
+            );
+        } else {
+             q = query(
+                products,
+                where("category", "==", category)
+            );
+        }
         const querySnapshot = await getDocs(q);
-        const data = querySnapshot.docs.map((element) => {
-            element.data;
-        });
-        return data;
+        let data: Product[] = [];
+        querySnapshot.docs.forEach((doc) => {    
+            data.push(doc.data() as Product);
+        })
+        console.log(data)
+        return data;    
     } catch (e) {
         console.log("Error in getting products by category", e);
         return [];
@@ -76,7 +87,8 @@ export async function deleteImageSlider(productId1: string) {
 export async function writebyCat(product: Product) {
     try {
         const category = product.category;
-        const data = await getbyCat(category);
+        const data:String[] = await getbyCat(category);
+        console.log(data);
         const productId = category + (data.length + 1).toString();
         product = { ...product, productId: productId };
         const docRef = await addDoc(collection(db, "products"), product);
@@ -125,7 +137,6 @@ export async function deleteProduct(productId1: string) {
         const products = collection(db, "products");
         const q = query(products, where("productId", "==", productId1));
         const querySnapshot = await getDocs(q);
-        console.log(querySnapshot);
         querySnapshot.forEach(async (doc) => {
             await deleteDoc(doc.ref);
         });
@@ -143,10 +154,26 @@ export async function getProductId() {
         querySnapshot.forEach((doc) => {
             data.add(doc.data().productId);
         });
-        
+
         return [...data];
     } catch (e) {
         console.log("Error in getting products", e);
+        return [];
+    }
+}
+
+export async function getProduct(productId1: string) {
+    try {
+        const products = collection(db, "products");
+        const q = query(products, where("productId", "==", productId1));
+        const querySnapshot = await getDocs(q);
+        let data: Product[] = [];
+        querySnapshot.forEach((doc) => {
+            data.push(doc.data() as Product);
+        });
+        return data;
+    } catch (e) {
+        console.log("Error in getting product", e);
         return [];
     }
 }

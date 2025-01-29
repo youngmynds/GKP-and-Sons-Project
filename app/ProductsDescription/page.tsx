@@ -1,10 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import Header from "../Components/header";
-import Footer from "../Components/footer";
-import Rights from "../Components/rights";
+import Header from "../components/header";
+import Footer from "../components/footer";
+import Rights from "../components/rights";
 import { Montserrat, Cardo } from "next/font/google";
+import { useSearchParams } from "next/navigation";
+import { getProduct } from "../utils/queries";
+import { useEffect } from "react";
 
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
@@ -17,6 +20,14 @@ const cardo = Cardo({
 });
 
 export default function ProductsDescription() {
+    const searchParams = useSearchParams();
+    const encodedId = searchParams.get("productId");
+    const productId = encodedId ? decodeURIComponent(encodedId) : "";
+    useEffect(() =>{
+        getProduct(productId).then((res) => {
+            console.log(res);
+        });
+    },[])
     return (
         <div className="bg-[#FFFCF8]">
             <Header />

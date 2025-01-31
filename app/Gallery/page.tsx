@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Header from "../components/header";
-import Card from "../Components/galleryProductsCard";
+import Card from "../components/galleryProductsCard";
 import Footer from "../components/footer";
 import { Parisienne, Montserrat } from "next/font/google";
 import Rights from "../components/rights";

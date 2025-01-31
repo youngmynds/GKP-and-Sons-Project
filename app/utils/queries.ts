@@ -51,39 +51,47 @@ export async function getbyCat(category: string, subcategory?: string) {
     }
 }
 
-export async function addImageSlider(productId1: string) {
+export async function addImageSlider(imageUrl: string) {
     try {
-        const products = collection(db, "products");
-        const q = query(products, where("productId", "==", productId1));
-        const querySnapshot = await getDocs(q);
-        console.log(querySnapshot);
-        querySnapshot.forEach(async (doc) => {
-            await updateDoc(doc.ref, {
-                isImageSlider: true,
-            });
-        });
+        const products = collection(db, "imageSlider");
+        await addDoc(products, { imageUrl: imageUrl });
         return toast.success("Success in adding image slider");
     } catch (e: any) {
         toast.error("Error in adding image slider", e);
     }
 }
 
-export async function deleteImageSlider(productId1: string) {
+export async function deleteImageSlider(imageUrl : String) {
     try {
-        const products = collection(db, "products");
-        const q = query(products, where("productId", "==", productId1));
+        const products = collection(db, "imageSlider");
+        const q = query(products, where("imageUrl", "==", imageUrl));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(async (doc) => {
-            await updateDoc(doc.ref, {
-                isImageSlider: false,
-            });
+            await deleteDoc(doc.ref);
         });
-        return toast.success("Success in deleting image slider");
+         toast.success("Success in deleting image slider");
+         return;
     } catch (e: any) {
         toast.error("Error in deleting image slider", e);
     }
 }
 
+export async function getImageSlider() {
+    try{
+        const imageSlider = collection(db, "imageSlider");
+        const q = query(imageSlider);
+
+        const querySnapshot = await getDocs(q);
+        let data: String[] = []
+        querySnapshot.forEach((doc) => {
+         data.push(doc.data().imageUrl);
+        })
+        return data;
+
+    }catch(e:any){
+        toast.error("Error in getting image slider", e);
+    }
+}
 export async function writebyCat(product: Product) {
     try {
         const category = product.category;

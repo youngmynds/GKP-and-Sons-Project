@@ -10,12 +10,13 @@ import {
     Autocomplete,
     FormControlLabel
 } from "@mui/material";
+import { X, Plus } from "lucide-react";
 import { toast } from "react-hot-toast";
 import {
     getCategories,
     getSubCategories,
     writebyCat,
-    addImageSlider,
+    getImageSlider,
     deleteImageSlider,
     deleteProduct,
     getProductId
@@ -30,8 +31,8 @@ const AdminPage: React.FC = () => {
     const [imageName, setImageName] = useState<string>("");
     const [imageDescription, setImageDescription] = useState<string>("");
     const [imageURL, setImageURL] = useState<string>("");
-    const [isImageSlider, setisImageSlider] = useState<boolean>(false);
     const [productId, setproductId] = useState<string[]>([]);
+    const [imageSlider, setImageSlider] = useState<string[]>([]);
     const [productId1, setProductId1] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -46,14 +47,18 @@ const AdminPage: React.FC = () => {
                 setproductId(data as string[]);
             });
         }
+        if (operations === 'imageSlider') {
+            getImageSlider().then((data) => {
+                setImageSlider(data as string[]);
+            });
+        }
     }, [operations]);
 
     return (
         <>
             <div className="flex flex-row items-center justify-center space-x-5">
                 <button className="bg-blue-500 text-white rounded p-2 m-2" onClick={() => setOperations('addProduct')}>Add Product</button>
-                <button className="bg-blue-500 text-white rounded p-2 m-2" onClick={() => setOperations('addImageSlider')}>Add in ImageSlider</button>
-                <button className="bg-blue-500 text-white rounded p-2" onClick={() => { setOperations('deleteImageSlider') }}>Delete from ImageSlider</button>
+                <button className="bg-blue-500 text-white rounded p-2 m-2" onClick={() => setOperations('imageSlider')}>Add in ImageSlider</button>
                 <button className="bg-blue-500 text-white rounded p-2" onClick={() => setOperations('deleteProduct')}>Delete Product</button>
             </div>
             {
@@ -102,16 +107,6 @@ const AdminPage: React.FC = () => {
                             variant="outlined"
                             value={imageURL}
                             onChange={(e) => setImageURL(e.target.value)} />
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    onChange={(e) => setisImageSlider(e.target.checked)}
-                                    name="Set as Image Slider?"
-                                />
-                            }
-                            label="Set as Image Slider?" // Text label associated with the checkbox
-                        />
-
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                             onClick={() => {
                                 if (selectedCategory === "" || selectedSubcategory === "" || imageName === "" || imageDescription === "" || imageURL === "") {
@@ -124,48 +119,38 @@ const AdminPage: React.FC = () => {
                                     name: imageName,
                                     description: imageDescription,
                                     imageUrl: imageURL,
-                                    isImageSlider: isImageSlider
                                 });
                                 setImageName("");
                                 setImageDescription("");
                                 setImageURL("");
-                                setisImageSlider(false);
                                 setSelectedCategory("");
                                 setSelectedSubcategory("");
                             }}>Add Product</button>
                     </div>
-                ) || ((operations === 'addImageSlider') && (
-                    <div className="flex flex-col items-center justify-center">
-                        <TextField
-                            label=""
-                            variant="outlined"
-                            value={productId1}
-                            onChange={(e) => setProductId1(e.target.value)} />
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            onClick={() => {
-                                if (productId1 === "")
-                                    return toast.error("Please Select a Product");
-                                addImageSlider(productId1);
-                                setProductId1("");
-                            }}>Add to Image Slider</button>
-                    </div>)) || (
-                    (operations === "deleteImageSlider") && (
-                        <div className="flex flex-col items-center justify-center">
-                            <TextField
-                                label=""
-                                variant="outlined"
-                                value={productId1}
-                                onChange={(e) => setProductId1(e.target.value)} />
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                onClick={() => {
-                                    if (productId1 === "")
-                                        return toast.error("Please Select a Product");
-                                    deleteImageSlider(productId1);
-                                    setProductId1("");
-                                }}>Delete in Image Slider</button>
+                ) || ((operations === 'imageSlider') && (
+                    <div className="flex flex-col items-center justify-center space-y-4">
+                        <div className="flex flex-wrap justify-center gap-4">
+                            {imageSlider.map((item) => (
+                                <div key={item} className="relative">
+                                    <button
+                                        className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
+                                        onClick={() => setImageSlider(imageSlider.filter((i) => i !== item))}
+                                    >
+                                        <X size={16} />
+                                    </button>
+                                    <img src={item} alt={item} className="w-40 h-40 object-cover rounded-lg shadow-md" />
+                                </div>
+                            ))}
                         </div>
-                    )
-                ) || (
+                        {/* <button
+                            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                            onClick= {() =>{ setImageSlider([...imageSlider,])}}
+                        >
+                            <Plus size={18} />
+                            Add Image
+                        </button> */}
+                    </div>
+                )) || (
                     (operations === 'deleteProduct') && (
                         <div className="flex flex-col items-center justify-center">
                             <Autocomplete

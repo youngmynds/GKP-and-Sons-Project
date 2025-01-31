@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import Image from "next/image";
 import Header from "../components/header";
 import Card from "../components/galleryProductsCard";
@@ -8,8 +8,9 @@ import Footer from "../components/footer";
 import Rights from "../components/rights";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
 import { useSearchParams, useRouter } from "next/navigation";
-import { getbyCat } from "../utils/queries";
+import { getbyCat, getSubCategories } from "../utils/queries";
 import { useEffect } from "react";
+import { select } from "@material-tailwind/react";
 const parisienne = Parisienne({
     weight: "400",
     subsets: ["latin"],
@@ -30,30 +31,34 @@ export default function Products() {
     const searchParams = useSearchParams();
     const encodedcat = searchParams.get("cat");
     const cat = encodedcat ? decodeURIComponent(encodedcat) : "";
-    const [data, setData] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState("Casting");
-
+    const [displayedItems, setDisplayedItems] = useState<{ src: string; title: string }[]>([]);
+    const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
+    const [subcategory, setSubcategory] = useState<string[]>([]);
     useEffect(() => {
+        const subcat = new Set()
         getbyCat(cat).then((res: any) => {
-            setData(res)
-            console.log(res);
+
+            subcat.add(res.map((item: any) => {
+                return item.subcategory
+            }))
+            setSubcategory(Array.from(subcat) as string[])
+            setSelectedSubcategory(subcategory[0])
+            console.log(subcat, "subcat")
         })
     }, [])
 
-    const castingItems = [
-        { src: "/CastingRings/CastingRing1.png", title: "Casting 1" },
-        { src: "/CastingRings/CastingRing2.png", title: "Casting 2" },
-    ];
+    useEffect(() => {
+        console.log(selectedSubcategory)
+        getbyCat(cat, selectedSubcategory).then((res: any) => {
 
-    const antiqueItems = [
-        { src: "/AntiqueRings/AntiqueRing1.png", title: "Antique 1" },
-        { src: "/AntiqueRings/AntiqueRing2.png", title: "Antique 2" },
-        { src: "/AntiqueRings/AntiqueRing3.png", title: "Antique 3" },
-        { src: "/AntiqueRings/AntiqueRing4.png", title: "Antique 4" },
-    ];
+            setDisplayedItems(res.map((item: any) => ({
+                src: item.imageUrl,
+                title: item.name,
+            })))
+            console.log(displayedItems)
+        })
+    }, [selectedSubcategory])
 
-    const displayedItems =
-        selectedCategory === "Casting" ? castingItems : antiqueItems;
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
@@ -94,29 +99,20 @@ export default function Products() {
                 </p>
             </div>
 
-            <div className="flex gap-10 justify-center md:mt-10">
-                {/* Buttons to select category */}
-                <button
-                    className={`border-b-2 ${selectedCategory === "Casting"
+            <div className="flex gap-15 justify-center md:mt-10">
+                {subcategory.map((item, index) => (
+                    <button
+                        className={`border-b-2  ${selectedSubcategory === `${item}`
                             ? "border-b-gold text-black"
                             : "border-transparent text-gray-400"
-                        } text-lg md:text-xl ${cardo.className}`}
-                    onClick={() => setSelectedCategory("Casting")}
-                >
-                    Casting
-                </button>
-                <button
-                    className={`border-b-2 ${selectedCategory === "Antique"
-                            ? "border-b-gold text-black"
-                            : "border-transparent text-gray-400"
-                        } text-lg md:text-xl ${cardo.className}`}
-                    onClick={() => setSelectedCategory("Antique")}
-                >
-                    Antique
-                </button>
+                            } text-lg md:text-xl ${cardo.className}`}
+                        onClick={() => setSelectedSubcategory(item)}
+                        key={index}
+                    >
+                        {item}
+                    </button>
+                ))}
             </div>
-
-            {/* Display the selected category's items */}
             <div className="flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
                 {displayedItems.map((item, index) => (
                     <Card

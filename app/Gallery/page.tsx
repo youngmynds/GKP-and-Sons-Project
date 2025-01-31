@@ -8,7 +8,7 @@ import { Parisienne, Montserrat } from "next/font/google";
 import Rights from "../components/rights";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getCategories, getProduct } from "../utils/queries";
+import { getbyCat, getCategories, getProduct } from "../utils/queries";
 import { title } from "process";
 const parisienne = Parisienne({
     weight: "400",
@@ -21,7 +21,7 @@ const montserrat = Montserrat({
 });
 
 export default function Gallery() {
-    const [Items, setItems] = useState<{ title: string; src: string }[]>([]); 
+    const [Items, setItems] = useState<{ title: string; src: string }[]>([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -30,9 +30,8 @@ export default function Gallery() {
             const images: string[] = [];
 
             for (const cat of categories) {
-                let productId = cat + '1';
-                let product = await getProduct(productId);
-                if (product) images.push(product.imageUrl);
+                let product = await getbyCat(cat);
+                if (product) images.push(product[0].imageUrl);
             }
 
             const itemsData = categories.map((cat, index) => ({

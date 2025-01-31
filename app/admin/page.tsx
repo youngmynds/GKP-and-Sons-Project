@@ -19,7 +19,8 @@ import {
     getImageSlider,
     deleteImageSlider,
     deleteProduct,
-    getProductId
+    getProductId,
+    addImageSlider
 } from "../utils/queries";
 
 const AdminPage: React.FC = () => {
@@ -53,6 +54,28 @@ const AdminPage: React.FC = () => {
             });
         }
     }, [operations]);
+
+    async function deleteimage(image: string) {
+        try {
+            await deleteImageSlider(image);
+            setImageSlider(imageSlider.filter((item) => item !== image));
+            toast.success("Success in deleting image slider");
+            setOperations("")
+        } catch (e: any) {
+            toast.error("Error in deleting image slider", e);
+        }
+    }
+    async function addImage(image: string) {
+        try {
+            await addImageSlider(image);
+            toast.success("Success in adding image slider");
+            setImageSlider([...imageSlider, image]);
+            setImageURL("");
+            setOperations("")
+        } catch (e: any) {
+            toast.error("Error in adding image slider", e);
+        }
+    }
 
     return (
         <>
@@ -133,8 +156,8 @@ const AdminPage: React.FC = () => {
                             {imageSlider.map((item) => (
                                 <div key={item} className="relative">
                                     <button
-                                        className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
-                                        onClick={() => setImageSlider(imageSlider.filter((i) => i !== item))}
+                                        className="absolute top-0 right-0 bg-gray-500 text-white p-1 rounded-full"
+                                        onClick={() => deleteimage(item)}
                                     >
                                         <X size={16} />
                                     </button>
@@ -142,13 +165,19 @@ const AdminPage: React.FC = () => {
                                 </div>
                             ))}
                         </div>
-                        {/* <button
+                        <TextField
+                            label="Image URL"
+                            variant="outlined"
+                            value={imageURL}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setImageURL(e.target.value)}
+                        />
+                        <button
                             className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                            onClick= {() =>{ setImageSlider([...imageSlider,])}}
+                            onClick={() => { addImage(imageURL) }}
                         >
                             <Plus size={18} />
                             Add Image
-                        </button> */}
+                        </button>
                     </div>
                 )) || (
                     (operations === 'deleteProduct') && (

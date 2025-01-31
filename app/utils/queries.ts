@@ -25,26 +25,26 @@ interface Product {
 export async function getbyCat(category: string, subcategory?: string) {
     try {
         const products = collection(db, "products");
-        let q :any;
+        let q: any;
         if (subcategory) {
-             q = query(
+            q = query(
                 products,
                 where("category", "==", category),
                 where("subcategory", "==", subcategory)
             );
         } else {
-             q = query(
+            q = query(
                 products,
                 where("category", "==", category)
             );
         }
         const querySnapshot = await getDocs(q);
         let data: Product[] = [];
-        querySnapshot.docs.forEach((doc) => {    
+        querySnapshot.docs.forEach((doc) => {
             data.push(doc.data() as Product);
         })
         console.log(data)
-        return data;    
+        return data;
     } catch (e) {
         console.log("Error in getting products by category", e);
         return [];
@@ -61,41 +61,43 @@ export async function addImageSlider(imageUrl: string) {
     }
 }
 
-export async function deleteImageSlider(imageUrl : String) {
+export async function deleteImageSlider(imageUrl: String) {
     try {
+        console.log(imageUrl)
         const products = collection(db, "imageSlider");
         const q = query(products, where("imageUrl", "==", imageUrl));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(async (doc) => {
+            console.log(doc.data())
             await deleteDoc(doc.ref);
         });
-         toast.success("Success in deleting image slider");
-         return;
+        toast.success("Success in deleting image slider");
+        return;
     } catch (e: any) {
         toast.error("Error in deleting image slider", e);
     }
 }
 
 export async function getImageSlider() {
-    try{
+    try {
         const imageSlider = collection(db, "imageSlider");
         const q = query(imageSlider);
 
         const querySnapshot = await getDocs(q);
         let data: String[] = []
         querySnapshot.forEach((doc) => {
-         data.push(doc.data().imageUrl);
+            data.push(doc.data().imageUrl);
         })
         return data;
 
-    }catch(e:any){
+    } catch (e: any) {
         toast.error("Error in getting image slider", e);
     }
 }
 export async function writebyCat(product: Product) {
     try {
         const category = product.category;
-        const data:Product[] = await getbyCat(category);
+        const data: Product[] = await getbyCat(category);
         console.log(data);
         const productId = category + (data.length + 1).toString();
         product = { ...product, productId: productId };
@@ -143,7 +145,7 @@ export async function getSubCategories() {
 export async function deleteProduct(productId1: string) {
     try {
         const products = collection(db, "products");
-        let q = query(products,where("productId", "==", productId1));
+        let q = query(products, where("productId", "==", productId1));
         let querySnapshot = await getDocs(q);
         querySnapshot.forEach(async (doc) => {
             await deleteDoc(doc.ref);

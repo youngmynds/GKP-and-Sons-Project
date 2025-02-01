@@ -35,20 +35,19 @@ export default function Products() {
     const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
     const [subcategory, setSubcategory] = useState<string[]>([]);
     useEffect(() => {
-        const subcat = new Set()
+        let subcat:any = new Set();
         getbyCat(cat).then((res: any) => {
 
-            subcat.add(res.map((item: any) => {
-                return item.subcategory
-            }))
-            setSubcategory(Array.from(subcat) as string[])
-            setSelectedSubcategory(subcategory[0])
-            console.log(subcat, "subcat")
+            res.map((item: any) => {
+                subcat.add(item.subcategory)
+            })
+            subcat = Array.from(subcat)
+            setSubcategory(subcat as string[])
+            setSelectedSubcategory(subcat[0] as string)
         })
     }, [])
 
     useEffect(() => {
-        console.log(selectedSubcategory)
         getbyCat(cat, selectedSubcategory).then((res: any) => {
 
             setDisplayedItems(res.map((item: any) => ({
@@ -99,14 +98,16 @@ export default function Products() {
                 </p>
             </div>
 
-            <div className="flex gap-15 justify-center md:mt-10">
+            <div className="flex justify-center md:mt-10 gap-4">
                 {subcategory.map((item, index) => (
                     <button
-                        className={`border-b-2  ${selectedSubcategory === `${item}`
+                        className={`border-b-2 ${selectedSubcategory === `${item}`
                             ? "border-b-gold text-black"
                             : "border-transparent text-gray-400"
                             } text-lg md:text-xl ${cardo.className}`}
-                        onClick={() => setSelectedSubcategory(item)}
+                        onClick={() => {
+                            setSelectedSubcategory(item);
+                        }}
                         key={index}
                     >
                         {item}

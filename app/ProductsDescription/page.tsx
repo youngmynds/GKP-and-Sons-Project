@@ -23,7 +23,7 @@ export default function ProductsDescription() {
     const searchParams = useSearchParams();
     const encodedId = searchParams.get("productId");
     const productId = encodedId ? decodeURIComponent(encodedId) : "";
-    const [product, setProduct] = useState<{ productId: string; name: string; description: string, imageUrl: string }>();
+    const [product, setProduct] = useState<{ productId: string; name: string; description: string, imageUrl: string, weight: string, carat: string,size: string }>();
     useEffect(() => {
         getProduct(productId).then((res: any) => {
             setProduct(res);
@@ -58,7 +58,7 @@ export default function ProductsDescription() {
             <div className="md:flex p-4 justify-center items-center mt-5">
                 <div className="flex justify-center items-center">
                     <Image
-                        src="/CastingRings/CastingRing1.png"
+                        src={product?.imageUrl as string}
                         alt="CastingRing1"
                         className="object-cover w-[450px] md:w-[400px] h-[280px]"
                         width="250"
@@ -90,7 +90,7 @@ export default function ProductsDescription() {
                             <p
                                 className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}
                             >
-                                22grms
+                                {product?.weight}
                             </p>
                             <p
                                 className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}
@@ -102,7 +102,7 @@ export default function ProductsDescription() {
                             <p
                                 className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}
                             >
-                                32
+                                {product?.size}
                             </p>
                             <p
                                 className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}
@@ -114,7 +114,7 @@ export default function ProductsDescription() {
                             <p
                                 className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}
                             >
-                                24 Karat
+                                {product?.carat}
                             </p>
                             <p
                                 className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}

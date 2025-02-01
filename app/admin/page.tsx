@@ -36,6 +36,9 @@ const AdminPage: React.FC = () => {
     const [imageSlider, setImageSlider] = useState<string[]>([]);
     const [productId1, setProductId1] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
+    const [carat, setCarat] = useState<string>("");
+    const [size, setSize] = useState<string>("");
+    const [weight, setWeight] = useState<string>("");
 
     useEffect(() => {
         if (operations === 'addProduct') {
@@ -130,9 +133,24 @@ const AdminPage: React.FC = () => {
                             variant="outlined"
                             value={imageURL}
                             onChange={(e) => setImageURL(e.target.value)} />
+                        <TextField
+                            label="Enter Product Size"
+                            variant="outlined"
+                            value={size}
+                            onChange={(e) => setSize(e.target.value)} />
+                        <TextField
+                            label="Enter Weight of Product"
+                            variant="outlined"
+                            value={weight}
+                            onChange={(e) => setWeight(e.target.value)} />
+                        <TextField
+                            label="Enter Carat of Product"
+                            variant="outlined"
+                            value={carat}
+                            onChange={(e) => setCarat(e.target.value)} />
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                             onClick={() => {
-                                if (selectedCategory === "" || selectedSubcategory === "" || imageName === "" || imageDescription === "" || imageURL === "") {
+                                if (selectedCategory === "" || selectedSubcategory === "" || imageName === "" || imageDescription === "" || imageURL === "" || carat === "" || size === "" || weight === "") {
                                     toast.error("Please fill all the fields");
                                     return;
                                 }
@@ -142,7 +160,14 @@ const AdminPage: React.FC = () => {
                                     name: imageName,
                                     description: imageDescription,
                                     imageUrl: imageURL,
+                                    carat: carat,
+                                    size: size,
+                                    weight: weight
                                 });
+                                setCarat("");
+                                setSize("");
+                                setWeight("");
+                                setOperations("");
                                 setImageName("");
                                 setImageDescription("");
                                 setImageURL("");

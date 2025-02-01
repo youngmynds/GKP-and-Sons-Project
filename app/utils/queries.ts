@@ -20,7 +20,7 @@ interface Product {
     imageUrl: string;
     isImageSlider?: boolean;
     productId?: string;
-    productweight?: string;
+    weight?: string;
     size?: string;
     carat?: string;
 }

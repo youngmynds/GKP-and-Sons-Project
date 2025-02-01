@@ -89,7 +89,7 @@ export default function Products() {
                 <h1
                     className={`text-gold text-6xl md:text-8xl text-center w-[95%] ${parisienne.className}`}
                 >
-                    Best Gold Ring Designs
+                    Best Gold {cat} Designs
                 </h1>
                 <p
                     className={`h-4 text-gray-800 text-2xl md:text-3xl font-light -mt-2  ${montserrat.className} `}

@@ -20,6 +20,9 @@ interface Product {
     imageUrl: string;
     isImageSlider?: boolean;
     productId?: string;
+    productweight?: string;
+    size?: string;
+    carat?: string;
 }
 
 export async function getbyCat(category: string, subcategory?: string) {
@@ -98,9 +101,19 @@ export async function writebyCat(product: Product) {
     try {
         const category = product.category;
         const data: Product[] = await getbyCat(category);
-        console.log(data);
-        const productId = category + (data.length + 1).toString();
-        product = { ...product, productId: productId };
+        let productId: number = 0;
+        if (data.length > 0) {
+            data.forEach((element) => {
+                console.log("element", element)
+                productId = Math.max(parseInt(element.productId?.split(category)[1] as string), productId);
+                console.log("productId", productId)
+            })
+        }
+        else {
+            productId = 1;
+        }
+        product.productId = category + String(productId + 1);
+        console.log(" final produuctId", product.productId)
         const docRef = await addDoc(collection(db, "products"), product);
     } catch (e) {
         console.log("Error in adding product", e);

@@ -101,6 +101,7 @@ export default function Gallery() {
                         key={index}
                         src={item.src}
                         title={item.title}
+                        productId={item.title}
                         onClick={() => {
                             const encodedTitle = encodeURIComponent(item.title);
                             router.push(`/products/?cat=${encodedTitle}`);

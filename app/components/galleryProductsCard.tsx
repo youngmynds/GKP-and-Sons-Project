@@ -10,10 +10,11 @@ const montserrat = Montserrat({
 interface CardProps {
     src: string;
     title: string;
+    productId: string;
     onClick?: () => void;
 }
 
-export default function Card({ src, title, onClick }: CardProps) {
+export default function Card({ src, title, productId ,onClick }: CardProps) {
     return (
         <div className="bg-black text-center mb-5 w-[calc(50%-16px)] sm:w-[calc(30%-12px)] md:w-[calc(30%-12px)] hover:scale-105 transition-transform duration-300 relative">
             <button onClick={onClick} className="w-full h-full flex flex-col">

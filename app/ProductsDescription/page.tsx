@@ -7,7 +7,7 @@ import Rights from "../components/rights";
 import { Montserrat, Cardo } from "next/font/google";
 import { useSearchParams } from "next/navigation";
 import { getProduct } from "../utils/queries";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
@@ -23,11 +23,12 @@ export default function ProductsDescription() {
     const searchParams = useSearchParams();
     const encodedId = searchParams.get("productId");
     const productId = encodedId ? decodeURIComponent(encodedId) : "";
-    useEffect(() =>{
-        getProduct(productId).then((res) => {
-            console.log(res);
+    const [product, setProduct] = useState<{ productId: string; name: string; description: string, imageUrl: string }>();
+    useEffect(() => {
+        getProduct(productId).then((res: any) => {
+            setProduct(res);
         });
-    },[])
+    }, [])
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
@@ -68,18 +69,12 @@ export default function ProductsDescription() {
                     <h1
                         className={`text-3xl md:text-4xl text-center text-black font-medium ${montserrat.className}`}
                     >
-                        Golden Grace
+                        {product?.name}
                     </h1>
                     <p
                         className={`mt-5 text-center md:text-none text-base text-gray-600 ${cardo.className}`}
                     >
-                        This exquisite casting gold ring is a masterpiece of
-                        craftsmanship, blending tradition with modern artistry.
-                        Radiating a brilliant golden luster, its intricate
-                        details highlight the precision of expert artisanship.
-                        Whether adorned with delicate engravings or left in its
-                        pure, minimalist form, this ring exudes sophistication
-                        and charm.
+                        {product?.description}
                     </p>
                 </div>
             </div>

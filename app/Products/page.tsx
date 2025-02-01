@@ -31,11 +31,11 @@ export default function Products() {
     const searchParams = useSearchParams();
     const encodedcat = searchParams.get("cat");
     const cat = encodedcat ? decodeURIComponent(encodedcat) : "";
-    const [displayedItems, setDisplayedItems] = useState<{ src: string; title: string }[]>([]);
+    const [displayedItems, setDisplayedItems] = useState<{ productId: string; src: string; title: string }[]>([]);
     const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
     const [subcategory, setSubcategory] = useState<string[]>([]);
     useEffect(() => {
-        let subcat:any = new Set();
+        let subcat: any = new Set();
         getbyCat(cat).then((res: any) => {
 
             res.map((item: any) => {
@@ -51,10 +51,10 @@ export default function Products() {
         getbyCat(cat, selectedSubcategory).then((res: any) => {
 
             setDisplayedItems(res.map((item: any) => ({
+                productId : item.productId,
                 src: item.imageUrl,
                 title: item.name,
             })))
-            console.log(displayedItems)
         })
     }, [selectedSubcategory])
 
@@ -118,10 +118,12 @@ export default function Products() {
                 {displayedItems.map((item, index) => (
                     <Card
                         key={index}
+                        productId={item.productId}
                         src={item.src}
                         title={item.title}
                         onClick={() => {
-                            router.push(`/productsDescription`);
+                            const encodedId = encodeURIComponent(item.productId);
+                            router.push(`/productsDescription/?productId=${encodedId}`);
                         }}
                     />
                 ))}

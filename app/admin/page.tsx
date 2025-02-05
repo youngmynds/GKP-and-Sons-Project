@@ -22,8 +22,11 @@ import {
     getProductId,
     addImageSlider
 } from "../utils/queries";
+import { useRouter } from "next/navigation";
+import secureLocalStorage from "react-secure-storage";
 
 const AdminPage: React.FC = () => {
+    const router = useRouter();
     const [operations, setOperations] = useState<string>('');
     const [categories, setCategories] = useState<string[]>([]);
     const [subcategories, setSubcategories] = useState<string[]>([]);
@@ -39,7 +42,11 @@ const AdminPage: React.FC = () => {
     const [carat, setCarat] = useState<string>("");
     const [size, setSize] = useState<string>("");
     const [weight, setWeight] = useState<string>("");
-
+    useEffect(() => {
+        const auth = secureLocalStorage.getItem("auth")
+        if (!auth)
+            router.push('/login')
+    }, [])
     useEffect(() => {
         if (operations === 'addProduct') {
             getCategories().then((data) => setCategories(data));

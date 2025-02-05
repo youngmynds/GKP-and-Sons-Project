@@ -7,7 +7,7 @@ import Rights from "../Components/rights";
 import { Montserrat, Cardo } from "next/font/google";
 import { useSearchParams } from "next/navigation";
 import { getProduct } from "../utils/queries";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
@@ -19,11 +19,11 @@ const cardo = Cardo({
     subsets: ["latin"],
 });
 
-export default function ProductsDescription() {
+function ProductsDescription() {
     const searchParams = useSearchParams();
     const encodedId = searchParams.get("productId");
     const productId = encodedId ? decodeURIComponent(encodedId) : "";
-    const [product, setProduct] = useState<{ productId: string; name: string; description: string, imageUrl: string, weight: string, carat: string,size: string }>();
+    const [product, setProduct] = useState<{ productId: string; name: string; description: string, imageUrl: string, weight: string, carat: string, size: string }>();
     useEffect(() => {
         getProduct(productId).then((res: any) => {
             setProduct(res);
@@ -129,4 +129,12 @@ export default function ProductsDescription() {
             <Rights />
         </div>
     );
+}
+
+export default function Display() {
+    return (
+        <Suspense>
+            <ProductsDescription />
+        </Suspense>
+    )
 }

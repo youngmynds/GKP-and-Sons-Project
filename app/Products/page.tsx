@@ -1,6 +1,6 @@
 "use client";
 
-import {useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Header from "../Components/header";
 import Card from "../Components/galleryProductsCard";
@@ -9,7 +9,7 @@ import Rights from "../Components/rights";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
 import { useSearchParams, useRouter } from "next/navigation";
 import { getbyCat } from "../utils/queries";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 
 const parisienne = Parisienne({
     weight: "400",
@@ -26,7 +26,7 @@ const cardo = Cardo({
     subsets: ["latin"],
 });
 
-export default function Products() {
+ function Products() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const encodedcat = searchParams.get("cat");
@@ -51,7 +51,7 @@ export default function Products() {
         getbyCat(cat, selectedSubcategory).then((res: any) => {
 
             setDisplayedItems(res.map((item: any) => ({
-                productId : item.productId,
+                productId: item.productId,
                 src: item.imageUrl,
                 title: item.name,
             })))
@@ -132,4 +132,12 @@ export default function Products() {
             <Rights />
         </div>
     );
+}
+
+export default function Display() {
+    return (
+        <Suspense>
+            <Products />
+        </Suspense>
+    )
 }

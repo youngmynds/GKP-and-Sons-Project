@@ -1,15 +1,17 @@
 "use client";
 
-import Header from "./components/header";
+import Header from "./Components/header";
 import Image from "next/image";
-import { Advertisements } from "./components/advertisementSlider";
-import Footer from "./components/footer";
-import Rights from "./components/rights";
-import Reviews from "./components/reviews";
-import Pdtcard from "./components/productCategoryCard";
-import { Members, Ads, Products } from "./utils/data";
+import Footer from "./Components/footer";
+import Rights from "./Components/rights";
+import Reviews from "./Components/reviews";
+import Pdtcard from "./Components/productCategoryCard";
+import { Members, Products } from "./utils/data";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
 import { useRouter } from "next/navigation";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const parisienne = Parisienne({
     weight: "400",
@@ -28,11 +30,38 @@ const cardo = Cardo({
 
 export default function Home() {
     const router = useRouter();
+    const heroImages = ["/BridalJewels/bridal1.png", "/BridalJewels/bridal2.png", "/BridalJewels/bridal3.png"];
+
+    const sliderSettings = {
+        dots: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        arrows: false,
+    };
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
-            <Advertisements items={Ads} />
-            <div className="">
+            <Slider {...sliderSettings}>
+                {heroImages.map((image, index) => (
+                    <div key={index} className="w-full h-[300px] md:h-[400px]">
+                        <Image
+                            src={image}
+                            alt={`Slide ${index + 1}`}
+                            width={0}
+                            height={0}
+                            layout="responsive" // Ensures the image takes the full width of the parent
+                            objectFit="cover" // Ensures the image covers the area without distortion
+                            className="w-full h-full"
+                        />
+
+                    </div>
+                ))}
+            </Slider>
+            <div className="mt-10">
                 <section className="lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center">
                     {/* Title */}
                     <div className="text-center mb-5 lg:mb-5">
@@ -230,7 +259,7 @@ export default function Home() {
                     REVIEWS
                 </p>
             </div>
-            <div className="flex gap-4 mb-10 overflow-x-auto pl-5 pr-5 hide-scrollbar">
+            <div className="flex gap-4 mb-10 overflow-x-auto pl-5 pr-5 scroll-smooth scrollbar-hide">
                 {Members.map((item, index) => (
                     <Reviews
                         key={index}

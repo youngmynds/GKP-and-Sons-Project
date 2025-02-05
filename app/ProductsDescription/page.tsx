@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import Rights from "../components/rights";
+import Header from "../Components/header";
+import Footer from "../Components/footer";
+import Rights from "../Components/rights";
 import { Montserrat, Cardo } from "next/font/google";
 import { useSearchParams } from "next/navigation";
 import { getProduct } from "../utils/queries";

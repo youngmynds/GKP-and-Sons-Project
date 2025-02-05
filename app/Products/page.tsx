@@ -1,16 +1,16 @@
 "use client";
 
-import { use, useState } from "react";
+import {useState } from "react";
 import Image from "next/image";
-import Header from "../components/header";
-import Card from "../components/galleryProductsCard";
-import Footer from "../components/footer";
-import Rights from "../components/rights";
+import Header from "../Components/header";
+import Card from "../Components/galleryProductsCard";
+import Footer from "../Components/footer";
+import Rights from "../Components/rights";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
 import { useSearchParams, useRouter } from "next/navigation";
-import { getbyCat, getSubCategories } from "../utils/queries";
+import { getbyCat } from "../utils/queries";
 import { useEffect } from "react";
-import { select } from "@material-tailwind/react";
+
 const parisienne = Parisienne({
     weight: "400",
     subsets: ["latin"],

@@ -1,15 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import Header from "../components/header";
-import Card from "../components/galleryProductsCard";
-import Footer from "../components/footer";
+import Header from "../Components/header";
+import Card from "../Components/galleryProductsCard";
+import Footer from "../Components/footer";
 import { Parisienne, Montserrat } from "next/font/google";
-import Rights from "../components/rights";
+import Rights from "../Components/rights";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getbyCat, getCategories, getProduct } from "../utils/queries";
-import { title } from "process";
+import { getbyCat, getCategories } from "../utils/queries";
+
 const parisienne = Parisienne({
     weight: "400",
     subsets: ["latin"],

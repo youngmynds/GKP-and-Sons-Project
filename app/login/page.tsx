@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { toast } from "react-hot-toast";

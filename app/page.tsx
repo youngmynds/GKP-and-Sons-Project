@@ -12,6 +12,8 @@ import { useRouter } from "next/navigation";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { getImageSlider } from "./utils/queries";
+import { useState, useEffect } from "react";
 
 const parisienne = Parisienne({
     weight: "400",
@@ -30,7 +32,14 @@ const cardo = Cardo({
 
 export default function Home() {
     const router = useRouter();
-    const heroImages = ["/BridalJewels/bridal1.png", "/BridalJewels/bridal2.png", "/BridalJewels/bridal3.png"];
+    const [heroImages, setheroImages] = useState<string[]>([])
+    useEffect(() => {
+        getImageSlider().then((data) => {
+            if (data) {
+                setheroImages(data as string[]);
+            }
+        });
+    }, [])
 
     const sliderSettings = {
         dots: true,

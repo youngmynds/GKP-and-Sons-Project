@@ -36,25 +36,14 @@ export default function Gallery() {
 
             const itemsData = categories.map((cat, index) => ({
                 title: cat,
-                src: images[index] || "" // Ensure images array doesn't go out of bounds
+                src: images[index] || ""
             }));
 
-            setItems(itemsData); // Update state with fetched data
+            setItems(itemsData);
         }
 
         fetchData();
     }, []);
-
-    // const Items = [
-    //     { src: "/Collections/pendants.png", title: "Pendants" },
-    //     { src: "/Collections/chains.png", title: "CHAINS" },
-    //     { src: "/Collections/bangles.png", title: "BANGLES" },
-    //     { src: "/Collections/bracelets.png", title: "BRACELETS" },
-    //     { src: "/Collections/earrings.png", title: "EARRINGS" },
-    //     { src: "/Collections/necklaces.png", title: "NECKLACES" },
-    //     { src: "/Collections/rings.png", title: "RINGS" },
-    //     { src: "/Collections/thali.png", title: "THALI" },
-    // ];
 
     return (
         <div className="bg-[#FFFCF8]">
@@ -104,7 +93,7 @@ export default function Gallery() {
                         productId={item.title}
                         onClick={() => {
                             const encodedTitle = encodeURIComponent(item.title);
-                            router.push(`/products/?cat=${encodedTitle}`);
+                            router.push(`/gallery/products/?cat=${encodedTitle}`);
                         }}
                     />
                 ))}

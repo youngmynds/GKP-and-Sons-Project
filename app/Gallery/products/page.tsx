@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Header from "../Components/header";
-import Card from "../Components/galleryProductsCard";
-import Footer from "../Components/footer";
-import Rights from "../Components/rights";
+import Header from "../../Components/header";
+import Card from "../../Components/galleryProductsCard";
+import Footer from "../../Components/footer";
+import Rights from "../../Components/rights";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
 import { useSearchParams, useRouter } from "next/navigation";
-import { getbyCat } from "../utils/queries";
+import { getbyCat } from "../../utils/queries";
 import { useEffect, Suspense } from "react";
 
 const parisienne = Parisienne({
@@ -26,7 +26,7 @@ const cardo = Cardo({
     subsets: ["latin"],
 });
 
- function Products() {
+function Products() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const encodedcat = searchParams.get("cat");
@@ -115,7 +115,7 @@ const cardo = Cardo({
                 ))}
             </div>
             <div className="flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
-                {displayedItems.map((item, index) => (
+                {displayedItems?.map((item, index) => (
                     <Card
                         key={index}
                         productId={item.productId}
@@ -123,7 +123,7 @@ const cardo = Cardo({
                         title={item.title}
                         onClick={() => {
                             const encodedId = encodeURIComponent(item.productId);
-                            router.push(`/productsDescription/?productId=${encodedId}`);
+                            router.push(`/gallery/products/productsDescription/?productId=${encodedId}`);
                         }}
                     />
                 ))}

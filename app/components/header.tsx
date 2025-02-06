@@ -51,7 +51,6 @@ export default function Header() {
                 >
                     {[
                         "Home",
-                        "About Us",
                         "Products",
                         "Collections",
                         "Contact Us",
@@ -59,7 +58,7 @@ export default function Header() {
                         <a
                             href={`#${item}`}
                             key={index}
-                            className={`hover:underline text-base tracking-wide text-white hover:text-gold`}
+                            className={`text-base tracking-wide text-white hover:text-gold`}
                         >
                             {item}
                         </a>
@@ -93,14 +92,12 @@ export default function Header() {
                 <nav className="flex flex-col gap-1">
                     {[
                         "Home",
-                        "About Us",
                         "Products",
                         "Collections",
-                        "Contact Us",
-                        "FAQs",
+                        "Contact Us"
                     ].map((item, index) => (
                         <a
-                            href="#"
+                            href={`#${item}`}
                             key={index}
                             className={`p-4 text-base text-black tracking-wide border-b border-b-gold pb-2 ${montserrat.className}`}
                         >

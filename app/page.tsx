@@ -95,7 +95,7 @@ export default function Home() {
                 ))}
             </Slider>
             <div className="mt-10">
-                <section className="lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center">
+                <section id="Home" className="lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center">
                     {/* Title */}
                     <div className="text-center mb-5 lg:mb-5">
                         <p

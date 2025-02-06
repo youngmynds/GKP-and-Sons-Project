@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import { toast } from "react-hot-toast";
 export default function Home() {
   const [name, setName] = useState("");
@@ -27,9 +28,9 @@ export default function Home() {
   };
 
   return (
-    <main className="flex h-screen flex-col justify-center items-center m-4 bg-gray-100">
+    <main className="flex h-screen flex-col justify-center items-center m-4">
       <h1 className="absolute top-4 left-4 text-[24px] font-bold">
-        GKP&Sons Jewellers
+        GKP & Sons Jewellers
       </h1>
       (
       <div className="absolute left-50vh top-1/2 transform -translate-y-1/2 border border-gray-200 rounded-3xl w-full md:w-[500px] bg-white shadow-lg">
@@ -60,7 +61,7 @@ export default function Home() {
               className="absolute inset-y-0 right-4 flex items-center cursor-pointer text-gray-500"
               onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? "🫣" : "👁"}
+              <i className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
             </span>
           </div>
           <button

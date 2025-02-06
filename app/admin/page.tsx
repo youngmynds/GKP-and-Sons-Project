@@ -67,14 +67,20 @@ const AdminPage: React.FC = () => {
 
     async function deleteimage(image: string) {
         try {
+            console.log("AdminPage - Deleting image:", image);
+
             await deleteImageSlider(image);
-            setImageSlider(imageSlider.filter((item) => item !== image));
+            console.log("deleteImageSlider called successfully");
+
+            setImageSlider((prev) => prev.filter((item) => item !== image));
             toast.success("Success in deleting image slider");
-            setOperations("")
+            setOperations("");
         } catch (e: any) {
-            toast.error("Error in deleting image slider", e);
+            console.error("Error in deleteimage:", e);
+            toast.error("Error in deleting image slider: " + e.message);
         }
     }
+
     async function addImage(image: string) {
         try {
             await addImageSlider(image);
@@ -88,6 +94,7 @@ const AdminPage: React.FC = () => {
     }
 
     return (
+        secureLocalStorage.getItem("auth") === "true" &&
         <>
             <div className="flex flex-row items-center justify-center space-x-5">
                 <button className="bg-blue-500 text-white rounded p-2 m-2" onClick={() => setOperations('addProduct')}>Add Product</button>
@@ -223,8 +230,7 @@ const AdminPage: React.FC = () => {
                                 )}
                                 value={productId1}
                                 onInputChange={(_, value) => {
-                                    // Triggered when the user types in the input
-                                    setProductId1(value) // Update the selected category with typed input
+                                    setProductId1(value)
                                     console.log("Product Id Input Changed:", value);
                                 }} />
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

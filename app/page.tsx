@@ -12,12 +12,8 @@ import { useRouter } from "next/navigation";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-<<<<<<< Updated upstream
 import { getImageSlider } from "./utils/queries";
 import { useState, useEffect } from "react";
-=======
-import { useState } from "react";
->>>>>>> Stashed changes
 
 const parisienne = Parisienne({
     weight: "400",
@@ -40,7 +36,13 @@ export default function Home() {
     useEffect(() => {
         getImageSlider().then((data) => {
             if (data) {
-                setheroImages(data as string[]);
+                setheroImages(data);
+            } else {
+                setheroImages([
+                    "https://i.imgur.com/OJ3Sfnb.jpeg",
+                    "https://i.imgur.com/D8G3fGb.jpeg",
+                    "https://i.imgur.com/YYgCe75.png",
+                ])
             }
         });
     }, [])

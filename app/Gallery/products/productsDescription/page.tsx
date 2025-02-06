@@ -1,10 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import Header from "../Components/header";
-import Footer from "../Components/footer";
-import Rights from "../Components/rights";
+import Header from "../../../Components/header";
+import Footer from "../../../Components/footer";
+import Rights from "../../../Components/rights";
 import { Montserrat, Cardo } from "next/font/google";
+import { useSearchParams } from "next/navigation";
+import { getProduct } from "../../../utils/queries";
+import { Suspense, useEffect, useState } from "react";
 
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
@@ -16,7 +19,16 @@ const cardo = Cardo({
     subsets: ["latin"],
 });
 
-export default function ProductsDescription() {
+function ProductsDescription() {
+    const searchParams = useSearchParams();
+    const encodedId = searchParams.get("productId");
+    const productId = encodedId ? decodeURIComponent(encodedId) : "";
+    const [product, setProduct] = useState<{ productId: string; name: string; description: string, imageUrl: string, weight: string, carat: string, size: string }>();
+    useEffect(() => {
+        getProduct(productId).then((res: any) => {
+            setProduct(res);
+        });
+    }, [])
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
@@ -46,7 +58,7 @@ export default function ProductsDescription() {
             <div className="md:flex p-4 justify-center items-center mt-5">
                 <div className="flex justify-center items-center">
                     <Image
-                        src="/CastingRings/CastingRing1.png"
+                        src={product?.imageUrl as string}
                         alt="CastingRing1"
                         className="object-cover w-[450px] md:w-[400px] h-[280px]"
                         width="250"
@@ -57,18 +69,12 @@ export default function ProductsDescription() {
                     <h1
                         className={`text-3xl md:text-4xl text-center text-black font-medium ${montserrat.className}`}
                     >
-                        Golden Grace
+                        {product?.name}
                     </h1>
                     <p
                         className={`mt-5 text-center md:text-none text-base text-gray-600 ${cardo.className}`}
                     >
-                        This exquisite casting gold ring is a masterpiece of
-                        craftsmanship, blending tradition with modern artistry.
-                        Radiating a brilliant golden luster, its intricate
-                        details highlight the precision of expert artisanship.
-                        Whether adorned with delicate engravings or left in its
-                        pure, minimalist form, this ring exudes sophistication
-                        and charm.
+                        {product?.description}
                     </p>
                 </div>
             </div>
@@ -84,7 +90,7 @@ export default function ProductsDescription() {
                             <p
                                 className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}
                             >
-                                22grms
+                                {product?.weight}
                             </p>
                             <p
                                 className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}
@@ -96,7 +102,7 @@ export default function ProductsDescription() {
                             <p
                                 className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}
                             >
-                                32
+                                {product?.size}
                             </p>
                             <p
                                 className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}
@@ -108,7 +114,7 @@ export default function ProductsDescription() {
                             <p
                                 className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}
                             >
-                                24 Karat
+                                {product?.carat}
                             </p>
                             <p
                                 className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}
@@ -123,4 +129,12 @@ export default function ProductsDescription() {
             <Rights />
         </div>
     );
+}
+
+export default function Display() {
+    return (
+        <Suspense>
+            <ProductsDescription />
+        </Suspense>
+    )
 }

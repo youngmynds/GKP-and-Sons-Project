@@ -1,18 +1,19 @@
 "use client";
 
-import Header from "./components/header";
+import Header from "./Components/header";
 import Image from "next/image";
-import { Advertisements } from "./components/advertisementSlider";
-import Footer from "./components/footer";
-import Rights from "./components/rights";
-import Reviews from "./components/reviews";
-import Pdtcard from "./components/productCategoryCard";
-import { Members, Ads, Products } from "./utils/data";
+import Footer from "./Components/footer";
+import Rights from "./Components/rights";
+import Reviews from "./Components/reviews";
+import Pdtcard from "./Components/productCategoryCard";
+import { Members, Products } from "./utils/data";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
 import { useRouter } from "next/navigation";
-import { getDocs, collection } from "firebase/firestore";
-import { db } from "./utils/firebase";
-import { useEffect } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { getImageSlider } from "./utils/queries";
+import { useState, useEffect } from "react";
 
 const parisienne = Parisienne({
     weight: "400",
@@ -31,27 +32,69 @@ const cardo = Cardo({
 
 export default function Home() {
     const router = useRouter();
+    const [heroImages, setheroImages] = useState<string[]>([])
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const colRef = collection(db, 'products');
-                const snapshot = await getDocs(colRef);
-                const products = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-                console.log("DB:", products);
-            } catch (error) {
-                console.error("Error fetching documents:", error);
+        getImageSlider().then((data) => {
+            if (data) {
+                setheroImages(data as string[]);
             }
-        };
+        });
+    }, [])
 
-        fetchProducts();
-    }, []);
+    const sliderSettings = {
+        dots: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        arrows: false,
+    };
+    const [result, setResult] = useState("");
 
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        setResult("Sending....");
+        const formData = new FormData(event.target);
 
+        formData.append("access_key", "5d1e1a42-cf09-41b8-9f6c-24ee29e7c867");
+
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            setResult("Form Submitted Successfully");
+            event.target.reset();
+        } else {
+            console.log("Error", data);
+            setResult(data.message);
+        }
+    };
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
-            <Advertisements items={Ads} />
-            <div className="">
+            <Slider {...sliderSettings}>
+                {heroImages.map((image, index) => (
+                    <div key={index} className="w-full h-[300px] md:h-[400px]">
+                        <Image
+                            src={image}
+                            alt={`Slide ${index + 1}`}
+                            width={0}
+                            height={0}
+                            layout="responsive" // Ensures the image takes the full width of the parent
+                            objectFit="cover" // Ensures the image covers the area without distortion
+                            className="w-full h-full"
+                        />
+
+                    </div>
+                ))}
+            </Slider>
+            <div className="mt-10">
                 <section className="lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center">
                     {/* Title */}
                     <div className="text-center mb-5 lg:mb-5">
@@ -99,7 +142,7 @@ export default function Home() {
                             <button
                                 className={`absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-xl py-2 px-6 hover:bg-opacity-80 transition ${montserrat.className}`}
                                 onClick={() => {
-                                    router.push("/Gallery");
+                                    router.push("/gallery");
                                 }}
                             >
                                 Explore →
@@ -161,7 +204,8 @@ export default function Home() {
                     </div>
                 </section>
             </div>
-            <div className="text-center">
+            <div className="text-center" id="Products">
+
                 <p
                     className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
                 >
@@ -179,7 +223,7 @@ export default function Home() {
                 ))}
             </div>
 
-            <div className="text-center mt-10">
+            <div className="text-center mt-10" id="Collections">
                 <p
                     className={`h-4 text-black text-xl md:text-2xl -mt-2 ${montserrat.className} `}
                 >
@@ -234,7 +278,7 @@ export default function Home() {
                     <button
                         className={`absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-xl hover:bg-opacity-80 transition ${montserrat.className}`}
                         onClick={() => {
-                            router.push("/Gallery");
+                            router.push("/gallery");
                         }}
                     >
                         Explore →
@@ -248,7 +292,7 @@ export default function Home() {
                     REVIEWS
                 </p>
             </div>
-            <div className="flex gap-4 mb-10 overflow-x-auto pl-5 pr-5 hide-scrollbar">
+            <div className="flex gap-4 mb-10 overflow-x-auto pl-5 pr-5 scroll-smooth scrollbar-hide">
                 {Members.map((item, index) => (
                     <Reviews
                         key={index}
@@ -260,7 +304,7 @@ export default function Home() {
                 ))}
             </div>
             <div className="md:flex mb-10 pl-4 pr-4 items-center gap-5">
-                <div className="md:w-[50%] text-center">
+                <div className="md:w-[50%] text-center" id="Contact Us">
                     <p
                         className={`h-4 text-black text-center text-xl md:text-2xl mb-5 ${montserrat.className}`}
                     >
@@ -338,9 +382,9 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="bg-[#2C1338] text-white p-4 mt-5 md:mt-0 md:w-[50%] mx-auto shadow-md text-center">
+                <form onSubmit={onSubmit} className="bg-[#2C1338] text-white p-4 mt-5 md:mt-0 md:w-[50%] mx-auto shadow-md text-center">
                     <h2
-                        className={`text-center text-xl mb-8 ${montserrat.className}`}
+                        className={`text-center text-xl mt-2 mb-8 ${montserrat.className}`}
                     >
                         GET IN TOUCH WITH US
                     </h2>
@@ -350,11 +394,15 @@ export default function Home() {
                             type="text"
                             placeholder="First Name *"
                             className="col-span-1 border border-gray-300 p-2 text-black"
+                            required
+                            name="First Name"
                         />
                         <input
                             type="text"
                             placeholder="Last Name *"
                             className="col-span-1 border border-gray-300 p-2 text-black"
+                            required
+                            name="Last Name"
                         />
                     </div>
 
@@ -363,62 +411,33 @@ export default function Home() {
                             type="email"
                             placeholder="Email *"
                             className="col-span-1 border border-gray-300 p-2 text-black"
+                            required
+                            name="Email"
                         />
                         <input
-                            type="text"
+                            type="phone"
                             placeholder="Phone Number *"
                             className="col-span-1 border border-gray-300 p-2 text-black"
+                            required
+                            name="Phone Number"
                         />
                     </div>
 
                     <textarea
                         placeholder="Message *"
-                        className="w-full border border-gray-300 p-2 text-black h-24 mb-4"
+                        className="w-full border border-gray-300 p-2 text-black h-48 mb-4"
+                        required
+                        name="Message"
                     ></textarea>
-
-                    <div className="border border-dashed border-blue-300 bg-blue-50 p-4 text-center mb-4">
-                        <div className="flex justify-center items-center mb-2">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 text-blue-500"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    d="M3 3a1 1 0 011-1h12a1 1 0 011 1v4a1 1 0 01-2 0V4H4v12h4a1 1 0 110 2H4a1 1 0 01-1-1V3z"
-                                    clipRule="evenodd"
-                                />
-                                <path
-                                    fillRule="evenodd"
-                                    d="M14 14a1 1 0 100-2 1 1 0 000 2zm1-5a1 1 0 00-2 0v6a1 1 0 102 0V9z"
-                                    clipRule="evenodd"
-                                />
-                            </svg>
-                        </div>
-                        <p
-                            className={`text-gray-600 mb-2 ${montserrat.className}`}
-                        >
-                            Drag your documents, photos, or videos here to start
-                            uploading.
-                        </p>
-                        <p
-                            className={`text-gray-600 mb-2 ${montserrat.className}`}
-                        >
-                            ----- OR -----
-                        </p>
-                        <button
-                            className={`bg-blue-500 text-white px-4 py-2 rounded-full ${montserrat.className}`}
-                        >
-                            Browse files
-                        </button>
-                    </div>
                     <button
-                        className={`bg-yellow-500 mt-2 text-[#2C1338] px-8 py-2 rounded-full hover:bg-yellow-600 ${cardo.className}`}
+                        type="submit"
+                        className={`bg-yellow-500 mt-8 mb-4 text-[#2C1338] px-8 py-2 rounded-full hover:bg-yellow-600 ${cardo.className}`}
                     >
                         Send Message
                     </button>
-                </div>
+
+                    <p>{result}</p>
+                </form>
             </div>
             <div className="w-full">
                 <iframe

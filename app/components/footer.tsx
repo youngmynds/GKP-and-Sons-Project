@@ -1,5 +1,5 @@
 import Image from "next/image";
-import InstaCard from "./instagramPostsCard";
+import InstaCard from './instagramPostsCard'
 import { Montserrat, Cardo } from "next/font/google";
 
 const montserrat = Montserrat({

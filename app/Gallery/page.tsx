@@ -1,12 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import Header from "../components/header";
-import Card from "../components/galleryProductsCard";
-import Footer from "../components/footer";
+import Header from "../Components/header";
+import Card from "../Components/galleryProductsCard";
+import Footer from "../Components/footer";
 import { Parisienne, Montserrat } from "next/font/google";
-import Rights from "../components/rights";
+import Rights from "../Components/rights";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getbyCat, getCategories } from "../utils/queries";
+
 const parisienne = Parisienne({
     weight: "400",
     subsets: ["latin"],
@@ -18,19 +21,30 @@ const montserrat = Montserrat({
 });
 
 export default function Gallery() {
-    const Items = [
-        { src: "/Collections/pendants.png", title: "PENDANTS" },
-        { src: "/Collections/chains.png", title: "CHAINS" },
-        { src: "/Collections/bangles.png", title: "BANGLES" },
-        { src: "/Collections/bracelets.png", title: "BRACELETS" },
-        { src: "/Collections/earrings.png", title: "EARRINGS" },
-        { src: "/Collections/necklaces.png", title: "NECKLACES" },
-        { src: "/Collections/rings.png", title: "RINGS" },
-        { src: "/Collections/thali.png", title: "THALI" },
-        { src: "/Collections/giftItems.png", title: "GIFT ITEMS" },
-    ];
-
+    const [Items, setItems] = useState<{ title: string; src: string }[]>([]);
     const router = useRouter();
+
+    useEffect(() => {
+        async function fetchData() {
+            const categories = await getCategories();
+            const images: string[] = [];
+
+            for (const cat of categories) {
+                let product = await getbyCat(cat);
+                if (product) images.push(product[0].imageUrl);
+            }
+
+            const itemsData = categories.map((cat, index) => ({
+                title: cat,
+                src: images[index] || ""
+            }));
+
+            setItems(itemsData);
+        }
+
+        fetchData();
+    }, []);
+
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
@@ -71,14 +85,15 @@ export default function Gallery() {
                 </p>
             </div>
             <div className="flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
-                {Items.map((item, index) => (
+                {Items.length > 0 && Items.map((item, index) => (
                     <Card
                         key={index}
                         src={item.src}
                         title={item.title}
+                        productId={item.title}
                         onClick={() => {
                             const encodedTitle = encodeURIComponent(item.title);
-                            router.push(`/Products/?cat=${encodedTitle}`);
+                            router.push(`/gallery/products/?cat=${encodedTitle}`);
                         }}
                     />
                 ))}

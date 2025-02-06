@@ -12,8 +12,12 @@ import { useRouter } from "next/navigation";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+<<<<<<< Updated upstream
 import { getImageSlider } from "./utils/queries";
 import { useState, useEffect } from "react";
+=======
+import { useState } from "react";
+>>>>>>> Stashed changes
 
 const parisienne = Parisienne({
     weight: "400",

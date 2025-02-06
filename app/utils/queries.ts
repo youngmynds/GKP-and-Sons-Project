@@ -56,6 +56,8 @@ export async function getbyCat(category: string, subcategory?: string) {
 
 export async function addImageSlider(imageUrl: string) {
     try {
+        if (imageUrl == "") toast.error("Add a URL")
+
         const products = collection(db, "imageSlider");
         await addDoc(products, { imageUrl: imageUrl });
         return toast.success("Success in adding image slider");
@@ -64,22 +66,29 @@ export async function addImageSlider(imageUrl: string) {
     }
 }
 
-export async function deleteImageSlider(imageUrl: String) {
+
+export async function deleteImageSlider(imageUrl: string) {
     try {
-        console.log(imageUrl)
+        console.log("Deleting image:", imageUrl);
+
         const products = collection(db, "imageSlider");
         const q = query(products, where("imageUrl", "==", imageUrl));
         const querySnapshot = await getDocs(q);
-        querySnapshot.forEach(async (doc) => {
-            console.log(doc.data())
-            await deleteDoc(doc.ref);
-        });
-        toast.success("Success in deleting image slider");
-        return;
+
+        if (querySnapshot.empty) {
+            toast.error("No matching image found in Firestore.");
+            return;
+        }
+
+        await deleteDoc(querySnapshot.docs[0].ref);
+        toast.success("Successfully deleted image from slider");
     } catch (e: any) {
-        toast.error("Error in deleting image slider", e);
+        console.error("Error in deleteImageSlider:", e);
+        toast.error("Error in deleting image slider: " + e.message);
     }
 }
+
+
 
 export async function getImageSlider() {
     try {

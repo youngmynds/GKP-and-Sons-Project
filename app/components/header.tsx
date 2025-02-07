@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Parisienne, Montserrat } from "next/font/google";
-
+import { useRouter } from 'next/navigation'
 const parisienne = Parisienne({
     weight: "400",
     subsets: ["latin"],
@@ -13,6 +13,7 @@ const montserrat = Montserrat({
 });
 
 export default function Header() {
+    const router = useRouter()
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -56,7 +57,10 @@ export default function Header() {
                         "Contact Us",
                     ].map((item, index) => (
                         <a
-                            href={`#${item}`}
+                            href={`/#${item}`}
+                            onClick={(() => {
+                                router.push('/#' + item)
+                            })}
                             key={index}
                             className={`text-base tracking-wide text-white hover:text-gold`}
                         >
@@ -78,9 +82,8 @@ export default function Header() {
 
             {/* Mobile Side Navbar */}
             <div
-                className={`md:hidden fixed top-0 left-0 h-full bg-white text-white z-50 transform ${
-                    isMenuOpen ? "translate-x-0" : "-translate-x-full"
-                } transition-transform duration-300 w-[70%]`}
+                className={`md:hidden fixed top-0 left-0 h-full bg-white text-white z-50 transform ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
+                    } transition-transform duration-300 w-[70%]`}
             >
                 <div className=" p-4 md:flex items-center justify-between border-black mb-5">
                     <h2

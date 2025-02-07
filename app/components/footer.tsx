@@ -1,7 +1,7 @@
 import Image from "next/image";
 import InstaCard from './instagramPostsCard'
 import { Montserrat, Cardo } from "next/font/google";
-
+import { useRouter } from 'next/navigation'
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
     subsets: ["latin"],
@@ -13,6 +13,7 @@ const cardo = Cardo({
 });
 
 export default function Footer() {
+    const router = useRouter()
     const Items = [
         { src: "/Collections/pendants.png", title: "PENDANTS" },
         { src: "/Collections/chains.png", title: "CHAINS" },
@@ -23,6 +24,8 @@ export default function Footer() {
         const section = document.getElementById(id);
         if (section) {
             section.scrollIntoView({ behavior: "smooth" });
+        } else {
+            router.push('/#' + id);
         }
     };
 

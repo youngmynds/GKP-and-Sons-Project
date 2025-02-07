@@ -28,11 +28,10 @@ export default function Home() {
   };
 
   return (
-    <main className="flex h-screen flex-col justify-center items-center m-4">
+    <main className="flex flex-col justify-center items-center m-4">
       <h1 className="absolute top-4 left-4 text-[24px] font-bold">
         GKP & Sons Jewellers
       </h1>
-      (
       <div className="absolute left-50vh top-1/2 transform -translate-y-1/2 border border-gray-200 rounded-3xl w-full md:w-[500px] bg-white shadow-lg">
         <h1 className="text-2xl font-semibold text-center pt-2">
           Sign In
@@ -73,7 +72,6 @@ export default function Home() {
           </button>
         </form>
       </div>
-      )
     </main>
   );
 }

@@ -85,7 +85,7 @@ function Products() {
                     height="100"
                 />
             </div>
-            <div className="w-full h-72 md:h-36 flex flex-col items-center justify-center">
+            <div className="max-w-7xl mx-auto h-72 md:h-36 flex flex-col items-center justify-center">
                 <h1
                     className={`text-gold text-6xl md:text-8xl text-center w-[95%] ${parisienne.className}`}
                 >
@@ -98,13 +98,13 @@ function Products() {
                 </p>
             </div>
 
-            <div className="flex justify-center md:mt-10 gap-4">
+            <div className="max-w-7xl mx-auto flex justify-center md:mt-10 gap-8">
                 {subcategory.map((item, index) => (
                     <button
                         className={`border-b-2 ${selectedSubcategory === `${item}`
                             ? "border-b-gold text-black"
                             : "border-transparent text-gray-400"
-                            } text-lg md:text-xl ${cardo.className}`}
+                            } text-lg md:text-2xl ${cardo.className}`}
                         onClick={() => {
                             setSelectedSubcategory(item);
                         }}
@@ -114,7 +114,7 @@ function Products() {
                     </button>
                 ))}
             </div>
-            <div className="flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
+            <div className="max-w-7xl mx-auto flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
                 {displayedItems?.map((item, index) => (
                     <Card
                         key={index}

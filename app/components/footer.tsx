@@ -19,6 +19,12 @@ export default function Footer() {
         { src: "/Collections/bangles.png", title: "BANGLES" },
         { src: "/Collections/Bracelets.png", title: "BRACELETS" },
     ];
+    const scrollToSection = (id) => {
+        const section = document.getElementById(id);
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+    };
 
     return (
         <div className="md:flex gap-5 pt-10 pb-10 pl-5 md:pl-14 md:pr-14 bg-[#170722] text-gray-300 justify-evenly">
@@ -79,19 +85,30 @@ export default function Footer() {
                 >
                     Useful Links
                 </p>
-                <p className={`text-lg font-medium mb-2 ${cardo.className}`}>
-                    About Us
+                <p
+                    onClick={() => scrollToSection("Home")}
+                    className={`text-lg font-medium mb-2 cursor-pointer ${cardo.className}`}
+                >
+                    Home
                 </p>
-                <p className={`text-lg font-medium mb-2 ${cardo.className}`}>
-                    Why Choose Us
-                </p>
-                <p className={`text-lg font-medium mb-2 ${cardo.className}`}>
+                <p
+                    onClick={() => scrollToSection("Products")}
+                    className={`text-lg font-medium mb-2 cursor-pointer ${cardo.className}`}
+                >
                     Products
                 </p>
-                <p className={`text-lg font-medium mb-2 ${cardo.className}`}>
+                <p
+                    onClick={() => scrollToSection("Collections")}
+                    className={`text-lg font-medium mb-2 cursor-pointer ${cardo.className}`}
+                >
                     Collections
                 </p>
-                <p className={`text-lg font-medium ${cardo.className}`}>FAQs</p>
+                <p
+                    onClick={() => scrollToSection("Contact Us")}
+                    className={`text-lg font-medium mb-2 cursor-pointer ${cardo.className}`}
+                >
+                    Contact Us
+                </p>
             </div>
             <div className="flex-1 mt-10 md:mt-0">
                 <p

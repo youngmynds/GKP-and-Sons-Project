@@ -55,7 +55,7 @@ function ProductsDescription() {
                     height="100"
                 />
             </div>
-            <div className="md:flex p-4 justify-center items-center mt-5">
+            <div className="max-w-7xl mx-auto md:flex p-4 justify-center items-center mt-5">
                 <div className="flex justify-center items-center">
                     <Image
                         src={product?.imageUrl as string}
@@ -78,7 +78,7 @@ function ProductsDescription() {
                     </p>
                 </div>
             </div>
-            <div className="flex items-center justify-center">
+            <div className="max-w-7xl mx-auto flex items-center justify-center">
                 <div className="border-2 border-gray-500 rounded-2xl mt-5 mb-5 p-4 md:p-8 inline-block justify-center">
                     <p
                         className={`text-black text-lg md:text-2xl ${montserrat.className}`}

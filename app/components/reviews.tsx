@@ -35,7 +35,7 @@ export default function Reviews({ src, name, review, stars }: CardProps) {
                     {review}
                 </p>
             </div>
-            <div className="bg-[#F0F0F0] flex p-4 items-center rounded-b-lg">
+            <div className="bg-[#2C1338] flex p-4 items-center rounded-b-lg">
                 <Image
                     src={src}
                     alt={name}
@@ -45,11 +45,11 @@ export default function Reviews({ src, name, review, stars }: CardProps) {
                 />
                 <div className="flex-row">
                     <p
-                        className={`text-black font-semibold md:text-sm ${montserrat.className}`}
+                        className={`text-white font-semibold md:text-sm ${montserrat.className}`}
                     >
                         {name}
                     </p>
-                    <p className="text-gold text-2xl -mt-2">{stars}</p>
+                    <p className="text-orange-600 text-2xl -mt-1">{stars}</p>
                 </div>
             </div>
         </div>

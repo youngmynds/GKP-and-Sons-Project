@@ -84,7 +84,7 @@ export default function Gallery() {
                     A COLLECTION OF
                 </p>
             </div>
-            <div className="flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
+            <div className="max-w-7xl mx-auto flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
                 {Items.length > 0 && Items.map((item, index) => (
                     <Card
                         key={index}

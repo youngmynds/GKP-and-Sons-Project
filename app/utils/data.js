@@ -19,9 +19,9 @@ export const Members = [
     },
     {
         src: "/ReviewersDP/review2.svg",
-        name: "Suriya Prabha K",
-        review: "Great experience and exclusive collections! Loved it",
-        stars: "★★★★☆",
+        name: "A V Viswa",
+        review: "I showed them a picture of a dollar pendant, and they made the exact same design for me. The craftsmanship was very nice, and all the details were perfect. ",
+        stars: "★★★★★",
     },
     {
         src: "/ReviewersDP/review3.svg",

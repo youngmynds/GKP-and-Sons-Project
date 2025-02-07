@@ -67,14 +67,11 @@ const AdminPage: React.FC = () => {
 
     async function deleteimage(image: string) {
         try {
-            console.log("AdminPage - Deleting image:", image);
-
             await deleteImageSlider(image);
             console.log("deleteImageSlider called successfully");
 
             setImageSlider((prev) => prev.filter((item) => item !== image));
             toast.success("Success in deleting image slider");
-            setOperations("");
         } catch (e: any) {
             console.error("Error in deleteimage:", e);
             toast.error("Error in deleting image slider: " + e.message);
@@ -83,6 +80,7 @@ const AdminPage: React.FC = () => {
 
     async function addImage(image: string) {
         try {
+            if (image === "") return toast.error("Add image URL")
             await addImageSlider(image);
             toast.success("Success in adding image slider");
             setImageSlider([...imageSlider, image]);
@@ -132,7 +130,6 @@ const AdminPage: React.FC = () => {
                                 console.log("Subcat Input Changed:", value);
                             }} />
                         <TextField
-
                             label="Product Name"
                             variant="outlined"
                             value={imageName}
@@ -163,12 +160,12 @@ const AdminPage: React.FC = () => {
                             value={carat}
                             onChange={(e) => setCarat(e.target.value)} />
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            onClick={() => {
+                            onClick={async () => {
                                 if (selectedCategory === "" || selectedSubcategory === "" || imageName === "" || imageDescription === "" || imageURL === "" || carat === "" || size === "" || weight === "") {
                                     toast.error("Please fill all the fields");
                                     return;
                                 }
-                                writebyCat({
+                                await writebyCat({
                                     category: selectedCategory,
                                     subcategory: selectedSubcategory,
                                     name: imageName,
@@ -178,6 +175,7 @@ const AdminPage: React.FC = () => {
                                     size: size,
                                     weight: weight
                                 });
+                                toast.success("Product added successfully");
                                 setCarat("");
                                 setSize("");
                                 setWeight("");
@@ -193,14 +191,14 @@ const AdminPage: React.FC = () => {
                     <div className="flex flex-col items-center justify-center space-y-4">
                         <div className="flex flex-wrap justify-center gap-4">
                             {imageSlider.map((item) => (
-                                <div key={item} className="relative">
+                                <div key={item} className="relative" style={{ width: '70%' }}>
                                     <button
                                         className="absolute top-0 right-0 bg-gray-500 text-white p-1 rounded-full"
                                         onClick={() => deleteimage(item)}
                                     >
                                         <X size={16} />
                                     </button>
-                                    <img src={item} alt={item} className="w-40 h-40 object-cover rounded-lg shadow-md" />
+                                    <img src={item} alt={item} className="w-full h-auto object-cover rounded-lg shadow-md" />
                                 </div>
                             ))}
                         </div>
@@ -209,9 +207,10 @@ const AdminPage: React.FC = () => {
                             variant="outlined"
                             value={imageURL}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setImageURL(e.target.value)}
+                            style={{ width: '50%' }}
                         />
                         <button
-                            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-1/2"
                             onClick={() => { addImage(imageURL) }}
                         >
                             <Plus size={18} />
@@ -240,6 +239,7 @@ const AdminPage: React.FC = () => {
                                     await deleteProduct(productId1);
                                     setOperations('');
                                     setProductId1('');
+                                    toast.success("Product Deleted Successfully")
                                 }}>Delete Product</button>
                         </div>
                     )

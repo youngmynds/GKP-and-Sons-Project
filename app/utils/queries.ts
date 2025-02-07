@@ -96,12 +96,11 @@ export async function getImageSlider() {
         const q = query(imageSlider);
 
         const querySnapshot = await getDocs(q);
-        let data: String[] = []
+        let data: string[] = []
         querySnapshot.forEach((doc) => {
             data.push(doc.data().imageUrl);
         })
         return data;
-
     } catch (e: any) {
         toast.error("Error in getting image slider", e);
     }

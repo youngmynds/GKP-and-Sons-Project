@@ -50,24 +50,22 @@ export default function Header() {
                 <nav
                     className={`hidden lg:flex gap-8 ml-20 ${montserrat.className} justify-center`}
                 >
-                    {["Home", "About Us","Collections", "Contact Us"].map((item, index) => (
+                    {[
+                        { name: "Home", path: "/#Home" },
+                        { name: "About Us", path: "/aboutus" },
+                        { name: "Collections", path: "/gallery" },
+                        { name: "Contact Us", path: "/#Contact Us" }
+                    ].map((item, index) => (
                         <a
-                            href={`/#${item}`}
-                            onClick={() => {
-                                if (item === "Collections") {
-                                    router.push("/gallery");
-                                }
-                                else if (item === "About Us") { 
-                                    router.push("/aboutus");
-                                }
-                                else {
-                                    router.push("/#" + item);
-                                }
+                            href={item.path}
+                            onClick={(e) => {
+                                e.preventDefault(); // Prevent default anchor behavior
+                                router.push(item.path);
                             }}
                             key={index}
-                            className={`text-base tracking-wide text-white hover:text-gold`}
+                            className="text-base tracking-wide text-white hover:text-gold"
                         >
-                            {item}
+                            {item.name}
                         </a>
                     ))}
                 </nav>
@@ -96,28 +94,21 @@ export default function Header() {
                 </div>
                 <nav className="flex flex-col gap-1">
                     {[
-                        "Home",
-                        "About Us",
-                        "Collections",
-                        "Contact Us"
+                        { name: "Home", path: "/#Home" },
+                        { name: "About Us", path: "/aboutus" },
+                        { name: "Collections", path: "/gallery" },
+                        { name: "Contact Us", path: "/#Contact Us" }
                     ].map((item, index) => (
                         <a
-                            href={`/#${item}`}
-                            onClick={(() => {
-                                if (item === "Collections") {
-                                    router.push("/gallery");
-                                }
-                                else if (item === "About Us") { 
-                                    router.push("/aboutus");
-                                } 
-                                else {
-                                    router.push("/#" + item);
-                                }
-                            })}
+                            href={item.path}
+                            onClick={(e) => {
+                                e.preventDefault(); // Prevent default anchor behavior
+                                router.push(item.path);
+                            }}
                             key={index}
                             className={`p-4 text-base text-black tracking-wide border-b border-b-gold pb-2 ${montserrat.className}`}
                         >
-                            {item}
+                            {item.name}
                         </a>
                     ))}
                 </nav>

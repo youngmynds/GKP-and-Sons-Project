@@ -343,7 +343,7 @@ export default function Home() {
                 </div>
             </section>
             {/* </div> */}
-            <div className="text-center mt-10">
+            <div className="mt-10">
                 <p
                     className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
                 >

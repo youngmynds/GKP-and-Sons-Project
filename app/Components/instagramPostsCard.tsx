@@ -13,8 +13,8 @@ export default function InstaCard({ src, title }: CardProps) {
             <Image
                 src={src}
                 alt={title}
-                width={1000}
-                height={1000}
+                width={500}
+                height={500}
                 className="object-cover"
             />
         </div>

@@ -21,7 +21,7 @@ export default function Header() {
     };
 
     return (
-        <div className="relative pt-[50px] md:pt-[80px]">
+        <div className="relative pt-[60px] md:pt-[60px] lg:[80px]">
             <header className="fixed top-0 left-0 flex items-center justify-between p-6 bg-[#170722] w-full z-50 ">
                 {/* Mobile Menu Icon */}
                 <button
@@ -50,13 +50,17 @@ export default function Header() {
                 <nav
                     className={`hidden lg:flex gap-8 ml-20 ${montserrat.className} justify-center`}
                 >
-                    {["Home", "Collections", "Contact Us"].map((item, index) => (
+                    {["Home", "About Us","Collections", "Contact Us"].map((item, index) => (
                         <a
                             href={`/#${item}`}
                             onClick={() => {
                                 if (item === "Collections") {
                                     router.push("/gallery");
-                                } else {
+                                }
+                                else if (item === "About Us") { 
+                                    router.push("/aboutus");
+                                }
+                                else {
                                     router.push("/#" + item);
                                 }
                             }}
@@ -93,6 +97,7 @@ export default function Header() {
                 <nav className="flex flex-col gap-1">
                     {[
                         "Home",
+                        "About Us",
                         "Collections",
                         "Contact Us"
                     ].map((item, index) => (
@@ -101,7 +106,11 @@ export default function Header() {
                             onClick={(() => {
                                 if (item === "Collections") {
                                     router.push("/gallery");
-                                } else {
+                                }
+                                else if (item === "About Us") { 
+                                    router.push("/aboutus");
+                                } 
+                                else {
                                     router.push("/#" + item);
                                 }
                             })}

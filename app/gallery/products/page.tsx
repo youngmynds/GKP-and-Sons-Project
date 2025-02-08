@@ -69,11 +69,11 @@ function Products() {
                 {/* Content */}
                 <div className="flex flex-col items-center z-10">
                     <h1
-                        className={`text-white text-center font-normal font-serif text-2xl md:text-4xl ${montserrat.className}`}
+                        className={`text-white text-center font-normal uppercase font-serif text-2xl md:text-4xl ${montserrat.className}`}
                     >
-                        RINGS
+                        {cat}
                     </h1>
-                    <div className="h-1 w-16 bg-gold mt-3"></div>
+                    <div className="h-1 w-24 bg-gold mt-3"></div>
                 </div>
             </div>
 

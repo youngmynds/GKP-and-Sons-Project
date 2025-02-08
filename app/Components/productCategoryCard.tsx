@@ -26,7 +26,7 @@ export default function Pdtcard({ src, title }: CardProps) {
             />
             {/* Overlay Text */}
             <p
-                className={`absolute text-center w-[20%] top-2 left-2 md:top-2 md:left-2 lg:top-4 lg:left-4 text-white text-xs md:text-lg lg:text-2xl ${montserrat.className}`}
+                className={`absolute text-center w-[20%] uppercase top-2 left-2 md:top-2 md:left-2 lg:top-4 lg:left-4 text-white text-xs md:text-lg lg:text-2xl ${montserrat.className}`}
             >
                 {title}
             </p>

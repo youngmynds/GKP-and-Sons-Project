@@ -30,6 +30,26 @@ const cardo = Cardo({
     subsets: ["latin"],
 });
 
+
+
+const CustomPrevArrow = ({ onClick }: { onClick: () => void }) => (
+    <div
+        className="absolute left-5 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer bg-gray-800 bg-opacity-50 pr-4 pl-3 py-2 rounded-full text-white"
+        onClick={onClick}
+    >
+        ◀
+    </div>
+);
+
+const CustomNextArrow = ({ onClick }: { onClick: () => void }) => (
+    <div
+        className="absolute right-5 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer bg-gray-800 bg-opacity-50 pr-3 pl-4 py-2 rounded-full text-white"
+        onClick={onClick}
+    >
+        ▶
+    </div>
+);
+
 export default function Home() {
     const router = useRouter();
     const [heroImages, setheroImages] = useState<string[]>([])
@@ -55,8 +75,11 @@ export default function Home() {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 5000,
-        arrows: false,
+        arrows: true, // Enable arrows
+        prevArrow: <CustomPrevArrow onClick={() => { }} />, // Custom left arrow
+        nextArrow: <CustomNextArrow onClick={() => { }} /> // Custom right arrow
     };
+
 
     const settings = {
         dots: false,
@@ -114,13 +137,11 @@ export default function Home() {
             {/* <div className="mt-20"> */}
             <Slider {...sliderSettings}>
                 {heroImages.map((image, index) => (
-                    <div key={index} className="w-full">
+                    <div key={index} className="w-full h-[150px] md:h-[350px] relative">
                         <Image
                             src={image}
                             alt={`Slide ${index + 1}`}
-                            width={0}
-                            height={0}
-                            layout="responsive" // Ensures the image takes the full width of the parent
+                            layout="fill" // Ensures the image takes the full width of the parent
                             objectFit="cover" // Ensures the image covers the area without distortion
                             className="w-full h-full"
                         />
@@ -128,18 +149,18 @@ export default function Home() {
                     </div>
                 ))}
             </Slider>
-            <section id="Home" className="max-w-7xl lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center mx-auto scroll-mt-24 mt-8">
+            <section id="Home" className="max-w-7xl lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center mx-auto scroll-mt-24 mt-10">
                 {/* Title */}
                 <div className="text-center mb-5 lg:mb-5">
                     <p
                         className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
                     >
-                        DISCOUNTS ON
+                        EXCLUSIVE COLLECTIONS AT
                     </p>
                     <h1
                         className={`text-gold text-5xl md:text-7xl ${parisienne.className}`}
                     >
-                        Bridal Jewellery
+                        GKP & Son's Jewellers
                     </h1>
                 </div>
                 {/* Image Grid */}
@@ -188,32 +209,32 @@ export default function Home() {
             <section className="py-8 px-4 md:px-0 mt-5 bg-gray-100">
                 <div className="max-w-7xl mx-auto flex justify-evenly items-center gap-2 md:gap-16">
                     {/* Certified Gold */}
-                    <div className="flex gap-1 md:gap-4 items-center">
+                    <div className="flex gap-2 md:gap-4 items-center">
                         <Image
                             src="/Others/916CertifiedIcon.svg"
                             alt="certified"
                             width={45}
                             height={45}
-                            className="md:w-[70px]"
+                            className="w-[35px] md:w-[70px]"
                         />
                         <p
-                            className={`font-normal text-sm md:text-xl text-[#551513] ${montserrat.className}`}
+                            className={`font-normal text-xs sm:text-sm md:text-xl text-[#551513] ${montserrat.className}`}
                         >
                             Certified <br /> 916 Gold
                         </p>
                     </div>
 
                     {/* Purity Guaranteed */}
-                    <div className="flex gap-1 md:gap-4 items-center">
+                    <div className="flex gap-2 md:gap-4 items-center">
                         <Image
                             src="/Others/PurityIcon.svg"
                             alt="certified"
                             width={45}
                             height={45}
-                            className="md:w-[70px]"
+                            className="w-[35px] md:w-[70px]"
                         />
                         <p
-                            className={`font-normal text-sm md:text-xl text-[#551513] ${montserrat.className}`}
+                            className={`font-normal text-xs sm:text-sm md:text-xl text-[#551513] ${montserrat.className}`}
                         >
                             Purity <br /> Guaranteed
                         </p>
@@ -226,10 +247,10 @@ export default function Home() {
                             alt="certified"
                             width={30}
                             height={30}
-                            className="w-[43px] md:w-[70px]"
+                            className="w-[30px] md:w-[65px]"
                         />
                         <p
-                            className={`font-normal text-sm md:text-xl text-[#551513] ${montserrat.className}`}
+                            className={`font-normal text-xs sm:text-sm md:text-xl text-[#551513] ${montserrat.className}`}
                         >
                             Custom <br /> Designs
                         </p>
@@ -328,6 +349,11 @@ export default function Home() {
                 >
                     REVIEWS
                 </p>
+                <p
+                    className={`text-gray-700 text-center text-lg md:text-lg font-light mt-5 mb-5 ${cardo.className}`}
+                >
+                    Take a look at the glowing reviews from our satisfied customers!
+                </p>
                 <Slider {...settings} className="py-5 max-w-7xl mx-auto mt-5">
                     {Members.map((item, index) => (
                         <div key={index} className="px-2 py-5">
@@ -386,7 +412,7 @@ export default function Home() {
                                     <p
                                         className={`text-sm md:text-sm ${cardo.className} text-black`}
                                     >
-                                        0422 239 6449 <br /> (+91) 98428 31542
+                                        (+91) 98428 31542
                                     </p>
                                 </div>
                             </div>
@@ -402,7 +428,7 @@ export default function Home() {
                                     <p
                                         className={`text-sm md:text-sm ${cardo.className} text-black`}
                                     >
-                                        gkpjewellers1997@gmail.com
+                                        gkpjewellers1997 @gmail.com
                                     </p>
                                 </div>
                                 <div className="w-[50%] flex flex-col justify-center items-center text-center border-2 border-[#FFD195] drop-shadow-lg h-[200px] md:h-[220px]">

@@ -101,7 +101,7 @@ export default function Footer() {
                     Home
                 </p>
                 <p
-                    onClick={() => scrollToSection("Collections")}
+                    onClick={() => router.push("/gallery")}
                     className={`text-lg font-medium mb-2 cursor-pointer ${cardo.className}`}
                 >
                     Collections

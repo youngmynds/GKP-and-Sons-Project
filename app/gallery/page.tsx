@@ -60,7 +60,7 @@ export default function Gallery() {
                     >
                         COLLECTIONS
                     </h1>
-                    <div className="h-1 w-16 bg-gold mt-3"></div>
+                    <div className="h-1 w-24 bg-gold mt-3"></div>
                 </div>
             </div>
 

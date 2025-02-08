@@ -111,6 +111,7 @@ export default function Home() {
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
+            {/* <div className="mt-20"> */}
             <Slider {...sliderSettings}>
                 {heroImages.map((image, index) => (
                     <div key={index} className="w-full">
@@ -127,201 +128,200 @@ export default function Home() {
                     </div>
                 ))}
             </Slider>
-            <div className="mt-10">
-                <section id="Home" className="max-w-7xl lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center mx-auto">
-                    {/* Title */}
-                    <div className="text-center mb-5 lg:mb-5">
+            <section id="Home" className="max-w-7xl lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center mx-auto scroll-mt-24">
+                {/* Title */}
+                <div className="text-center mb-5 lg:mb-5">
+                    <p
+                        className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
+                    >
+                        DISCOUNTS ON
+                    </p>
+                    <h1
+                        className={`text-gold text-5xl md:text-7xl ${parisienne.className}`}
+                    >
+                        Bridal Jewellery
+                    </h1>
+                </div>
+                {/* Image Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    {/* Left Images */}
+                    <div className="col-span-1 grid grid-rows-2">
+                        <Image
+                            src="/BridalJewels/bridal1.png"
+                            alt="Bridal Jewellery 1"
+                            width={1000}
+                            height={1000}
+                            className="w-full h-[200px] object-cover"
+                        />
+                        <Image
+                            src="/BridalJewels/bridal2.png"
+                            alt="Bridal Jewellery 2"
+                            width={1000}
+                            height={1000}
+                            className="w-full h-[210px] object-cover"
+                        />
+                    </div>
+
+                    {/* Right Image */}
+                    <div className="col-span-1 md:col-span-2 relative">
+                        <Image
+                            src="/BridalJewels/bridal3.png"
+                            alt="Featured Bridal Jewellery"
+                            width={1000}
+                            height={1000}
+                            className="w-full h-[420px] object-cover"
+                        />
+                        {/* Explore Button */}
+                        <button
+                            className={`absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-xl py-2 px-6 hover:bg-opacity-80 transition ${montserrat.className}`}
+                            onClick={() => {
+                                router.push("/gallery");
+                            }}
+                        >
+                            Explore →
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            {/* Features Section */}
+            <section className="py-8 px-4 md:px-0 mt-5 bg-gray-100">
+                <div className="max-w-7xl mx-auto flex justify-evenly items-center gap-2 md:gap-16">
+                    {/* Certified Gold */}
+                    <div className="flex gap-1 md:gap-4 items-center">
+                        <Image
+                            src="/Others/916CertifiedIcon.svg"
+                            alt="certified"
+                            width={45}
+                            height={45}
+                            className="md:w-[70px]"
+                        />
                         <p
-                            className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
+                            className={`font-normal text-sm md:text-xl text-[#551513] ${montserrat.className}`}
                         >
-                            DISCOUNTS ON
+                            Certified <br /> 916 Gold
                         </p>
-                        <h1
-                            className={`text-gold text-5xl md:text-7xl ${parisienne.className}`}
-                        >
-                            Bridal Jewellery
-                        </h1>
                     </div>
-                    {/* Image Grid */}
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                        {/* Left Images */}
-                        <div className="col-span-1 grid grid-rows-2">
-                            <Image
-                                src="/BridalJewels/bridal1.png"
-                                alt="Bridal Jewellery 1"
-                                width={1000}
-                                height={1000}
-                                className="w-full h-[200px] object-cover"
-                            />
-                            <Image
-                                src="/BridalJewels/bridal2.png"
-                                alt="Bridal Jewellery 2"
-                                width={1000}
-                                height={1000}
-                                className="w-full h-[210px] object-cover"
-                            />
-                        </div>
 
-                        {/* Right Image */}
-                        <div className="col-span-1 md:col-span-2 relative">
-                            <Image
-                                src="/BridalJewels/bridal3.png"
-                                alt="Featured Bridal Jewellery"
-                                width={1000}
-                                height={1000}
-                                className="w-full h-[420px] object-cover"
-                            />
-                            {/* Explore Button */}
-                            <button
-                                className={`absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-xl py-2 px-6 hover:bg-opacity-80 transition ${montserrat.className}`}
-                                onClick={() => {
-                                    router.push("/gallery");
-                                }}
-                            >
-                                Explore →
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Features Section */}
-                <section className="py-8 px-4 md:px-0 mt-5 bg-gray-100">
-                    <div className="max-w-7xl mx-auto flex justify-evenly items-center gap-2 md:gap-16">
-                        {/* Certified Gold */}
-                        <div className="flex gap-1 md:gap-4 items-center">
-                            <Image
-                                src="/Others/916CertifiedIcon.svg"
-                                alt="certified"
-                                width={45}
-                                height={45}
-                                className="md:w-[70px]"
-                            />
-                            <p
-                                className={`font-normal text-sm md:text-xl text-[#551513] ${montserrat.className}`}
-                            >
-                                Certified <br /> 916 Gold
-                            </p>
-                        </div>
-
-                        {/* Purity Guaranteed */}
-                        <div className="flex gap-1 md:gap-4 items-center">
-                            <Image
-                                src="/Others/PurityIcon.svg"
-                                alt="certified"
-                                width={45}
-                                height={45}
-                                className="md:w-[70px]"
-                            />
-                            <p
-                                className={`font-normal text-sm md:text-xl text-[#551513] ${montserrat.className}`}
-                            >
-                                Purity <br /> Guaranteed
-                            </p>
-                        </div>
-
-                        {/* Custom Designs */}
-                        <div className="flex gap-1 md:gap-4 items-center">
-                            <Image
-                                src="/Others/SettingsIcon.svg"
-                                alt="certified"
-                                width={30}
-                                height={30}
-                                className="md:w-[55px]"
-                            />
-                            <p
-                                className={`font-normal text-sm md:text-xl text-[#551513] ${montserrat.className}`}
-                            >
-                                Custom <br /> Designs
-                            </p>
-                        </div>
-                    </div>
-                </section>
-                <section id="Products" className="max-w-7xl mx-auto mt-10">
-                    <div className="text-center">
-
+                    {/* Purity Guaranteed */}
+                    <div className="flex gap-1 md:gap-4 items-center">
+                        <Image
+                            src="/Others/PurityIcon.svg"
+                            alt="certified"
+                            width={45}
+                            height={45}
+                            className="md:w-[70px]"
+                        />
                         <p
-                            className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
+                            className={`font-normal text-sm md:text-xl text-[#551513] ${montserrat.className}`}
                         >
-                            OUR CRAFTED
+                            Purity <br /> Guaranteed
                         </p>
-                        <h1
-                            className={`text-gold text-5xl md:text-7xl ${parisienne.className}`}
-                        >
-                            Products
-                        </h1>
                     </div>
-                    <div className="flex flex-wrap justify-center gap-4 mt-5">
-                        {Products.map((item, index) => (
-                            <Pdtcard key={index} src={item.src} title={item.title} />
-                        ))}
-                    </div>
-                </section>
 
-                <section id="Collections" className="max-w-7xl mx-auto items-center mt-10">
-                    <div className="text-center">
+                    {/* Custom Designs */}
+                    <div className="flex gap-1 md:gap-4 items-center">
+                        <Image
+                            src="/Others/SettingsIcon.svg"
+                            alt="certified"
+                            width={30}
+                            height={30}
+                            className="md:w-[55px]"
+                        />
                         <p
-                            className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
+                            className={`font-normal text-sm md:text-xl text-[#551513] ${montserrat.className}`}
                         >
-                            DISCOVER OUR LUXURY
+                            Custom <br /> Designs
                         </p>
-                        <h1
-                            className={`text-gold text-5xl md:text-7xl ${parisienne.className}`}
+                    </div>
+                </div>
+            </section>
+            <section id="Products" className="max-w-7xl mx-auto mt-10 scroll-mt-24">
+                <div className="text-center">
+
+                    <p
+                        className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
+                    >
+                        OUR CRAFTED
+                    </p>
+                    <h1
+                        className={`text-gold text-5xl md:text-7xl ${parisienne.className}`}
+                    >
+                        Products
+                    </h1>
+                </div>
+                <div className="flex flex-wrap justify-center gap-4 mt-5">
+                    {Products.map((item, index) => (
+                        <Pdtcard key={index} src={item.src} title={item.title} />
+                    ))}
+                </div>
+            </section>
+
+            <section id="Collections" className="max-w-7xl mx-auto items-center mt-10 scroll-mt-24">
+                <div className="text-center">
+                    <p
+                        className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
+                    >
+                        DISCOVER OUR LUXURY
+                    </p>
+                    <h1
+                        className={`text-gold text-5xl md:text-7xl ${parisienne.className}`}
+                    >
+                        Collections
+                    </h1>
+                </div>
+                <div className="flex flex-wrap justify-center gap-4 mt-5">
+                    {/* Card 1 */}
+                    <div className="bg-black text-center w-[calc(50%-16px)] md:w-[calc(25%-12px)]">
+                        <Image
+                            src="/Collections/pendants.png"
+                            alt="pendants"
+                            width={1000}
+                            height={1000}
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                    {/* Card 2 */}
+                    <div className="bg-black text-center w-[calc(50%-16px)] md:w-[calc(25%-12px)]">
+                        <Image
+                            src="/Collections/chains.png"
+                            alt="chains"
+                            width={1000}
+                            height={1000}
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                    {/* Card 3 */}
+                    <div className="bg-black text-center w-[calc(50%-16px)] md:w-[calc(25%-12px)]">
+                        <Image
+                            src="/Collections/bangles.png"
+                            alt="bangles"
+                            width={1000}
+                            height={1000}
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                    {/* Card 4 */}
+                    <div className="relative bg-black text-center w-[calc(50%-16px)] md:w-[calc(25%-12px)]">
+                        <Image
+                            src="/Collections/rings.png"
+                            alt="rings"
+                            width={1000}
+                            height={1000}
+                            className="w-full h-full object-cover"
+                        />
+                        <button
+                            className={`absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-xl hover:bg-opacity-80 transition ${montserrat.className}`}
+                            onClick={() => {
+                                router.push("/gallery");
+                            }}
                         >
-                            Collections
-                        </h1>
+                            Explore →
+                        </button>
                     </div>
-                    <div className="flex flex-wrap justify-center gap-4 mt-5">
-                        {/* Card 1 */}
-                        <div className="bg-black text-center w-[calc(50%-16px)] md:w-[calc(25%-12px)]">
-                            <Image
-                                src="/Collections/pendants.png"
-                                alt="pendants"
-                                width={1000}
-                                height={1000}
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
-                        {/* Card 2 */}
-                        <div className="bg-black text-center w-[calc(50%-16px)] md:w-[calc(25%-12px)]">
-                            <Image
-                                src="/Collections/chains.png"
-                                alt="chains"
-                                width={1000}
-                                height={1000}
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
-                        {/* Card 3 */}
-                        <div className="bg-black text-center w-[calc(50%-16px)] md:w-[calc(25%-12px)]">
-                            <Image
-                                src="/Collections/bangles.png"
-                                alt="bangles"
-                                width={1000}
-                                height={1000}
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
-                        {/* Card 4 */}
-                        <div className="relative bg-black text-center w-[calc(50%-16px)] md:w-[calc(25%-12px)]">
-                            <Image
-                                src="/Collections/rings.png"
-                                alt="rings"
-                                width={1000}
-                                height={1000}
-                                className="w-full h-full object-cover"
-                            />
-                            <button
-                                className={`absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-xl hover:bg-opacity-80 transition ${montserrat.className}`}
-                                onClick={() => {
-                                    router.push("/gallery");
-                                }}
-                            >
-                                Explore →
-                            </button>
-                        </div>
-                    </div>
-                </section>
-            </div>
+                </div>
+            </section>
+            {/* </div> */}
             <div className="text-center mt-10">
                 <p
                     className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
@@ -342,7 +342,7 @@ export default function Home() {
                 </Slider>
             </div>
 
-            <section id="Contact Us" className="max-w-7xl mx-auto mt-10">
+            <section id="Contact Us" className="max-w-7xl mx-auto mt-10 scroll-mt-24">
                 <div className="md:flex mb-10 pl-4 pr-4 items-center gap-5">
                     <div className="md:w-[50%] text-center">
                         <p
@@ -492,6 +492,7 @@ export default function Home() {
             </div>
             <Footer />
             <Rights />
+
         </div>
     );
 }

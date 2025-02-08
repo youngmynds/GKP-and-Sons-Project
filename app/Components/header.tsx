@@ -22,7 +22,7 @@ export default function Header() {
 
     return (
         <div className="relative pt-[80px]">
-            <header className="fixed top-0 left-0 flex items-center justify-between p-6 bg-[#170722] w-full z-50">
+            <header className="fixed top-0 left-0 flex items-center justify-between p-6 bg-[#170722] w-full z-50 ">
                 {/* Mobile Menu Icon */}
                 <button
                     onClick={toggleMenu}

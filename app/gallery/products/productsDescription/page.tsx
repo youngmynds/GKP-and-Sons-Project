@@ -57,13 +57,15 @@ function ProductsDescription() {
             </div>
             <div className="max-w-7xl mx-auto md:flex p-4 justify-center items-center mt-5">
                 <div className="flex justify-center items-center">
-                    <Image
-                        src={product?.imageUrl as string}
-                        alt="CastingRing1"
-                        className="object-cover w-[450px] md:w-[400px] h-[280px]"
-                        width="250"
-                        height="100"
-                    />
+                    {product?.imageUrl && (
+                        <Image
+                            src={product.imageUrl}
+                            alt="CastingRing1"
+                            className="object-cover w-[450px] md:w-[400px] h-[280px]"
+                            width="250"
+                            height="100"
+                        />
+                    )}
                 </div>
                 <div className="md:w-[30%] justify-center md:ml-10 mt-5 md:mt-0">
                     <h1
@@ -85,7 +87,7 @@ function ProductsDescription() {
                     >
                         Product Details
                     </p>
-                    <div className="flex mt-6 md:mt-8 gap-14 md:gap-80">
+                    <div className="flex mt-6 md:mt-8 gap-8 md:gap-64">
                         <div>
                             <p
                                 className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}

@@ -40,32 +40,38 @@ export default function Footer() {
                 <div className={`text-lg font-medium ${cardo.className}`}>
                     <div className={`pl-4 border-l-4 mb-2`}>
                         <p className={`text-gold`}>Call Us</p>
-                        <p>0422 239 6449</p>
+                        <p>+91 98428 31542</p>
                     </div>
                     <div className={`pl-4 border-l-4 mb-2`}>
                         <p className={`text-gold`}>Email Us</p>
-                        <p>gkpjewellers24@gmail.com</p>
+                        <p>gkpjewellers1997@gmail.com</p>
                     </div>
                     <div className={`pl-4 border-l-4 mb-2`}>
                         <p className={`text-gold`}>Follow Us</p>
                         <div className="flex gap-4 mt-1">
                             <Image
-                                src="SocialMediaIcons/Facebook.svg"
+                                src="/SocialMediaIcons/Facebook.svg"
                                 alt="Facebook"
                                 width="12"
                                 height="12"
                             />
                             <Image
-                                src="SocialMediaIcons/Instagram.svg"
+                                src="/SocialMediaIcons/Instagram.svg"
                                 alt="Instagram"
                                 width="25"
                                 height="25"
                             />
                             <Image
-                                src="SocialMediaIcons/Whatsapp.svg"
-                                alt="Whatsapp"
-                                width="25"
-                                height="25"
+                                src="/SocialMediaIcons/Youtube.svg"
+                                alt="Youtube"
+                                width="30"
+                                height="30"
+                            />
+                            <Image
+                                src="/SocialMediaIcons/Linkedin.svg"
+                                alt="Linkedin"
+                                width="23"
+                                height="23"
                             />
                         </div>
                     </div>
@@ -93,12 +99,6 @@ export default function Footer() {
                     className={`text-lg font-medium mb-2 cursor-pointer ${cardo.className}`}
                 >
                     Home
-                </p>
-                <p
-                    onClick={() => scrollToSection("Products")}
-                    className={`text-lg font-medium mb-2 cursor-pointer ${cardo.className}`}
-                >
-                    Products
                 </p>
                 <p
                     onClick={() => scrollToSection("Collections")}

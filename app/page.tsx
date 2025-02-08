@@ -50,11 +50,11 @@ export default function Home() {
     const sliderSettings = {
         dots: true,
         infinite: true,
-        speed: 1000,
+        speed: 3000,
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 5000,
         arrows: false,
     };
 
@@ -128,7 +128,7 @@ export default function Home() {
                     </div>
                 ))}
             </Slider>
-            <section id="Home" className="max-w-7xl lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center mx-auto scroll-mt-24">
+            <section id="Home" className="max-w-7xl lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center mx-auto scroll-mt-24 mt-8">
                 {/* Title */}
                 <div className="text-center mb-5 lg:mb-5">
                     <p
@@ -222,11 +222,11 @@ export default function Home() {
                     {/* Custom Designs */}
                     <div className="flex gap-1 md:gap-4 items-center">
                         <Image
-                            src="/Others/SettingsIcon.svg"
+                            src="/Others/CustomIcon.svg"
                             alt="certified"
                             width={30}
                             height={30}
-                            className="md:w-[55px]"
+                            className="w-[43px] md:w-[70px]"
                         />
                         <p
                             className={`font-normal text-sm md:text-xl text-[#551513] ${montserrat.className}`}
@@ -386,7 +386,7 @@ export default function Home() {
                                     <p
                                         className={`text-sm md:text-sm ${cardo.className} text-black`}
                                     >
-                                        0422 239 6449 <br /> (+91) 98745 43210
+                                        0422 239 6449 <br /> (+91) 98428 31542
                                     </p>
                                 </div>
                             </div>
@@ -402,7 +402,7 @@ export default function Home() {
                                     <p
                                         className={`text-sm md:text-sm ${cardo.className} text-black`}
                                     >
-                                        gkpjewellers24 @gmail.com
+                                        gkpjewellers1997@gmail.com
                                     </p>
                                 </div>
                                 <div className="w-[50%] flex flex-col justify-center items-center text-center border-2 border-[#FFD195] drop-shadow-lg h-[200px] md:h-[220px]">

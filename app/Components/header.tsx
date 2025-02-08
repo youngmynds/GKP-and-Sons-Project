@@ -21,7 +21,7 @@ export default function Header() {
     };
 
     return (
-        <div className="relative pt-[80px]">
+        <div className="relative pt-[50px] md:pt-[80px]">
             <header className="fixed top-0 left-0 flex items-center justify-between p-6 bg-[#170722] w-full z-50 ">
                 {/* Mobile Menu Icon */}
                 <button
@@ -50,17 +50,16 @@ export default function Header() {
                 <nav
                     className={`hidden lg:flex gap-8 ml-20 ${montserrat.className} justify-center`}
                 >
-                    {[
-                        "Home",
-                        "Products",
-                        "Collections",
-                        "Contact Us",
-                    ].map((item, index) => (
+                    {["Home", "Collections", "Contact Us"].map((item, index) => (
                         <a
                             href={`/#${item}`}
-                            onClick={(() => {
-                                router.push('/#' + item)
-                            })}
+                            onClick={() => {
+                                if (item === "Collections") {
+                                    router.push("/gallery");
+                                } else {
+                                    router.push("/#" + item);
+                                }
+                            }}
                             key={index}
                             className={`text-base tracking-wide text-white hover:text-gold`}
                         >
@@ -68,7 +67,6 @@ export default function Header() {
                         </a>
                     ))}
                 </nav>
-
                 {/* Call Us Section */}
                 <div className="hidden lg:flex items-center justify-center space-x-3">
                     <p className={`text-gold text-xl ${parisienne.className}`}>
@@ -95,12 +93,18 @@ export default function Header() {
                 <nav className="flex flex-col gap-1">
                     {[
                         "Home",
-                        "Products",
                         "Collections",
                         "Contact Us"
                     ].map((item, index) => (
                         <a
-                            href={`#${item}`}
+                            href={`/#${item}`}
+                            onClick={(() => {
+                                if (item === "Collections") {
+                                    router.push("/gallery");
+                                } else {
+                                    router.push("/#" + item);
+                                }
+                            })}
                             key={index}
                             className={`p-4 text-base text-black tracking-wide border-b border-b-gold pb-2 ${montserrat.className}`}
                         >

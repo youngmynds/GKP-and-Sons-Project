@@ -345,7 +345,7 @@ export default function Home() {
             {/* </div> */}
             <div className="mt-10">
                 <p
-                    className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
+                    className={`h-4 text-center text-black text-xl md:text-2xl ${montserrat.className} `}
                 >
                     REVIEWS
                 </p>

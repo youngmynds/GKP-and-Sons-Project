@@ -6,11 +6,6 @@ import Rights from "../Components/rights";
 import Image from "next/image";
 import { Parisienne, Montserrat, Cardo } from "next/font/google";
 
-const parisienne = Parisienne({
-    weight: "400",
-    subsets: ["latin"],
-});
-
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
     subsets: ["latin"],
@@ -35,7 +30,7 @@ export default function aboutus() {
                 {/* Content */}
                 <div className="flex flex-col items-center z-10">
                     <h1
-                        className={`text-white text-center font-normal font-serif text-2xl md:text-4xl ${montserrat.className}`}
+                        className={`text-white uppercase text-center font-normal font-serif text-2xl md:text-4xl ${montserrat.className}`}
                     >
                         TERMS AND CONDITIONS
                     </h1>
@@ -72,7 +67,7 @@ export default function aboutus() {
                 </p>
                 <p className={`text-gray-600 text-center text-base md:text-lg mt-5 ${cardo.className}`}>
                     All content on our website, including text, images, graphics, logos, and product designs, is the exclusive property of GKP & Son's Jewellers and is protected by copyright laws. Unauthorized reproduction, distribution, or use of any content without our written consent is strictly prohibited. <br /> <br />
-                    While we take every effort to ensure the accuracy of information on our website, GKP & Son's Jewellers shall not be held liable for any indirect, incidental, or consequential damages arising from the use of our website, products, or ser
+                    While we take every effort to ensure the accuracy of information on our website, GKP & Son's Jewellers shall not be held liable for any indirect, incidental, or consequential damages arising from the use of our website, products, or services.
                 </p>
                 <p className={`text-black uppercase text-center text-xl md:text-2xl mt-16 ${montserrat.className}`}>
                     Contact Us

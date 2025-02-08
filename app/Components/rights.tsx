@@ -14,7 +14,7 @@ export default function Rights() {
         >
             <p>© 2025 GKP & Sons Jewellers | All Rights Reserved.</p>
             <p>
-                <a href="/privacy-policy" className="cursor-pointer hover:underline">Privacy Policy</a> |
+                <a href="/privacy" className="cursor-pointer hover:underline">Privacy Policy</a> |
                 <a href="/terms" className="cursor-pointer hover:underline ml-1">Terms and Conditions</a>
             </p>
 

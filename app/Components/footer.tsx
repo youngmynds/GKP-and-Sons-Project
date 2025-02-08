@@ -101,6 +101,12 @@ export default function Footer() {
                     Home
                 </p>
                 <p
+                    onClick={() => router.push("/aboutus")}
+                    className={`text-lg font-medium mb-2 cursor-pointer ${cardo.className}`}
+                >
+                    About Us
+                </p>
+                <p
                     onClick={() => router.push("/gallery")}
                     className={`text-lg font-medium mb-2 cursor-pointer ${cardo.className}`}
                 >

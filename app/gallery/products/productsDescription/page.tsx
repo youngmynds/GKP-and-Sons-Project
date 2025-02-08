@@ -69,7 +69,7 @@ function ProductsDescription() {
                 </div>
                 <div className="md:w-[30%] justify-center md:ml-10 mt-5 md:mt-0">
                     <h1
-                        className={`text-3xl md:text-4xl text-center uppercase text-black font-medium ${montserrat.className}`}
+                        className={`text-3xl uppercase md:text-4xl text-center uppercase text-black font-medium ${montserrat.className}`}
                     >
                         {product?.name}
                     </h1>

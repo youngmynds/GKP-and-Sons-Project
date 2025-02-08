@@ -54,7 +54,7 @@ export default function aboutus() {
                 {/* Content */}
                 <div className="flex flex-col items-center z-10">
                     <h1
-                        className={`text-white text-center font-normal font-serif text-2xl md:text-4xl ${montserrat.className}`}
+                        className={`text-white uppercase text-center font-normal font-serif text-2xl md:text-4xl ${montserrat.className}`}
                     >
                         ABOUT US
                     </h1>

@@ -18,7 +18,7 @@ export default function Footer() {
         { src: "/Collections/pendants.png", title: "PENDANTS" },
         { src: "/Collections/chains.png", title: "CHAINS" },
         { src: "/Collections/bangles.png", title: "BANGLES" },
-        { src: "/Collections/bracelets.png", title: "BRACELETS" },
+        //   { src: "/Collections/bracelets.png", title: "BRACELETS" },
     ];
     const scrollToSection = (id) => {
         const section = document.getElementById(id);

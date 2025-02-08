@@ -2,13 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import {
-    Box,
-    Button,
-    ButtonGroup,
     TextField,
-    Checkbox,
     Autocomplete,
-    FormControlLabel
 } from "@mui/material";
 import { X, Plus } from "lucide-react";
 import { toast } from "react-hot-toast";
@@ -47,6 +42,7 @@ const AdminPage: React.FC = () => {
         if (!auth)
             router.push('/login')
     }, [])
+    
     useEffect(() => {
         if (operations === 'addProduct') {
             getCategories().then((data) => setCategories(data));
@@ -94,16 +90,42 @@ const AdminPage: React.FC = () => {
     return (
         secureLocalStorage.getItem("auth") === "true" &&
         <>
-            <div className="flex flex-row items-center justify-center space-x-5">
-                <button className="bg-blue-500 text-white rounded p-2 m-2" onClick={() => setOperations('addProduct')}>Add Product</button>
-                <button className="bg-blue-500 text-white rounded p-2 m-2" onClick={() => setOperations('imageSlider')}>Add in ImageSlider</button>
-                <button className="bg-blue-500 text-white rounded p-2" onClick={() => setOperations('deleteProduct')}>Delete Product</button>
+            {/* Sidebar */}
+            <div className="bg-blue-600 text-white py-8 px-4 shadow-md w-[20%] h-screen fixed flex flex-col justify-between items-center">
+                <div className="w-full">
+                    <p className="text-xl mb-20">Admin Page <br /> <span className="text-2xl font-bold">GKP & Son's Jewellers</span> </p>
+
+                    <div className="flex flex-col space-y-4 items-center">
+                        <button className="px-4 py-2 bg-white text-blue-600 rounded shadow w-full"
+                            onClick={() => setOperations('addProduct')}>
+                            Add Product
+                        </button>
+                        <button className="px-4 py-2 bg-white text-blue-600 rounded shadow w-full"
+                            onClick={() => setOperations('imageSlider')}>
+                            Add ImageSlider
+                        </button>
+                        <button className="px-4 py-2 bg-white text-blue-600 rounded shadow w-full"
+                            onClick={() => setOperations('deleteProduct')}>
+                            Delete Product
+                        </button>
+                    </div>
+                </div>
+
+                {/* Logout Button */}
+                <button className="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded shadow w-full mb-10"
+                >
+                    Logout
+                </button>
             </div>
+
             {
                 (operations === 'addProduct') && (
-                    <div className="flex flex-col sm:flex-row space-y-5 items-center justify-center space-x-5">
+                    <div className="ml-52 flex flex-col space-y-5 items-center justify-center">
+                        <div className="mt-5">
+
+                        </div>
                         <Autocomplete
-                            style={{ width: '216px' }}
+                            style={{ width: '50%' }}
                             options={categories}
                             freeSolo
                             renderInput={(params) => (
@@ -117,7 +139,7 @@ const AdminPage: React.FC = () => {
                             value={selectedCategory}
                         />
                         <Autocomplete
-                            style={{ width: '215px' }}
+                            style={{ width: '50%' }}
                             options={subcategories}
                             freeSolo
                             renderInput={(params) => (
@@ -132,34 +154,40 @@ const AdminPage: React.FC = () => {
                         <TextField
                             label="Product Name"
                             variant="outlined"
+                            className="w-[50%]"
                             value={imageName}
                             onChange={(e) => setImageName(e.target.value)} />
                         <TextField
                             label="Product Description"
                             variant="outlined"
+                            className="w-[50%]"
                             value={imageDescription}
                             onChange={(e) => setImageDescription(e.target.value)} />
                         <TextField
                             label="Product Image URL"
                             variant="outlined"
+                            className="w-[50%]"
                             value={imageURL}
                             onChange={(e) => setImageURL(e.target.value)} />
                         <TextField
                             label="Enter Product Size"
                             variant="outlined"
+                            className="w-[50%]"
                             value={size}
                             onChange={(e) => setSize(e.target.value)} />
                         <TextField
                             label="Enter Weight of Product"
                             variant="outlined"
+                            className="w-[50%]"
                             value={weight}
                             onChange={(e) => setWeight(e.target.value)} />
                         <TextField
                             label="Enter Carat of Product"
                             variant="outlined"
+                            className="w-[50%]"
                             value={carat}
                             onChange={(e) => setCarat(e.target.value)} />
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded w-1/2"
                             onClick={async () => {
                                 if (selectedCategory === "" || selectedSubcategory === "" || imageName === "" || imageDescription === "" || imageURL === "" || carat === "" || size === "" || weight === "") {
                                     toast.error("Please fill all the fields");
@@ -188,51 +216,56 @@ const AdminPage: React.FC = () => {
                             }}>Add Product</button>
                     </div>
                 ) || ((operations === 'imageSlider') && (
-                    <div className="flex flex-col items-center justify-center space-y-4">
-                        <div className="flex flex-wrap justify-center gap-4">
-                            {imageSlider.map((item) => (
-                                <div key={item} className="relative" style={{ width: '70%' }}>
-                                    <button
-                                        className="absolute top-0 right-0 bg-gray-500 text-white p-1 rounded-full"
-                                        onClick={() => deleteimage(item)}
-                                    >
-                                        <X size={16} />
-                                    </button>
-                                    <img src={item} alt={item} className="w-full h-auto object-cover rounded-lg shadow-md" />
-                                </div>
-                            ))}
+                    <div className="ml-52 justify-center items-center flex flex-col space-y-4">
+                        <div className="flex flex-col items-center justify-center space-y-4 mt-10">
+
+                            <TextField
+                                label="Image URL"
+                                variant="outlined"
+                                value={imageURL}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setImageURL(e.target.value)}
+                                style={{ width: '50%' }}
+                            />
+                            <button
+                                className="flex justify-center items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-1/2"
+                                onClick={() => { addImage(imageURL) }}
+                            >
+                                <Plus size={18} />
+                                Add Image
+                            </button>
+                            <div className="flex flex-wrap justify-center gap-4">
+                                {imageSlider.map((item) => (
+                                    <div key={item} className="relative" style={{ width: '50%' }}>
+                                        <button
+                                            className="absolute top-2 right-2 bg-gray-500 text-white p-1 rounded-full"
+                                            onClick={() => deleteimage(item)}
+                                        >
+                                            <X size={20} />
+                                        </button>
+                                        <img src={item} alt={item} className="w-full h-auto object-cover rounded-lg shadow-md" />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <TextField
-                            label="Image URL"
-                            variant="outlined"
-                            value={imageURL}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setImageURL(e.target.value)}
-                            style={{ width: '50%' }}
-                        />
-                        <button
-                            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-1/2"
-                            onClick={() => { addImage(imageURL) }}
-                        >
-                            <Plus size={18} />
-                            Add Image
-                        </button>
                     </div>
                 )) || (
                     (operations === 'deleteProduct') && (
-                        <div className="flex flex-col items-center justify-center">
+                        <div className="ml-52 flex flex-col items-center justify-center space-y-4">
+                            <div className="mt-6"></div>
                             <Autocomplete
-                                style={{ width: '215px' }}
+                                style={{ width: '50%' }}
                                 options={productId}
                                 freeSolo
                                 renderInput={(params) => (
-                                    <TextField {...params} label="Type or select ProductId" variant="outlined" />
+                                    <TextField {...params} label="Type or Select Product ID" variant="outlined" />
                                 )}
                                 value={productId1}
                                 onInputChange={(_, value) => {
                                     setProductId1(value)
                                     console.log("Product Id Input Changed:", value);
                                 }} />
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
+                                style={{ width: '50%' }}
                                 onClick={async () => {
                                     if (productId1 === "")
                                         return toast.error("Please Select a Product");
@@ -245,7 +278,6 @@ const AdminPage: React.FC = () => {
                     )
                 )
             }
-
         </>
     )
 };

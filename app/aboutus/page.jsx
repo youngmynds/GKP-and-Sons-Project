@@ -94,7 +94,20 @@ export default function AboutUs() {
                         </div>
                     ))}
                 </div>
+
             </div>
+            
+            <p className={`text-black uppercase text-center text-xl md:text-2xl mt-16 ${montserrat.className}`}>
+    {isTamil ? "எங்கள் வாக்குறுதி" : "Our Promise"}
+</p>
+
+<p className={`text-gray-600 text-center text-base md:text-lg mt-5 ${cardo.className}`}>
+    {isTamil
+        ? "நகைகள் வெறும் அணிகலன்கள் அல்ல—அவை அன்பு, பாரம்பரியம் மற்றும் கொண்டாட்டத்தின் காலத்திற்கும் அழியாத வெளிப்பாடாகும். G.K.P & Sons Jewellers இல், நாங்கள் உணர்வுப்பூர்வமான மதிப்பைக் கொண்ட நகைகளை உருவாக்க உறுதியாக இருக்கிறோம், அவை அணிபவருக்கு மகிழ்ச்சியை அளிக்கும். இது ஒரு திருமணமாக இருக்கலாம், நினைவு நாளாக இருக்கலாம், ஒரு தனிப்பட்ட முக்கிய நிகழ்வாக இருக்கலாம், அல்லது நன்றியுச் சொல்லும் சின்னமாக இருக்கலாம்—எங்கள் நகைகள் தலைமுறைகள் முழுவதும் மதிப்புமிக்கதாக இருப்பதற்காக வடிவமைக்கப்படுகின்றன. நாங்கள் உருவாக்கிய அற்புதமான தொகுப்பை ஆராய்ந்து பாருங்கள், G.K.P & Sons Jewellers குடும்பத்தின் ஒரு பகுதியாக வாருங்கள், எங்கே பாரம்பரியம் நேர்த்தியுடன் கலக்கிறது, மற்றும் ஒவ்வொரு துண்டும் ஒரு அழகான கதையை கூறுகிறது."
+        : "Jewellery is not just an accessory—it is a timeless expression of love, tradition, and celebration. At G.K.P & Sons Jewellers, we are devoted to crafting jewellery that holds sentimental value and brings joy to its wearer. Whether it is a wedding, an anniversary, a personal milestone, or a token of appreciation, our jewellery is designed to be cherished for generations to come. We invite you to explore our exquisite collection and become a part of the G.K.P & Sons Jewellers family, where tradition meets elegance, and every piece tells a beautiful story."
+    }
+</p>
+
             <Footer />
             <Rights />
         </div>

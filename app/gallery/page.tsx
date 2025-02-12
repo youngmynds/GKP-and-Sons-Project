@@ -92,8 +92,8 @@ export default function Gallery() {
                         title={item.title}
                         productId={item.title}
                         onClick={() => {
-                            const encodedTitle = encodeURIComponent(item.title);
-                            router.push(`/gallery/products/?cat=${encodedTitle}`);
+                                const encodedTitle = encodeURIComponent(item.title);
+                                router.push(`/gallery/products/?cat=${encodedTitle}`);
                         }}
                     />
                 ))}

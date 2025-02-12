@@ -57,6 +57,7 @@ export async function getbyCat(category: string, subcategory?: string) {
 export async function addImageSlider(imageUrl: string) {
     try {
         if (imageUrl == "") toast.error("Add a URL")
+        
 
         const products = collection(db, "imageSlider");
         await addDoc(products, { imageUrl: imageUrl });

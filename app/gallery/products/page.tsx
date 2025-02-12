@@ -31,14 +31,15 @@ function Products() {
     const searchParams = useSearchParams();
     const encodedcat = searchParams.get("cat");
     const cat = encodedcat ? decodeURIComponent(encodedcat) : "";
+    console.log(cat)
     const [displayedItems, setDisplayedItems] = useState<{ productId: string; src: string; title: string }[]>([]);
     const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
     const [subcategory, setSubcategory] = useState<string[]>([]);
     useEffect(() => {
         let subcat: any = new Set();
         getbyCat(cat).then((res: any) => {
-
-            res.map((item: any) => {
+            console.log(res)
+            res?.map((item: any) => {
                 subcat.add(item.subcategory)
             })
             subcat = Array.from(subcat)

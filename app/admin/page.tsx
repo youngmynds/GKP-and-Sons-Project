@@ -37,12 +37,22 @@ const AdminPage: React.FC = () => {
     const [carat, setCarat] = useState<string>("");
     const [size, setSize] = useState<string>("");
     const [weight, setWeight] = useState<string>("");
+
+    const validurl = (image) => {
+        try {
+            const url = new URL(image)
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
     useEffect(() => {
         const auth = secureLocalStorage.getItem("auth")
         if (!auth)
             router.push('/login')
     }, [])
-    
+
     useEffect(() => {
         if (operations === 'addProduct') {
             getCategories().then((data) => setCategories(data));
@@ -77,6 +87,8 @@ const AdminPage: React.FC = () => {
     async function addImage(image: string) {
         try {
             if (image === "") return toast.error("Add image URL")
+            if (!validurl(image)) return toast.error("Enter valid URL");
+
             await addImageSlider(image);
             toast.success("Success in adding image slider");
             setImageSlider([...imageSlider, image]);
@@ -112,7 +124,10 @@ const AdminPage: React.FC = () => {
                 </div>
 
                 {/* Logout Button */}
-                <button className="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded shadow w-full mb-10"
+                <button className="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded shadow w-full mb-10" onClick={() => {
+                    secureLocalStorage.removeItem("auth");
+                    router.push("/")
+                }}
                 >
                     Logout
                 </button>
@@ -193,6 +208,8 @@ const AdminPage: React.FC = () => {
                                     toast.error("Please fill all the fields");
                                     return;
                                 }
+                                if (!validurl(imageURL)) return toast.error("Enter Valid URL");
+
                                 await writebyCat({
                                     category: selectedCategory,
                                     subcategory: selectedSubcategory,

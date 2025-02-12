@@ -7,7 +7,9 @@ import {
     updateDoc,
     QuerySnapshot,
     deleteDoc,
-    doc
+    doc,
+    serverTimestamp,
+    orderBy
 } from "firebase/firestore";
 import db from "./firebase";
 import { toast } from "react-toastify";
@@ -57,10 +59,9 @@ export async function getbyCat(category: string, subcategory?: string) {
 export async function addImageSlider(imageUrl: string) {
     try {
         if (imageUrl == "") toast.error("Add a URL")
-        
 
         const products = collection(db, "imageSlider");
-        await addDoc(products, { imageUrl: imageUrl });
+        await addDoc(products, { imageUrl: imageUrl, createdAt: serverTimestamp() });
         return toast.success("Success in adding image slider");
     } catch (e: any) {
         toast.error("Error in adding image slider", e);
@@ -94,11 +95,12 @@ export async function deleteImageSlider(imageUrl: string) {
 export async function getImageSlider() {
     try {
         const imageSlider = collection(db, "imageSlider");
-        const q = query(imageSlider);
-
-        const querySnapshot = await getDocs(q);
+        let q = query(imageSlider, orderBy("createdAt", "asc"));
+        // let q = query(imageSlider)
+        let querySnapshot = await getDocs(q);
         let data: string[] = []
         querySnapshot.forEach((doc) => {
+            console.log(doc.data())
             data.push(doc.data().imageUrl);
         })
         return data;
@@ -206,3 +208,4 @@ export async function getProduct(productId: string) {
         return null;
     }
 }
+

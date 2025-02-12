@@ -73,6 +73,7 @@ const AdminPage: React.FC = () => {
 
     async function deleteimage(image: string) {
         try {
+          if (imageSlider.length == 2) return toast.error("Cannot delete lesser than 2 images")
             await deleteImageSlider(image);
             console.log("deleteImageSlider called successfully");
 
@@ -251,7 +252,7 @@ const AdminPage: React.FC = () => {
                                 Add Image
                             </button>
                             <div className="flex flex-wrap justify-center gap-4">
-                                {imageSlider.map((item) => (
+                                {imageSlider?.map((item) => (
                                     <div key={item} className="relative" style={{ width: '50%' }}>
                                         <button
                                             className="absolute top-2 right-2 bg-gray-500 text-white p-1 rounded-full"

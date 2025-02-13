@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { Parisienne, Montserrat } from "next/font/google";
+import { Dancing_Script, Montserrat } from "next/font/google";
 import { useRouter } from 'next/navigation'
-const parisienne = Parisienne({
-    weight: "400",
-    subsets: ["latin"],
+
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"], // Adjust as needed
 });
 
 const montserrat = Montserrat({
@@ -71,7 +72,7 @@ export default function Header() {
                 </nav>
                 {/* Call Us Section */}
                 <div className="hidden lg:flex items-center justify-center space-x-3">
-                    <p className={`text-gold text-xl ${parisienne.className}`}>
+                    <p className={`text-gold text-xl ${dancingScript.className}`}>
                         Call Us
                     </p>
                     <p className={`text-white ${montserrat.className}`}>
@@ -82,7 +83,7 @@ export default function Header() {
 
             {/* Mobile Side Navbar */}
             <div
-                className={`md:hidden fixed top-0 left-0 h-full bg-[#FFEDCF] text-white z-50 transform ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
+                className={`md:hidden fixed top-0 left-0 h-full bg-[#fff0c7] text-white z-50 transform ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
                     } transition-transform duration-300 w-[70%]`}
             >
                 <div className=" p-4 md:flex items-center justify-between border-black mb-5">
@@ -91,7 +92,7 @@ export default function Header() {
                     >
                         Welcome to 
                     </h2>
-                    <p className={`text-4xl text-[#D2A150] ${parisienne.className} mt-2`}>GKP & Sons Jewellers</p>
+                    <p className={`text-4xl text-[#B8860B] ${dancingScript.className} mt-2`}>GKP & Sons Jewellers</p>
                 </div>
                 <nav className="flex flex-col gap-1">
                     {[

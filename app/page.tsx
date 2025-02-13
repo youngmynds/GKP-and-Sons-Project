@@ -8,7 +8,7 @@ import Rights from "./Components/rights";
 import Reviews from "./Components/reviews";
 import Pdtcard from "./Components/productCategoryCard";
 import { Members, Products } from "./utils/data";
-import { Parisienne, Montserrat, Cardo } from "next/font/google";
+import { Dancing_Script, Montserrat, Cardo } from "next/font/google";
 import { useRouter } from "next/navigation";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -16,9 +16,9 @@ import "slick-carousel/slick/slick-theme.css";
 import { getImageSlider } from "./utils/queries";
 import { useState, useEffect, useRef } from "react";
 
-const parisienne = Parisienne({
-    weight: "400",
-    subsets: ["latin"],
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"], // Adjust as needed
 });
 
 const montserrat = Montserrat({
@@ -220,7 +220,7 @@ export default function Home() {
                         EXCLUSIVE COLLECTIONS AT
                     </p>
                     <h1
-                        className={`text-gold text-5xl md:text-7xl mt-5 ${parisienne.className}`}
+                        className={`text-gold text-5xl md:text-7xl mt-5 ${dancingScript.className}`}
                     >
                         GKP & Son's Jewellers
                     </h1>
@@ -328,7 +328,7 @@ export default function Home() {
                         OUR CRAFTED
                     </p>
                     <h1
-                        className={`text-gold text-5xl md:text-7xl mt-5 ${parisienne.className}`}
+                        className={`text-gold text-5xl md:text-7xl mt-5 ${dancingScript.className}`}
                     >
                         Products
                     </h1>
@@ -348,7 +348,7 @@ export default function Home() {
                         DISCOVER OUR LUXURY
                     </p>
                     <h1
-                        className={`text-gold text-5xl md:text-7xl mt-5 ${parisienne.className}`}
+                        className={`text-gold text-5xl md:text-7xl mt-5 ${dancingScript.className}`}
                     >
                         Collections
                     </h1>

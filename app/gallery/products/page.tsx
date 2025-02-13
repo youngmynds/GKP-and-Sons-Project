@@ -6,14 +6,14 @@ import Header from "../../Components/header";
 import Card from "../../Components/galleryProductsCard";
 import Footer from "../../Components/footer";
 import Rights from "../../Components/rights";
-import { Parisienne, Montserrat, Cardo } from "next/font/google";
+import { Dancing_Script, Montserrat, Cardo } from "next/font/google";
 import { useSearchParams, useRouter } from "next/navigation";
 import { getbyCat } from "../../utils/queries";
 import { useEffect, Suspense } from "react";
 
-const parisienne = Parisienne({
-    weight: "400",
-    subsets: ["latin"],
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"], // Adjust as needed
 });
 
 const montserrat = Montserrat({
@@ -70,7 +70,7 @@ function Products() {
                 {/* Content */}
                 <div className="flex flex-col items-center z-10">
                     <h1
-                        className={`text-white uppercase text-center font-normal uppercase font-serif text-2xl md:text-4xl ${montserrat.className}`}
+                        className={`text-white uppercase text-center font-normal font-serif text-2xl md:text-4xl ${montserrat.className}`}
                     >
                         {cat}
                     </h1>
@@ -88,12 +88,12 @@ function Products() {
             </div>
             <div className="max-w-7xl mx-auto h-72 md:h-36 flex flex-col items-center justify-center">
                 <h1
-                    className={`text-gold text-6xl md:text-8xl text-center w-[95%] ${parisienne.className}`}
+                    className={`text-gold text-6xl md:text-8xl text-center w-[95%] ${dancingScript.className}`}
                 >
                     Best Gold {cat} Designs
                 </h1>
                 <p
-                    className={`h-4 text-gray-800 text-2xl md:text-3xl font-light -mt-2  ${montserrat.className} `}
+                    className={`h-4 text-gray-800 text-2xl md:text-3xl font-light  ${montserrat.className} `}
                 >
                     IN COIMBATORE
                 </p>

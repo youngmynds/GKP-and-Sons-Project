@@ -128,7 +128,7 @@ function ProductsDescription() {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-center items-center">
+            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-center items-center mt-10">
                 <p className={`text-gray-800 text-center md:text-left text-base md:text-lg mr-0 md:mr-2 ${montserrat.className}`}>For any questions or inquiries about our products,</p>
                 <button
                     className={`flex gap-2 bg-purple-500 text-white px-10 md:px-5 py-2 rounded-full shadow-lg transition-all duration-300 transform hover:bg-purple-600 hover:scale-105 focus:ring-4 focus:ring-purple-300 my-5 text-center ${cardo.className}`}
@@ -141,7 +141,7 @@ function ProductsDescription() {
                         window.open(whatsappURL, "_blank");
                     }}
                 >
-                    <Image src="/SocialMediaIcons/whatsapp.svg" alt="Enquire" width={20} height={20}/> Enquire
+                    <Image src="/SocialMediaIcons/whatsapp.svg" alt="Enquire" width={24} height={24}/> Enquire
                 </button>
             </div>
 

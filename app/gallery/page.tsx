@@ -4,16 +4,17 @@ import Image from "next/image";
 import Header from "../Components/header";
 import Card from "../Components/galleryProductsCard";
 import Footer from "../Components/footer";
-import { Parisienne, Montserrat } from "next/font/google";
+import { Dancing_Script, Montserrat } from "next/font/google";
 import Rights from "../Components/rights";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getbyCat, getCategories } from "../utils/queries";
 
-const parisienne = Parisienne({
-    weight: "400",
-    subsets: ["latin"],
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"], // Adjust as needed
 });
+
 
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
@@ -74,12 +75,12 @@ export default function Gallery() {
             </div>
             <div className="w-full h-36 flex flex-col items-center justify-center">
                 <h1
-                    className={`text-gold text-6xl md:text-8xl ${parisienne.className}`}
+                    className={`text-gold text-6xl md:text-8xl ${dancingScript.className}`}
                 >
                     Elegance
                 </h1>
                 <p
-                    className={`h-4 text-gray-800 text-2xl md:text-3xl font-light -mt-2 ${montserrat.className} `}
+                    className={`h-4 text-gray-800 text-2xl md:text-3xl font-light mt-2 ${montserrat.className} `}
                 >
                     A COLLECTION OF
                 </p>

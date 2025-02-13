@@ -76,8 +76,8 @@ export default function aboutus() {
                 <p className={`text-gray-600 text-center text-base md:text-lg mt-5 ${cardo.className}`}>
                     As a user, you have the right to access, update, or request the deletion of any personal information you have shared with us. If you have previously subscribed to our updates but no longer wish to receive communications, you can opt out at any time. We respect your choices regarding privacy and are committed to addressing any concerns you may have regarding your data.
                     If you would like to update your information, unsubscribe from marketing messages, or request the removal of your data, please contact us at:
-                    <a href="https://gkpjewellers.vercel.app/" className="text-blue-600 hover:underline ml-2">
-                        https://gkpjewellers.vercel.app/
+                    <a href="mailto:gkpjewellers1997@gmail.com" className="text-blue-600 hover:underline ml-2">
+                        gkpjewellers1997@gmail.com
                     </a>
                 </p>
                 <p className={`text-black uppercase text-center text-xl md:text-2xl mt-16 ${montserrat.className}`}>

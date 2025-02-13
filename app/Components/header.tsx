@@ -82,15 +82,16 @@ export default function Header() {
 
             {/* Mobile Side Navbar */}
             <div
-                className={`md:hidden fixed top-0 left-0 h-full bg-white text-white z-50 transform ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
+                className={`md:hidden fixed top-0 left-0 h-full bg-[#FFEDCF] text-white z-50 transform ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
                     } transition-transform duration-300 w-[70%]`}
             >
                 <div className=" p-4 md:flex items-center justify-between border-black mb-5">
                     <h2
-                        className={`text-xl text-black font-semibold tracking-wide ${montserrat.className}`}
+                        className={`text-xl text-[#5A3E2B] ${montserrat.className}`}
                     >
-                        Welcome to <br></br> GKP & Sons Jewellers
+                        Welcome to 
                     </h2>
+                    <p className={`text-4xl text-[#D2A150] ${parisienne.className} mt-2`}>GKP & Sons Jewellers</p>
                 </div>
                 <nav className="flex flex-col gap-1">
                     {[

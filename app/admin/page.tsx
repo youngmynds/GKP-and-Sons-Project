@@ -21,6 +21,18 @@ import {
 } from "../utils/queries";
 import { useRouter } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
+import { Parisienne, Montserrat } from "next/font/google";
+
+const parisienne = Parisienne({
+    weight: "400",
+    subsets: ["latin"],
+});
+
+const montserrat = Montserrat({
+    weight: ["100", "300", "400", "700", "900"],
+    subsets: ["latin"],
+});
+
 
 const AdminPage: React.FC = () => {
     const router = useRouter();
@@ -34,8 +46,6 @@ const AdminPage: React.FC = () => {
     const [imageURL, setImageURL] = useState<string>("");
     const [productId, setproductId] = useState<string[]>([]);
     const [imageSlider, setImageSlider] = useState<string[]>([]);
-    const [productId1, setProductId1] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(false);
     const [carat, setCarat] = useState<string>("");
     const [size, setSize] = useState<string>("");
     const [weight, setWeight] = useState<string>("");
@@ -119,20 +129,21 @@ const AdminPage: React.FC = () => {
         secureLocalStorage.getItem("auth") === "true" &&
         <>
             {/* Sidebar */}
-            <div className="bg-blue-600 text-white py-8 px-4 shadow-md w-[20%] h-screen fixed flex flex-col justify-between items-center">
+            <div className="bg-[#FFEDCF] text-white py-8 px-4 shadow-md w-[20%] h-screen fixed flex flex-col justify-between items-center">
                 <div className="w-full">
-                    <p className="text-xl mb-20">Admin Page <br /> <span className="text-2xl font-bold">GKP & Son's Jewellers</span> </p>
+                    <p className={`text-xl text-[#5A3E2B] ${montserrat.className}`}>Admin Page</p>
+                    <p className={`text-4xl text-[#D2A150] ${parisienne.className} mt-2 mb-20`}>GKP & Son's Jewellers</p>
 
                     <div className="flex flex-col space-y-4 items-center">
-                        <button className="px-4 py-2 bg-white text-blue-600 rounded shadow w-full"
+                        <button className="px-4 py-2 bg-[#865DFF] text-[#FFF5E1] rounded shadow w-full"
                             onClick={() => setOperations('addProduct')}>
                             Add Product
                         </button>
-                        <button className="px-4 py-2 bg-white text-blue-600 rounded shadow w-full"
+                        <button className="px-4 py-2 bg-[#865DFF] text-[#FFF5E1] rounded shadow w-full"
                             onClick={() => setOperations('imageSlider')}>
                             Add ImageSlider
                         </button>
-                        <button className="px-4 py-2 bg-white text-blue-600 rounded shadow w-full"
+                        <button className="px-4 py-2 bg-[#865DFF] text-[#FFF5E1] rounded shadow w-full"
                             onClick={() => setOperations('deleteProduct')}>
                             Delete Product
                         </button>
@@ -140,7 +151,7 @@ const AdminPage: React.FC = () => {
                 </div>
 
                 {/* Logout Button */}
-                <button className="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded shadow w-full mb-10" onClick={() => {
+                <button className="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded-full shadow w-full mb-10" onClick={() => {
                     secureLocalStorage.removeItem("auth");
                     router.push("/")
                 }}
@@ -218,7 +229,7 @@ const AdminPage: React.FC = () => {
                             className="w-[50%]"
                             value={carat}
                             onChange={(e) => setCarat(e.target.value)} />
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded w-1/2"
+                        <button className="flex items-center gap-2 justify-center bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded w-1/2"
                             onClick={async () => {
                                 if (selectedCategory === "" || selectedSubcategory === "" || imageName === "" || imageDescription === "" || imageURL === "" || carat === "" || size === "" || weight === "") {
                                     toast.error("Please fill all the fields");
@@ -245,7 +256,7 @@ const AdminPage: React.FC = () => {
                                 setImageURL("");
                                 setSelectedCategory("");
                                 setSelectedSubcategory("");
-                            }}>Add Product</button>
+                            }}><Plus size={18} /> Add Product</button>
                     </div>
                 ) || ((operations === 'imageSlider') && (
                     <div className="ml-52 justify-center items-center flex flex-col space-y-4">
@@ -269,7 +280,7 @@ const AdminPage: React.FC = () => {
                                 {imageSlider?.map((item) => (
                                     <div key={item} className="relative" style={{ width: '50%' }}>
                                         <button
-                                            className="absolute top-2 right-2 bg-gray-500 text-white p-1 rounded-full"
+                                            className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full"
                                             onClick={() => deleteimage(item)}
                                         >
                                             <X size={20} />
@@ -283,7 +294,7 @@ const AdminPage: React.FC = () => {
                 )) || (
                     (operations === 'deleteProduct') && (
                         <div className="ml-52 flex flex-col items-center justify-center space-y-4">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
                                 {delProducts?.map((item, index) => (
                                     <div
                                         key={index}

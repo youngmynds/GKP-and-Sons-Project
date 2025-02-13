@@ -2,6 +2,7 @@
 
 import Header from "./Components/header";
 import Image from "next/image";
+import { UploadCloud } from "lucide-react"; // Import Lucide React icon
 import Footer from "./Components/footer";
 import Rights from "./Components/rights";
 import Reviews from "./Components/reviews";
@@ -13,8 +14,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getImageSlider } from "./utils/queries";
-import { useState, useEffect } from "react";
-import { imgbbUploader } from "imgbb-uploader";
+import { useState, useEffect, useRef } from "react";
 
 const parisienne = Parisienne({
     weight: "400",
@@ -30,7 +30,6 @@ const cardo = Cardo({
     weight: "400",
     subsets: ["latin"],
 });
-
 
 
 const CustomPrevArrow = ({ onClick }: { onClick: () => void }) => (
@@ -52,6 +51,13 @@ const CustomNextArrow = ({ onClick }: { onClick: () => void }) => (
 );
 
 export default function Home() {
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+    const handleClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
     const router = useRouter();
     const [heroImages, setheroImages] = useState<string[]>([])
     useEffect(() => {
@@ -110,19 +116,36 @@ export default function Home() {
 
     const [result, setResult] = useState("");
 
-    const uploadImageToImgBB = async (file) => {
-        const formData = new FormData();
-        formData.append("image", file);
-        formData.append("key", "e22bf75ff3567cd84086365dbdca9a21"); // Get API key from ImgBB
+    const uploadImageToImgBB = async (file: File) => {
+        try {
+            const formData = new FormData();
+            formData.append("image", file);
+            formData.append("key", "e22bf75ff3567cd84086365dbdca9a21"); // Replace with your actual API key
 
-        const response = await fetch("https://api.imgbb.com/1/upload", {
-            method: "POST",
-            body: formData
-        });
+            const response = await fetch("https://api.imgbb.com/1/upload", {
+                method: "POST",
+                body: formData,
+            });
 
-        const data = await response.json();
-        return data.success ? data.data.url : null; // Return the image URL
+            // Check if response is valid
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const text = await response.text(); // Get response text
+            if (!text) {
+                throw new Error("Empty response received from ImgBB.");
+            }
+
+            const data = JSON.parse(text); // Safely parse JSON
+
+            return data.success ? data.data.url : null; // Return uploaded image URL
+        } catch (error) {
+            console.error("Image upload failed:", error);
+            return null;
+        }
     };
+
 
     const onSubmit = async (event) => {
         event.preventDefault();
@@ -190,14 +213,14 @@ export default function Home() {
             </Slider>
             <section id="Home" className="max-w-7xl lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center mx-auto scroll-mt-24 mt-10">
                 {/* Title */}
-                <div className="text-center mb-5 lg:mb-5">
+                <div className="text-center mb-5">
                     <p
                         className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
                     >
                         EXCLUSIVE COLLECTIONS AT
                     </p>
                     <h1
-                        className={`text-gold text-5xl md:text-7xl ${parisienne.className}`}
+                        className={`text-gold text-5xl md:text-7xl mt-5 ${parisienne.className}`}
                     >
                         GKP & Son's Jewellers
                     </h1>
@@ -305,7 +328,7 @@ export default function Home() {
                         OUR CRAFTED
                     </p>
                     <h1
-                        className={`text-gold text-5xl md:text-7xl ${parisienne.className}`}
+                        className={`text-gold text-5xl md:text-7xl mt-5 ${parisienne.className}`}
                     >
                         Products
                     </h1>
@@ -325,7 +348,7 @@ export default function Home() {
                         DISCOVER OUR LUXURY
                     </p>
                     <h1
-                        className={`text-gold text-5xl md:text-7xl ${parisienne.className}`}
+                        className={`text-gold text-5xl md:text-7xl mt-5 ${parisienne.className}`}
                     >
                         Collections
                     </h1>
@@ -424,22 +447,26 @@ export default function Home() {
 
                         <div className="flex flex-col gap-2">
                             <div className="flex gap-2">
-                                <div className="w-[50%] flex flex-col justify-center items-center text-center border-2 border-[#FFD195] drop-shadow-lg h-[200px] md:h-[220px]">
-                                    <Image
-                                        src="/ShopInfoIcons/locationIcon.svg"
-                                        alt="locationIcon"
-                                        width={40}
-                                        height={40}
-                                        className="mt-4 mb-4 md:-mt-6 md:mb-8"
-                                    />
-                                    <p
-                                        className={`text-sm md:text-sm ${cardo.className} text-black`}
-                                    >
-                                        Swarna Mahal Complex, 441/2, Big Bazaar St,
-                                        Prakasam, Town Hall, Coimbatore, Tamil Nadu
-                                        641001
-                                    </p>
-                                </div>
+                                <a
+                                    href="https://www.google.com/maps/place/GKP+%26+Sons+Jewellers/@10.9928859,76.9549267,17z/data=!3m1!4b1!4m6!3m5!1s0x3ba8eebbb32d66f9:0x692fe4cfcaedeb96!8m2!3d10.9928859!4d76.9575016!16s%2Fg%2F1tplj4x7?entry=ttu&g_ep=EgoyMDI1MDIxMC4wIKXMDSoASAFQAw%3D%3D"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-[50%]"
+                                >
+                                    <div className="w-full flex flex-col justify-center items-center text-center border-2 border-[#FFD195] drop-shadow-lg h-[200px] md:h-[220px] cursor-pointer">
+                                        <Image
+                                            src="/ShopInfoIcons/locationIcon.svg"
+                                            alt="locationIcon"
+                                            width={40}
+                                            height={40}
+                                            className="mt-4 mb-4 md:-mt-6 md:mb-8"
+                                        />
+                                        <p className={`text-sm md:text-sm ${cardo.className} text-black`}>
+                                            Swarna Mahal Complex, 441/2, Big Bazaar St, Prakasam, Town Hall, Coimbatore, Tamil Nadu 641001
+                                        </p>
+                                    </div>
+                                </a>
+
                                 <div className="w-[50%] flex flex-col justify-center items-center text-center border-2 border-[#FFD195] drop-shadow-lg h-[200px] md:h-[220px]">
                                     <Image
                                         src="/ShopInfoIcons/callIcon.svg"
@@ -456,20 +483,20 @@ export default function Home() {
                                 </div>
                             </div>
                             <div className="flex gap-2">
-                                <div className="w-[50%] flex flex-col justify-center items-center text-center border-2 border-[#FFD195] drop-shadow-lg h-[200px] md:h-[220px]">
-                                    <Image
-                                        src="/ShopInfoIcons/mailIcon.svg"
-                                        alt="mailIcon"
-                                        width={60}
-                                        height={60}
-                                        className="-mt-6 mb-8 md:-mt-4 md:mb-12"
-                                    />
-                                    <p
-                                        className={`text-sm md:text-sm ${cardo.className} text-black`}
-                                    >
-                                        gkpjewellers1997 @gmail.com
-                                    </p>
-                                </div>
+                                <a href="mailto:gkpjewellers1997@gmail.com" className="w-[50%]">
+                                    <div className="w-full flex flex-col justify-center items-center text-center border-2 border-[#FFD195] drop-shadow-lg h-[200px] md:h-[220px] cursor-pointer">
+                                        <Image
+                                            src="/ShopInfoIcons/mailIcon.svg"
+                                            alt="mailIcon"
+                                            width={60}
+                                            height={60}
+                                            className="-mt-6 mb-8 md:-mt-4 md:mb-12"
+                                        />
+                                        <p className={`text-sm md:text-sm ${cardo.className} text-black`}>
+                                            gkpjewellers1997 @gmail.com
+                                        </p>
+                                    </div>
+                                </a>
                                 <div className="w-[50%] flex flex-col justify-center items-center text-center border-2 border-[#FFD195] drop-shadow-lg h-[200px] md:h-[220px]">
                                     <Image
                                         src="/ShopInfoIcons/clockIcon.svg"
@@ -530,11 +557,30 @@ export default function Home() {
 
                         <textarea
                             placeholder="Message *"
-                            className="w-full border border-gray-300 p-2 text-black h-52 mb-4"
+                            className="w-full border border-gray-300 p-2 text-black h-32 mb-4"
                             required
                             name="Message"
                         ></textarea>
-                        <input type="file" id="imageUpload" name="image" accept="image/*" />
+                        <div
+                            className="flex flex-col items-center justify-center border-2 border-dashed border-[#25BAFF] rounded-lg p-6 bg-[#F9FDFF] shadow-md w-full cursor-pointer"
+                            onClick={handleClick}
+                        >
+                            <div className="text-center">
+                                {/* Centering the Icon */}
+                                <div className="flex items-center justify-center mb-2">
+                                    <UploadCloud className="w-10 h-10 text-gray-500" />
+                                </div>
+
+                                <p className={`text-gray-700 ${montserrat.className}`}>Drag your documents, photos or videos here to start uploading.</p>
+                                <p className={`text-gray-500 my-2 ${montserrat.className}`}>———— OR ————</p>
+                                <button className={`bg-[#288CFD] text-white px-6 py-2 rounded-full hover:bg-blue-600 ${montserrat.className}`}>
+                                    Browse files
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <input type="file" id="imageUpload" name="image" accept="image/*" className="hidden" ref={fileInputRef} />
 
                         <button
                             type="submit"

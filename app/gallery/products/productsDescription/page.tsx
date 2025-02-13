@@ -141,7 +141,7 @@ function ProductsDescription() {
                         window.open(whatsappURL, "_blank");
                     }}
                 >
-                    <Image src="/SocialMediaIcons/whatsapp.svg" alt="Enquire" width={24} height={24}/> Enquire
+                    <Image src="/SocialMediaIcons/Whatsapp.svg" alt="Enquire" width={24} height={24}/> Enquire
                 </button>
             </div>
 

@@ -5,11 +5,11 @@ import Header from "../Components/header";
 import Footer from "../Components/footer";
 import Rights from "../Components/rights";
 import Image from "next/image";
-import { Parisienne, Montserrat, Cardo } from "next/font/google";
+import { Dancing_Script, Montserrat, Cardo } from "next/font/google";
 
-const parisienne = Parisienne({
-    weight: "400",
-    subsets: ["latin"],
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"], // Adjust as needed
 });
 
 const montserrat = Montserrat({
@@ -63,12 +63,12 @@ export default function AboutUs() {
             <div className="max-w-5xl mx-auto py-16 px-8 justify-center items-center pb-20">
                 <div className="mt-4 mb-4">
                     <label className="flex items-center cursor-pointer">
-                        <span className={`mr-2 ${parisienne.className} ${isTamil ? "text-gold" : "text-gold"} text-xl`}>English</span>
+                        <span className={`mr-2 ${dancingScript.className} ${isTamil ? "text-gold" : "text-gold"} text-2xl`}>English</span>
                         <input type="checkbox" className="hidden" onChange={toggleLanguage} checked={isTamil} />
                         <div className={`w-10 h-6 ${isTamil ? "bg-gold" : "bg-gray-300"} rounded-full p-1 relative ml-4`}>
                             <div className={`w-4 h-4 -mt-[1.px] bg-white rounded-full shadow-md transform ${isTamil ? "translate-x-5" : "translate-x-0"} transition-transform`}></div>
                         </div>
-                        <span className={`ml-6 ${parisienne.className} ${isTamil ? "text-gold" : "text-gold"} text-xl`}>Tamil</span>
+                        <span className={`ml-6 ${dancingScript.className} ${isTamil ? "text-gold" : "text-gold"} text-2xl`}>Tamil</span>
                     </label>
                 </div>
 
@@ -87,7 +87,7 @@ export default function AboutUs() {
                     {milestones.map((item, index) => (
                         <div key={index} className="mb-8 relative">
                             <div className="absolute -left-[34px] w-4 h-4 bg-gold rounded-full border-4 border-white"></div>
-                            <h3 className={`text-3xl text-gold font-bold ${parisienne.className}`}>{item.title}</h3>
+                            <h3 className={`text-3xl text-gold font-bold ${dancingScript.className}`}>{item.title}</h3>
                             <p className={`text-gray-600 text-base md:text-lg ${cardo.className}`}>{item.description}</p>
                         </div>
                     ))}

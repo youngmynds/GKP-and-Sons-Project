@@ -2,6 +2,7 @@ import Image from "next/image";
 import InstaCard from './instagramPostsCard'
 import { Montserrat, Cardo } from "next/font/google";
 import { useRouter } from 'next/navigation'
+
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
     subsets: ["latin"],
@@ -49,30 +50,38 @@ export default function Footer() {
                     <div className={`pl-4 border-l-4 mb-2`}>
                         <p className={`text-gold`}>Follow Us</p>
                         <div className="flex gap-4 mt-1">
-                            <Image
-                                src="/SocialMediaIcons/Facebook.svg"
-                                alt="Facebook"
-                                width="12"
-                                height="12"
-                            />
-                            <Image
-                                src="/SocialMediaIcons/Instagram.svg"
-                                alt="Instagram"
-                                width="25"
-                                height="25"
-                            />
-                            <Image
-                                src="/SocialMediaIcons/Youtube.svg"
-                                alt="Youtube"
-                                width="30"
-                                height="30"
-                            />
-                            <Image
-                                src="/SocialMediaIcons/Linkedin.svg"
-                                alt="Linkedin"
-                                width="23"
-                                height="23"
-                            />
+                            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                                <Image
+                                    src="/SocialMediaIcons/Facebook.svg"
+                                    alt="Facebook"
+                                    width="12"
+                                    height="12"
+                                />
+                            </a>
+                            <a href="https://www.instagram.com/gkp.jewellers.cbe?igsh=MXZpZXo5cDQ3ZHVteQ==" target="_blank" rel="noopener noreferrer">
+                                <Image
+                                    src="/SocialMediaIcons/Instagram.svg"
+                                    alt="Instagram"
+                                    width="25"
+                                    height="25"
+                                />
+                            </a>
+                            <a href="https://www.youtube.com/@gkpjewellers7161" target="_blank" rel="noopener noreferrer">
+                                <Image
+                                    src="/SocialMediaIcons/Youtube.svg"
+                                    alt="Youtube"
+                                    width="30"
+                                    height="30"
+                                />
+                            </a>
+                            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                                <Image
+                                    src="/SocialMediaIcons/Linkedin.svg"
+                                    alt="Linkedin"
+                                    width="23"
+                                    height="23"
+                                />
+                            </a>
                         </div>
                     </div>
                 </div>

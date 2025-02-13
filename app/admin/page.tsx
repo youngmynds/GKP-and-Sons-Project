@@ -8,6 +8,7 @@ import {
 import { X, Plus } from "lucide-react";
 import { toast } from "react-hot-toast";
 import {
+    Product,
     getCategories,
     getSubCategories,
     writebyCat,
@@ -15,7 +16,8 @@ import {
     deleteImageSlider,
     deleteProduct,
     getProductId,
-    addImageSlider
+    addImageSlider,
+    getbyCat
 } from "../utils/queries";
 import { useRouter } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
@@ -37,6 +39,9 @@ const AdminPage: React.FC = () => {
     const [carat, setCarat] = useState<string>("");
     const [size, setSize] = useState<string>("");
     const [weight, setWeight] = useState<string>("");
+    const [delProducts, setDelProducts] = useState<Product[]>([])
+    const [delcat, setDelCat] = useState<string>("");
+    const [delsubcat, setDelSubCat] = useState<string>("");
 
     const validurl = (image) => {
         try {
@@ -59,6 +64,9 @@ const AdminPage: React.FC = () => {
             getSubCategories().then((data) => setSubcategories(data));
         }
         if (operations === 'deleteProduct') {
+            getbyCat().then((data) => {
+                setDelProducts(data);
+            })
             getProductId().then((data) => {
                 console.log(data);
                 setproductId(data as string[]);
@@ -71,9 +79,17 @@ const AdminPage: React.FC = () => {
         }
     }, [operations]);
 
+    useEffect(() => {
+        const filteredDelProducts = delProducts.filter((data) => {
+            (delcat == "" || data.category === delcat) &&
+                (delsubcat == "" || data.subcategory === delsubcat)
+        })
+        setDelProducts(filteredDelProducts);
+    }, [delcat, delsubcat])
+
     async function deleteimage(image: string) {
         try {
-          if (imageSlider.length == 2) return toast.error("Cannot delete lesser than 2 images")
+            if (imageSlider.length == 2) return toast.error("Cannot delete lesser than 2 images")
             await deleteImageSlider(image);
             console.log("deleteImageSlider called successfully");
 
@@ -94,7 +110,6 @@ const AdminPage: React.FC = () => {
             toast.success("Success in adding image slider");
             setImageSlider([...imageSlider, image]);
             setImageURL("");
-            setOperations("")
         } catch (e: any) {
             toast.error("Error in adding image slider", e);
         }
@@ -225,7 +240,6 @@ const AdminPage: React.FC = () => {
                                 setCarat("");
                                 setSize("");
                                 setWeight("");
-                                setOperations("");
                                 setImageName("");
                                 setImageDescription("");
                                 setImageURL("");
@@ -269,30 +283,42 @@ const AdminPage: React.FC = () => {
                 )) || (
                     (operations === 'deleteProduct') && (
                         <div className="ml-52 flex flex-col items-center justify-center space-y-4">
-                            <div className="mt-6"></div>
-                            <Autocomplete
-                                style={{ width: '50%' }}
-                                options={productId}
-                                freeSolo
-                                renderInput={(params) => (
-                                    <TextField {...params} label="Type or Select Product ID" variant="outlined" />
-                                )}
-                                value={productId1}
-                                onInputChange={(_, value) => {
-                                    setProductId1(value)
-                                    console.log("Product Id Input Changed:", value);
-                                }} />
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
-                                style={{ width: '50%' }}
-                                onClick={async () => {
-                                    if (productId1 === "")
-                                        return toast.error("Please Select a Product");
-                                    await deleteProduct(productId1);
-                                    setOperations('');
-                                    setProductId1('');
-                                    toast.success("Product Deleted Successfully")
-                                }}>Delete Product</button>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+                                {delProducts?.map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className="relative bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex flex-col items-center"
+                                    >
+                                        {/* Delete Button */}
+                                        <button
+                                            className="absolute top-3 right-3 bg-red-500 text-white p-2 rounded-full shadow-md hover:bg-red-600 transition"
+                                            onClick={async () => {
+                                                try {
+                                                    await deleteProduct(item.productId as string);
+                                                    toast.success("Success in deleting product");
+                                                } catch (e: any) {
+                                                    toast.error("Error in deleting product: " + e.message);
+                                                }
+                                            }}
+                                        >
+                                            <X size={20} />
+                                        </button>
+
+                                        <img
+                                            src={item.imageUrl}
+                                            alt="Product"
+                                            className="w-full h-48 object-cover rounded-lg border border-gray-200 shadow-sm"
+                                        />
+
+                                        <p className="mt-3 text-sm text-gray-600 font-medium bg-gray-100 px-3 py-1 rounded-md shadow">
+                                            Product ID: <span className="font-semibold text-gray-800">{item.productId}</span>
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+
                         </div>
+
                     )
                 )
             }

@@ -14,6 +14,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getImageSlider } from "./utils/queries";
 import { useState, useEffect } from "react";
+import { imgbbUploader } from "imgbb-uploader";
 
 const parisienne = Parisienne({
     weight: "400",
@@ -109,16 +110,52 @@ export default function Home() {
 
     const [result, setResult] = useState("");
 
+    const uploadImageToImgBB = async (file) => {
+        const formData = new FormData();
+        formData.append("image", file);
+        formData.append("key", "e22bf75ff3567cd84086365dbdca9a21"); // Get API key from ImgBB
+
+        const response = await fetch("https://api.imgbb.com/1/upload", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+        return data.success ? data.data.url : null; // Return the image URL
+    };
+
     const onSubmit = async (event) => {
         event.preventDefault();
         setResult("Sending....");
+
         const formData = new FormData(event.target);
+        console.log("Has image:", formData.has("image"));
+
+        if (formData.has("image")) {
+            const file = formData.get("image");
+
+            if (file instanceof File) {
+                const imageUrl = await uploadImageToImgBB(file); // Upload to ImgBB
+
+                if (imageUrl) {
+                    formData.append("url", imageUrl);
+                    formData.delete("image"); // Remove original file
+                } else {
+                    console.log("Image upload failed");
+                }
+            }
+        }
+
+        console.log("Final FormData entries:");
+        for (const [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
 
         formData.append("access_key", "5d1e1a42-cf09-41b8-9f6c-24ee29e7c867");
 
         const response = await fetch("https://api.web3forms.com/submit", {
             method: "POST",
-            body: formData
+            body: formData,
         });
 
         const data = await response.json();
@@ -131,6 +168,8 @@ export default function Home() {
             setResult(data.message);
         }
     };
+
+
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
@@ -495,6 +534,8 @@ export default function Home() {
                             required
                             name="Message"
                         ></textarea>
+                        <input type="file" id="imageUpload" name="image" accept="image/*" />
+
                         <button
                             type="submit"
                             className={`bg-yellow-500 mt-8 mb-4 text-[#2C1338] px-8 py-2 rounded-full hover:bg-yellow-600 ${cardo.className}`}

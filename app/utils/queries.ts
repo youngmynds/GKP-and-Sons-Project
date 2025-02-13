@@ -14,7 +14,7 @@ import {
 import db from "./firebase";
 import { toast } from "react-toastify";
 
-interface Product {
+export interface Product {
     name: string;
     category: string;
     subcategory: string;
@@ -27,21 +27,25 @@ interface Product {
     carat?: string;
 }
 
-export async function getbyCat(category: string, subcategory?: string) {
+export async function getbyCat(category?: string, subcategory?: string) {
     try {
         const products = collection(db, "products");
         let q: any;
-        if (subcategory) {
-            q = query(
-                products,
-                where("category", "==", category),
-                where("subcategory", "==", subcategory)
-            );
+        if (category) {
+            if (subcategory) {
+                q = query(
+                    products,
+                    where("category", "==", category),
+                    where("subcategory", "==", subcategory)
+                );
+            } else {
+                q = query(
+                    products,
+                    where("category", "==", category)
+                );
+            }
         } else {
-            q = query(
-                products,
-                where("category", "==", category)
-            );
+            q = query(products)
         }
         const querySnapshot = await getDocs(q);
         let data: Product[] = [];
@@ -89,8 +93,6 @@ export async function deleteImageSlider(imageUrl: string) {
         toast.error("Error in deleting image slider: " + e.message);
     }
 }
-
-
 
 export async function getImageSlider() {
     try {

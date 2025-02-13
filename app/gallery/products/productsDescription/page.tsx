@@ -67,15 +67,28 @@ function ProductsDescription() {
                         />
                     )}
                 </div>
-                <div className="md:w-[30%] justify-center md:ml-10 mt-5 md:mt-0">
-                    <h1
-                        className={`text-3xl uppercase md:text-4xl text-center uppercase text-black font-medium ${montserrat.className}`}
-                    >
-                        {product?.name}
-                    </h1>
-                    <p
-                        className={`mt-5 text-center md:text-none text-base text-gray-600 ${cardo.className}`}
-                    >
+                <div className="md:w-[30%] flex flex-col items-center md:items-start md:ml-10 mt-5 md:mt-0">
+                    <div className="flex flex-col md:flex-row items-center gap-6">
+                        <h1
+                            className={`text-3xl md:text-4xl text-center md:text-left uppercase text-black font-semibold tracking-wide ${montserrat.className}`}
+                        >
+                            {product?.name}
+                        </h1>
+                        <button
+                            className="bg-purple-500 text-white px-5 py-2 rounded-full shadow-lg transition-all duration-300 transform hover:bg-purple-600 hover:scale-105 focus:ring-4 focus:ring-purple-300"
+                            onClick={() => {
+                                const ownerNumber = "919842831542";
+                                const message = encodeURIComponent(
+                                    `Hello, I'm interested in *${product?.name}* (ID: ${productId}, URL: ${window.location.href}). Can you provide more details?`
+                                );
+                                const whatsappURL = `https://wa.me/${ownerNumber}?text=${message}`;
+                                window.open(whatsappURL, "_blank");
+                            }}
+                        >
+                            📩 Enquire
+                        </button>
+                    </div>
+                    <p className={`mt-4 text-center md:text-left text-lg text-gray-700 leading-relaxed ${cardo.className}`}>
                         {product?.description}
                     </p>
                 </div>

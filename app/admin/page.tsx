@@ -24,8 +24,8 @@ import secureLocalStorage from "react-secure-storage";
 import { Dancing_Script, Montserrat } from "next/font/google";
 
 const dancingScript = Dancing_Script({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // Adjust as needed
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700"], // Adjust as needed
 });
 
 const montserrat = Montserrat({
@@ -50,8 +50,8 @@ const AdminPage: React.FC = () => {
     const [size, setSize] = useState<string>("");
     const [weight, setWeight] = useState<string>("");
     const [delProducts, setDelProducts] = useState<Product[]>([])
-    const [delcat, setDelCat] = useState<string>("");
-    const [delsubcat, setDelSubCat] = useState<string>("");
+    const [delcat, setDelCat] = useState<string>("All");
+    const [delsubcat, setDelSubCat] = useState<string>("All");
 
     const validurl = (image) => {
         try {
@@ -74,6 +74,12 @@ const AdminPage: React.FC = () => {
             getSubCategories().then((data) => setSubcategories(data));
         }
         if (operations === 'deleteProduct') {
+            getCategories().then((data) => {
+                setCategories(data)
+            })
+            getSubCategories().then((data) => [
+                setSubcategories(data)
+            ])
             getbyCat().then((data) => {
                 setDelProducts(data);
             })
@@ -89,13 +95,16 @@ const AdminPage: React.FC = () => {
         }
     }, [operations]);
 
+    const [filteredDelProducts, setFilteredDelProducts] = useState<Product[]>([]);
+
     useEffect(() => {
-        const filteredDelProducts = delProducts.filter((data) => {
-            (delcat == "" || data.category === delcat) &&
-                (delsubcat == "" || data.subcategory === delsubcat)
+        const filtered = delProducts.filter((data) => {
+            return (
+                (delcat === "All" || data.category === delcat) &&
+                (delsubcat === "All" || data.subcategory === delsubcat))
         })
-        setDelProducts(filteredDelProducts);
-    }, [delcat, delsubcat])
+        setFilteredDelProducts(filtered);
+    }, [delcat, delsubcat, delProducts])
 
     async function deleteimage(image: string) {
         try {
@@ -292,43 +301,76 @@ const AdminPage: React.FC = () => {
                         </div>
                     </div>
                 )) || (
-                    (operations === 'deleteProduct') && (
-                        <div className="ml-52 flex flex-col items-center justify-center space-y-4">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
-                                {delProducts?.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        className="relative bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex flex-col items-center"
+                    (operations === 'deleteProduct') && categories && subcategories && (
+                        <>
+                            <div className="flex flex-col md:flex-row justify-center items-center gap-6  p-4 ">
+                                <div className="flex flex-col ">
+                                    <label className="text-gray-700 font-semibold">Categories</label>
+                                    <select
+                                        onChange={(e) => setDelCat(e.target.value)}
+                                        className="mt-1 p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
                                     >
-                                        {/* Delete Button */}
-                                        <button
-                                            className="absolute top-3 right-3 bg-gray-500 text-white p-2 rounded-full shadow-md hover:bg-red-600 transition"
-                                            onClick={async () => {
-                                                try {
-                                                    await deleteProduct(item.productId as string);
-                                                    toast.success("Success in deleting product");
-                                                } catch (e: any) {
-                                                    toast.error("Error in deleting product: " + e.message);
-                                                }
-                                            }}
-                                        >
-                                            <X size={20} />
-                                        </button>
+                                        <option>All</option>
+                                        {categories.map((item, index) => (
+                                            <option key={index}>{item}</option>
+                                        ))}
+                                    </select>
+                                </div>
 
-                                        <img
-                                            src={item.imageUrl}
-                                            alt="Product"
-                                            className="w-full h-48 object-cover rounded-lg border border-gray-200 shadow-sm"
-                                        />
-
-                                        <p className="mt-3 text-sm text-gray-600 font-medium bg-gray-100 px-3 py-1 rounded-md shadow">
-                                            Product ID: <span className="font-semibold text-gray-800">{item.productId}</span>
-                                        </p>
-                                    </div>
-                                ))}
+                                <div className="flex flex-col items-start">
+                                    <label className="text-gray-700 font-semibold">Subcategories</label>
+                                    <select
+                                        onChange={(e) => setDelSubCat(e.target.value)}
+                                        className="mt-1 p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                                    >
+                                        <option>All</option>
+                                        {subcategories.map((item, index) => (
+                                            <option key={index}>{item}</option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
 
-                        </div>
+                            <div className="ml-52 flex flex-col items-center justify-center space-y-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
+                                    {filteredDelProducts?.map((item, index) => (
+                                        <div
+                                            key={index}
+                                            className="relative bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex flex-col items-center"
+                                        >
+
+                                            <button
+                                                className="absolute top-3 right-3 bg-gray-500 text-white p-2 rounded-full shadow-md hover:bg-red-600 transition"
+                                                onClick={async () => {
+                                                    try {
+                                                        await deleteProduct(item.productId as string);
+                                                        setFilteredDelProducts(filteredDelProducts.filter((prod) => {
+                                                            return prod.productId !== item.productId;
+                                                        }))
+                                                        toast.success("Success in deleting product");
+                                                    } catch (e: any) {
+                                                        toast.error("Error in deleting product: " + e.message);
+                                                    }
+                                                }}
+                                            >
+                                                <X size={20} />
+                                            </button>
+
+                                            <img
+                                                src={item.imageUrl}
+                                                alt="Product"
+                                                className="w-full h-48 object-cover rounded-lg border border-gray-200 shadow-sm"
+                                            />
+
+                                            <p className="mt-3 text-sm text-gray-600 font-medium bg-gray-100 px-3 py-1 rounded-md shadow">
+                                                Product ID: <span className="font-semibold text-gray-800">{item.productId}</span>
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+
+                            </div>
+                        </>
 
                     )
                 )

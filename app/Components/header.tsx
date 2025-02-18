@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Dancing_Script, Montserrat } from "next/font/google";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const dancingScript = Dancing_Script({
     subsets: ["latin"],
@@ -39,12 +40,14 @@ export default function Header() {
 
                 {/* Logo Centered in Mobile/Tablet */}
                 <div className="absolute left-1/2 transform -translate-x-1/2 lg:relative lg:left-0 lg:transform-none">
-                    <Image
-                        src="/GKP_Logo.png"
-                        alt="Logo"
-                        width={170}
-                        height={150}
-                    />
+                    <Link href="/">
+                        <Image
+                            src="/GKP_Logo.png"
+                            alt="Logo"
+                            width={170}
+                            height={150}
+                        />
+                    </Link>
                 </div>
 
                 {/* Desktop Navigation */}

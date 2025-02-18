@@ -20,23 +20,46 @@ const montserrat = Montserrat({
     subsets: ["latin"],
 });
 
+const weightRanges = [
+    { label: "0-4 g", min: 0, max: 4 },
+    { label: "5-8 g", min: 5, max: 8 },
+    { label: "9-12 g", min: 9, max: 12 },
+    { label: "13-18 g", min: 13, max: 18 },
+    { label: "19-24 g", min: 19, max: 24 },
+    { label: "24+ g", min: 25, max: Infinity },
+];
+
 export default function Gallery() {
-    const [Items, setItems] = useState<{ title: string; src: string }[]>([]);
+    const [Items, setItems] = useState<
+        { title: string; src: string; weights: number[] }[]
+    >([]);
+    const [selectedWeightRange, setSelectedWeightRange] = useState<{
+        min: number;
+        max: number;
+    } | null>(null);
     const router = useRouter();
 
     useEffect(() => {
         async function fetchData() {
             const categories = await getCategories();
             const images: string[] = [];
+            const weights: Map<string, number[]> = new Map();
 
             for (const cat of categories) {
                 let product = await getbyCat(cat);
-                if (product) images.push(product[0].imageUrl);
+                if (product) {
+                    images.push(product[0].imageUrl);
+                    weights.set(
+                        cat,
+                        product.map((p) => parseFloat(p.weight ?? "0 g")),
+                    );
+                }
             }
 
             const itemsData = categories.map((cat, index) => ({
                 title: cat,
                 src: images[index] || "",
+                weights: weights.get(cat) || [],
             }));
 
             setItems(itemsData);
@@ -44,6 +67,16 @@ export default function Gallery() {
 
         fetchData();
     }, []);
+
+    const filteredItems = selectedWeightRange
+        ? Items.filter((item) =>
+              item.weights.some(
+                  (weight) =>
+                      weight >= selectedWeightRange.min &&
+                      weight <= selectedWeightRange.max,
+              ),
+          )
+        : Items;
 
     return (
         <div className="bg-[#FFFCF8]">
@@ -73,20 +106,54 @@ export default function Gallery() {
                 />
             </div>
             <div className="w-full h-36 flex flex-col items-center justify-center">
-                <h1
-                    className={`text-gold text-6xl md:text-8xl ${dancingScript.className}`}
-                >
-                    Elegance
-                </h1>
                 <p
                     className={`h-4 text-gray-800 text-2xl md:text-3xl font-light mt-2 ${montserrat.className} `}
                 >
                     A COLLECTION OF
                 </p>
+                <h1
+                    className={`text-gold text-6xl md:text-8xl mt-2 ${dancingScript.className}`}
+                >
+                    Elegance
+                </h1>
             </div>
+
+            <div className="flex flex-col items-center mt-5">
+                <div className="relative">
+                    <select
+                        className="block appearance-none w-full bg-white border border-gold hover:border-gold px-4 py-2 pr-8 rounded-xl shadow leading-tight focus:outline-none focus:ring-2 focus:ring-gold text-sm"
+                        onChange={(e) => {
+                            const selectedRange = weightRanges.find(
+                                (range) => range.label === e.target.value,
+                            );
+                            setSelectedWeightRange(selectedRange || null);
+                        }}
+                        title="Select a weight range to filter categories by products that fall within the selected range."
+                    >
+                        <option value="">
+                            Filter collections by gold weight (in grams)
+                        </option>
+                        {weightRanges.map((range, index) => (
+                            <option key={index} value={range.label}>
+                                {range.label}
+                            </option>
+                        ))}
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg
+                            className="fill-current h-4 w-4"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                        >
+                            <path d="M7 10l5 5 5-5H7z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
             <div className="max-w-7xl mx-auto flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
-                {Items.length > 0 &&
-                    Items.map((item, index) => (
+                {filteredItems.length > 0 &&
+                    filteredItems.map((item, index) => (
                         <Card
                             key={index}
                             src={item.src}

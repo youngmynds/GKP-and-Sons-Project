@@ -44,3 +44,12 @@ export const Ads = [
     { src: "/ProductCategories/diamond.png", title: "Ad3" },
     { src: "/ProductCategories/custom.png", title: "Ad4" },
 ];
+
+export const weightRanges = [
+    { label: "0-4 g", min: 0, max: 4 },
+    { label: "5-8 g", min: 5, max: 8 },
+    { label: "9-12 g", min: 9, max: 12 },
+    { label: "13-18 g", min: 13, max: 18 },
+    { label: "19-24 g", min: 19, max: 24 },
+    { label: "24+ g", min: 25, max: Infinity },
+];

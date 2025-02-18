@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense, use } from "react";
 import Image from "next/image";
 import Header from "../../Components/header";
 import Card from "../../Components/galleryProductsCard";
@@ -9,7 +9,6 @@ import Rights from "../../Components/rights";
 import { Dancing_Script, Montserrat, Cardo } from "next/font/google";
 import { useSearchParams, useRouter } from "next/navigation";
 import { getbyCat } from "../../utils/queries";
-import { useEffect, Suspense } from "react";
 
 const dancingScript = Dancing_Script({
     subsets: ["latin"],
@@ -29,38 +28,76 @@ const cardo = Cardo({
 function Products() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const encodedcat = searchParams.get("cat");
-    const cat = encodedcat ? decodeURIComponent(encodedcat) : "";
-    console.log(cat);
-    const [displayedItems, setDisplayedItems] = useState<
-        { productId: string; src: string; title: string }[]
-    >([]);
+    const [cat, setCat] = useState<string>(searchParams.get("cat") || "");
+
+    const [data, setData] = useState<{
+        subcategories: string[];
+        items: {
+            productId: string;
+            src: string;
+            title: string;
+            subcategory?: string;
+        }[];
+    }>({ subcategories: [], items: [] });
     const [selectedSubcategory, setSelectedSubcategory] = useState<string>("");
-    const [subcategory, setSubcategory] = useState<string[]>([]);
-    useEffect(() => {
-        let subcat: any = new Set();
-        getbyCat(cat).then((res: any) => {
-            console.log(res);
-            res?.map((item: any) => {
-                subcat.add(item.subcategory);
-            });
-            subcat = Array.from(subcat);
-            setSubcategory(subcat as string[]);
-            setSelectedSubcategory(subcat[0] as string);
-        });
-    }, []);
+    const [filteredItems, setFilteredItems] = useState<
+        {
+            productId: string;
+            src: string;
+            title: string;
+            subcategory?: string;
+        }[]
+    >([]);
 
     useEffect(() => {
-        getbyCat(cat, selectedSubcategory).then((res: any) => {
-            setDisplayedItems(
-                res.map((item: any) => ({
-                    productId: item.productId,
-                    src: item.imageUrl,
-                    title: item.name,
-                })),
+        getbyCat(cat).then((res: any) => {
+            const subcategories = Array.from(
+                new Set(res.map((item: any) => item.subcategory)),
+            ) as string[];
+            const items = res.map((item: any) => ({
+                productId: item.productId,
+                src: item.imageUrl,
+                title: item.name,
+                subcategory: item.subcategory,
+            }));
+            setData({ subcategories, items });
+            setSelectedSubcategory(subcategories[0] || "");
+            setFilteredItems(
+                items.filter(
+                    (item: {
+                        productId: string;
+                        src: string;
+                        title: string;
+                        subcategory?: string;
+                    }) => {
+                        if (subcategories[0] === "") {
+                            return true;
+                        }
+                        return (
+                            item.subcategory?.toString() ===
+                            subcategories[0].toString()
+                        );
+                    },
+                ),
             );
         });
-    }, [selectedSubcategory]);
+    }, [cat]);
+
+    useEffect(() => {
+        console.log(selectedSubcategory);
+        if (data.items.length === 0) return;
+        setFilteredItems(
+            data.items.filter((item) => {
+                if (selectedSubcategory === "") {
+                    return true;
+                }
+                return (
+                    item.subcategory?.toString() ===
+                    selectedSubcategory.toString()
+                );
+            }),
+        );
+    }, [selectedSubcategory, data]);
 
     return (
         <div className="bg-[#FFFCF8]">
@@ -103,24 +140,23 @@ function Products() {
             </div>
 
             <div className="max-w-7xl mx-auto flex justify-center md:mt-10 gap-8">
-                {subcategory.map((item, index) => (
+                {data.subcategories.map((item, index) => (
                     <button
                         className={`border-b-2 ${
-                            selectedSubcategory === `${item}`
+                            selectedSubcategory === item
                                 ? "border-b-gold text-black"
                                 : "border-transparent text-gray-400"
                         } text-lg md:text-2xl ${cardo.className}`}
-                        onClick={() => {
-                            setSelectedSubcategory(item);
-                        }}
+                        onClick={() => setSelectedSubcategory(item)}
                         key={index}
                     >
                         {item}
                     </button>
                 ))}
             </div>
+
             <div className="max-w-7xl mx-auto flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
-                {displayedItems?.map((item, index) => (
+                {filteredItems.map((item, index) => (
                     <Card
                         key={index}
                         productId={item.productId}

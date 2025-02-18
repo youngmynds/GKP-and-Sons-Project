@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getbyCat, getCategories } from "../utils/queries";
 import { weightRanges } from "../utils/data";
+import Loading from "../Components/Loading";
 
 const dancingScript = Dancing_Script({
     subsets: ["latin"],
@@ -110,60 +111,69 @@ export default function Gallery() {
                 </h1>
             </div>
 
-            <div className="flex flex-col items-center mt-5">
-                <div className="relative">
-                    <select
-                        className="block appearance-none w-full bg-white border border-gold hover:border-gold px-4 py-2 pr-8 rounded-xl shadow leading-tight focus:outline-none focus:ring-2 focus:ring-gold text-sm"
-                        onChange={(e) => {
-                            const selectedRange = weightRanges.find(
-                                (range) => range.label === e.target.value,
-                            );
-                            setSelectedWeightRange(selectedRange || null);
-                        }}
-                        title="Select a weight range to filter categories by products that fall within the selected range."
-                    >
-                        <option value="">
-                            Filter collections by gold weight (in grams)
-                        </option>
-                        {weightRanges.map((range, index) => (
-                            <option key={index} value={range.label}>
-                                {range.label}
-                            </option>
-                        ))}
-                    </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg
-                            className="fill-current h-4 w-4"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                        >
-                            <path d="M7 10l5 5 5-5H7z" />
-                        </svg>
+            {Items.length === 0 ? (
+                <Loading message="Loading collections..." />
+            ) : (
+                <>
+                    <div className="flex flex-col items-center mt-5">
+                        <div className="relative">
+                            <select
+                                className="block appearance-none w-full bg-white border border-gold hover:border-gold px-4 py-2 pr-8 rounded-xl shadow leading-tight focus:outline-none focus:ring-2 focus:ring-gold text-sm"
+                                onChange={(e) => {
+                                    const selectedRange = weightRanges.find(
+                                        (range) =>
+                                            range.label === e.target.value,
+                                    );
+                                    setSelectedWeightRange(
+                                        selectedRange || null,
+                                    );
+                                }}
+                                title="Select a weight range to filter categories by products that fall within the selected range."
+                            >
+                                <option value="">
+                                    Filter collections by gold weight (in grams)
+                                </option>
+                                {weightRanges.map((range, index) => (
+                                    <option key={index} value={range.label}>
+                                        {range.label}
+                                    </option>
+                                ))}
+                            </select>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg
+                                    className="fill-current h-4 w-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path d="M7 10l5 5 5-5H7z" />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <div className="max-w-7xl mx-auto flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
-                {filteredItems.length > 0 &&
-                    filteredItems.map((item, index) => (
-                        <Card
-                            key={index}
-                            src={item.src}
-                            title={item.title}
-                            productId={item.title}
-                            onClick={() => {
-                                const encodedTitle = encodeURIComponent(
-                                    item.title,
-                                );
-                                let url = `/gallery/products/?cat=${encodedTitle}`;
-                                if (selectedWeightRange) {
-                                    url += `&range=${selectedWeightRange.min}-${selectedWeightRange.max}`;
-                                }
-                                router.push(url);
-                            }}
-                        />
-                    ))}
-            </div>
+                    <div className="max-w-7xl mx-auto flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
+                        {filteredItems.length > 0 &&
+                            filteredItems.map((item, index) => (
+                                <Card
+                                    key={index}
+                                    src={item.src}
+                                    title={item.title}
+                                    productId={item.title}
+                                    onClick={() => {
+                                        const encodedTitle = encodeURIComponent(
+                                            item.title,
+                                        );
+                                        let url = `/gallery/products/?cat=${encodedTitle}`;
+                                        if (selectedWeightRange) {
+                                            url += `&min=${selectedWeightRange.min}&max=${selectedWeightRange.max}`;
+                                        }
+                                        router.push(url);
+                                    }}
+                                />
+                            ))}
+                    </div>
+                </>
+            )}
             <Footer />
             <Rights />
         </div>

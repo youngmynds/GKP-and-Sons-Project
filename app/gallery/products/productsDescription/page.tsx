@@ -8,6 +8,7 @@ import { Montserrat, Cardo } from "next/font/google";
 import { useSearchParams } from "next/navigation";
 import { getProduct } from "../../../utils/queries";
 import { Suspense, useEffect, useState } from "react";
+import Loading from "@/app/Components/Loading";
 
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
@@ -32,111 +33,119 @@ function ProductsDescription() {
         carat: string;
         size: string;
     }>();
+
     useEffect(() => {
         getProduct(productId).then((res: any) => {
             setProduct(res);
         });
-    }, []);
+    }, [productId]);
+
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
-            <div className="bg-black w-full h-52 flex items-center justify-center relative">
-                {/* Glowing Background */}
-                <div className="absolute flex items-center justify-center">
-                    <div className="w-40 h-40 rounded-full bg-gradient-to-br from-gray-100 to-transparent blur-2xl mt-8 ml-4"></div>
-                </div>
-                {/* Content */}
-                <div className="flex flex-col items-center z-10">
-                    <h1
-                        className={`text-white text-center font-normal uppercase font-serif text-2xl md:text-4xl ${montserrat.className}`}
-                    >
-                        {product?.name}
-                    </h1>
-                    <div className="h-1 w-24 bg-gold mt-3"></div>
-                </div>
-            </div>
-            <div className="flex justify-center -mt-1">
-                <Image
-                    src="/Polygon.svg"
-                    alt="Triangle"
-                    width="100"
-                    height="100"
-                />
-            </div>
-            <div className="max-w-7xl mx-auto md:flex p-4 justify-center items-center mt-5">
-                <div className="flex justify-center items-center">
-                    {product?.imageUrl && (
+            {!product ? (
+                <Loading message="Loading Product Details" />
+            ) : (
+                <>
+                    <div className="bg-black w-full h-52 flex items-center justify-center relative">
+                        {/* Glowing Background */}
+                        <div className="absolute flex items-center justify-center">
+                            <div className="w-40 h-40 rounded-full bg-gradient-to-br from-gray-100 to-transparent blur-2xl mt-8 ml-4"></div>
+                        </div>
+                        {/* Content */}
+                        <div className="flex flex-col items-center z-10">
+                            <h1
+                                className={`text-white text-center font-normal uppercase font-serif text-2xl md:text-4xl ${montserrat.className}`}
+                            >
+                                {product?.name}
+                            </h1>
+                            <div className="h-1 w-24 bg-gold mt-3"></div>
+                        </div>
+                    </div>
+                    <div className="flex justify-center -mt-1">
                         <Image
-                            src={product.imageUrl}
-                            alt="CastingRing1"
-                            className="object-cover w-[450px] md:w-[400px] h-[280px]"
-                            width="250"
+                            src="/Polygon.svg"
+                            alt="Triangle"
+                            width="100"
                             height="100"
                         />
-                    )}
-                </div>
-                <div className="md:w-[30%] flex flex-col items-center md:items-start md:ml-10 mt-5 md:mt-0">
-                    <div className="flex flex-col md:flex-row items-center gap-6">
-                        <h1
-                            className={`text-3xl md:text-4xl text-center md:text-left uppercase text-black tracking-wide ${montserrat.className}`}
-                        >
-                            {product?.name}
-                        </h1>
                     </div>
-                    <p
-                        className={`mt-4 text-center md:text-left text-lg text-gray-700 leading-relaxed ${cardo.className}`}
-                    >
-                        {product?.description}
-                    </p>
-                </div>
-            </div>
-            <div className="max-w-7xl mx-auto flex items-center justify-center">
-                <div className="border-2 border-gray-500 rounded-2xl mt-5 mb-5 p-4 md:p-8 inline-block justify-center">
-                    <p
-                        className={`text-black text-lg md:text-2xl ${montserrat.className}`}
-                    >
-                        Product Details
-                    </p>
-                    <div className="flex mt-6 md:mt-8 gap-8 md:gap-64">
-                        <div>
-                            <p
-                                className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}
-                            >
-                                {product?.weight}
-                            </p>
-                            <p
-                                className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}
-                            >
-                                Weight
-                            </p>
+                    <div className="max-w-7xl mx-auto md:flex p-4 justify-center items-center mt-5">
+                        <div className="flex justify-center items-center">
+                            {product?.imageUrl && (
+                                <Image
+                                    src={product.imageUrl}
+                                    alt="CastingRing1"
+                                    className="object-cover w-[450px] md:w-[400px] h-[280px]"
+                                    width="250"
+                                    height="100"
+                                />
+                            )}
                         </div>
-                        <div>
+                        <div className="md:w-[30%] flex flex-col items-center md:items-start md:ml-10 mt-5 md:mt-0">
+                            <div className="flex flex-col md:flex-row items-center gap-6">
+                                <h1
+                                    className={`text-3xl md:text-4xl text-center md:text-left uppercase text-black tracking-wide ${montserrat.className}`}
+                                >
+                                    {product?.name}
+                                </h1>
+                            </div>
                             <p
-                                className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}
+                                className={`mt-4 text-center md:text-left text-lg text-gray-700 leading-relaxed ${cardo.className}`}
                             >
-                                {product?.size}
-                            </p>
-                            <p
-                                className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}
-                            >
-                                Size
-                            </p>
-                        </div>
-                        <div>
-                            <p
-                                className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}
-                            >
-                                {product?.carat}
-                            </p>
-                            <p
-                                className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}
-                            >
-                                Carat
+                                {product?.description}
                             </p>
                         </div>
                     </div>
-                </div>
-            </div>
+                    <div className="max-w-7xl mx-auto flex items-center justify-center">
+                        <div className="border-2 border-gray-500 rounded-2xl mt-5 mb-5 p-4 md:p-8 inline-block justify-center">
+                            <p
+                                className={`text-black text-lg md:text-2xl ${montserrat.className}`}
+                            >
+                                Product Details
+                            </p>
+                            <div className="flex mt-6 md:mt-8 gap-8 md:gap-64">
+                                <div>
+                                    <p
+                                        className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}
+                                    >
+                                        {product?.weight}
+                                    </p>
+                                    <p
+                                        className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}
+                                    >
+                                        Weight
+                                    </p>
+                                </div>
+                                <div>
+                                    <p
+                                        className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}
+                                    >
+                                        {product?.size}
+                                    </p>
+                                    <p
+                                        className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}
+                                    >
+                                        Size
+                                    </p>
+                                </div>
+                                <div>
+                                    <p
+                                        className={`text-black font-semibold text-base md:text-lg ${cardo.className}`}
+                                    >
+                                        {product?.carat}
+                                    </p>
+                                    <p
+                                        className={`text-gray-600 text-sm md:text-lg ${montserrat.className}`}
+                                    >
+                                        Carat
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
 
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-center items-center mt-10">
                 <p

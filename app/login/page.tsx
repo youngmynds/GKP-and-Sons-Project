@@ -29,10 +29,6 @@ export default function Home() {
         if (!name || !password) {
             return;
         }
-        console.log(
-            process.env.NEXT_PUBLIC_ADMIN_USERNAME,
-            process.env.NEXT_PUBLIC_ADMIN_PASSWORD,
-        );
         if (
             name === process.env.NEXT_PUBLIC_ADMIN_USERNAME &&
             password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD

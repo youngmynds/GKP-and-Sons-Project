@@ -19,6 +19,7 @@ import {
 import { useRouter } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
 import { Dancing_Script, Montserrat } from "next/font/google";
+import Image from "next/image";
 
 const dancingScript = Dancing_Script({
     subsets: ["latin"],
@@ -61,7 +62,7 @@ const AdminPage: React.FC = () => {
     useEffect(() => {
         const auth = secureLocalStorage.getItem("auth");
         if (!auth) router.push("/login");
-    }, []);
+    }, [router]);
 
     useEffect(() => {
         if (operations === "addProduct") {
@@ -145,7 +146,7 @@ const AdminPage: React.FC = () => {
                         <p
                             className={`text-4xl text-[#B8860B] ${dancingScript.className} mt-2 mb-20`}
                         >
-                            GKP & Son's Jewellers
+                            {"GKP & Son's Jewellers"}
                         </p>
 
                         <div className="flex flex-col space-y-4 items-center">
@@ -345,9 +346,11 @@ const AdminPage: React.FC = () => {
                                             >
                                                 <X size={20} />
                                             </button>
-                                            <img
+                                            <Image
                                                 src={item}
                                                 alt={item}
+                                                width={500}
+                                                height={300}
                                                 className="w-full h-auto object-cover rounded-lg shadow-md"
                                             />
                                         </div>
@@ -443,9 +446,11 @@ const AdminPage: React.FC = () => {
                                                         <X size={20} />
                                                     </button>
 
-                                                    <img
+                                                    <Image
                                                         src={item.imageUrl}
                                                         alt="Product"
+                                                        width={500}
+                                                        height={300}
                                                         className="w-full h-48 object-cover rounded-lg border border-gray-200 shadow-sm"
                                                     />
 

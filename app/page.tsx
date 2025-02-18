@@ -223,7 +223,7 @@ export default function Home() {
                     <h1
                         className={`text-gold text-5xl md:text-7xl mt-5 ${dancingScript.className}`}
                     >
-                        GKP & Son's Jewellers
+                        {"GKP & Son's Jewellers"}
                     </h1>
                 </div>
                 {/* Image Grid */}

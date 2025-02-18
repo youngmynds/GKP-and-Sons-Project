@@ -17,8 +17,8 @@ import { getImageSlider } from "./utils/queries";
 import { useState, useEffect, useRef } from "react";
 
 const dancingScript = Dancing_Script({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // Adjust as needed
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700"], // Adjust as needed
 });
 
 const montserrat = Montserrat({
@@ -30,7 +30,6 @@ const cardo = Cardo({
     weight: "400",
     subsets: ["latin"],
 });
-
 
 const CustomPrevArrow = ({ onClick }: { onClick: () => void }) => (
     <div
@@ -59,7 +58,7 @@ export default function Home() {
         }
     };
     const router = useRouter();
-    const [heroImages, setheroImages] = useState<string[]>([])
+    const [heroImages, setheroImages] = useState<string[]>([]);
     useEffect(() => {
         getImageSlider().then((data) => {
             if (data) {
@@ -69,10 +68,10 @@ export default function Home() {
                     "https://i.imgur.com/OJ3Sfnb.jpeg",
                     "https://i.imgur.com/D8G3fGb.jpeg",
                     "https://i.imgur.com/YYgCe75.png",
-                ])
+                ]);
             }
         });
-    }, [])
+    }, []);
 
     const sliderSettings = {
         dots: true,
@@ -83,10 +82,9 @@ export default function Home() {
         autoplay: true,
         autoplaySpeed: 5000,
         arrows: true, // Enable arrows
-        prevArrow: <CustomPrevArrow onClick={() => { }} />, // Custom left arrow
-        nextArrow: <CustomNextArrow onClick={() => { }} /> // Custom right arrow
+        prevArrow: <CustomPrevArrow onClick={() => {}} />, // Custom left arrow
+        nextArrow: <CustomNextArrow onClick={() => {}} />, // Custom right arrow
     };
-
 
     const settings = {
         dots: false,
@@ -146,7 +144,6 @@ export default function Home() {
         }
     };
 
-
     const onSubmit = async (event) => {
         event.preventDefault();
         setResult("Sending....");
@@ -192,14 +189,16 @@ export default function Home() {
         }
     };
 
-
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
             {/* <div className="mt-20"> */}
             <Slider {...sliderSettings}>
                 {heroImages.map((image, index) => (
-                    <div key={index} className="w-full h-[150px] md:h-[350px] relative">
+                    <div
+                        key={index}
+                        className="w-full h-[150px] md:h-[350px] relative"
+                    >
                         <Image
                             src={image}
                             alt={`Slide ${index + 1}`}
@@ -207,11 +206,13 @@ export default function Home() {
                             objectFit="cover" // Ensures the image covers the area without distortion
                             className="w-full h-full"
                         />
-
                     </div>
                 ))}
             </Slider>
-            <section id="Home" className="max-w-7xl lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center mx-auto scroll-mt-24 mt-10">
+            <section
+                id="Home"
+                className="max-w-7xl lg:flex text-center justify-center lg:gap-28 px-4 py-8 items-center mx-auto scroll-mt-24 mt-10"
+            >
                 {/* Title */}
                 <div className="text-center mb-5">
                     <p
@@ -319,9 +320,11 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <section id="Products" className="max-w-7xl mx-auto mt-10 scroll-mt-24">
+            <section
+                id="Products"
+                className="max-w-7xl mx-auto mt-10 scroll-mt-24"
+            >
                 <div className="text-center">
-
                     <p
                         className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
                     >
@@ -335,12 +338,19 @@ export default function Home() {
                 </div>
                 <div className="flex flex-wrap justify-center gap-4 mt-5">
                     {Products.map((item, index) => (
-                        <Pdtcard key={index} src={item.src} title={item.title} />
+                        <Pdtcard
+                            key={index}
+                            src={item.src}
+                            title={item.title}
+                        />
                     ))}
                 </div>
             </section>
 
-            <section id="Collections" className="max-w-7xl mx-auto items-center mt-10 scroll-mt-24">
+            <section
+                id="Collections"
+                className="max-w-7xl mx-auto items-center mt-10 scroll-mt-24"
+            >
                 <div className="text-center">
                     <p
                         className={`h-4 text-black text-xl md:text-2xl ${montserrat.className} `}
@@ -414,7 +424,8 @@ export default function Home() {
                 <p
                     className={`text-gray-700 text-center text-lg md:text-lg font-light mt-5 mb-5 ${cardo.className}`}
                 >
-                    Take a look at the glowing reviews from our satisfied customers!
+                    Take a look at the glowing reviews from our satisfied
+                    customers!
                 </p>
                 <Slider {...settings} className="py-5 max-w-7xl mx-auto mt-5">
                     {Members.map((item, index) => (
@@ -430,7 +441,10 @@ export default function Home() {
                 </Slider>
             </div>
 
-            <section id="Contact Us" className="max-w-7xl mx-auto mt-10 scroll-mt-24">
+            <section
+                id="Contact Us"
+                className="max-w-7xl mx-auto mt-10 scroll-mt-24"
+            >
                 <div className="md:flex mb-10 pl-4 pr-4 items-center gap-5">
                     <div className="md:w-[50%] text-center">
                         <p
@@ -461,8 +475,12 @@ export default function Home() {
                                             height={40}
                                             className="mt-4 mb-4 md:-mt-6 md:mb-8"
                                         />
-                                        <p className={`text-sm md:text-sm ${cardo.className} text-black`}>
-                                            Swarna Mahal Complex, 441/2, Big Bazaar St, Prakasam, Town Hall, Coimbatore, Tamil Nadu 641001
+                                        <p
+                                            className={`text-sm md:text-sm ${cardo.className} text-black`}
+                                        >
+                                            Swarna Mahal Complex, 441/2, Big
+                                            Bazaar St, Prakasam, Town Hall,
+                                            Coimbatore, Tamil Nadu 641001
                                         </p>
                                     </div>
                                 </a>
@@ -483,7 +501,10 @@ export default function Home() {
                                 </div>
                             </div>
                             <div className="flex gap-2">
-                                <a href="mailto:gkpjewellers1997@gmail.com" className="w-[50%]">
+                                <a
+                                    href="mailto:gkpjewellers1997@gmail.com"
+                                    className="w-[50%]"
+                                >
                                     <div className="w-full flex flex-col justify-center items-center text-center border-2 border-[#FFD195] drop-shadow-lg h-[200px] md:h-[220px] cursor-pointer">
                                         <Image
                                             src="/ShopInfoIcons/mailIcon.svg"
@@ -492,7 +513,9 @@ export default function Home() {
                                             height={60}
                                             className="-mt-6 mb-8 md:-mt-4 md:mb-12"
                                         />
-                                        <p className={`text-sm md:text-sm ${cardo.className} text-black`}>
+                                        <p
+                                            className={`text-sm md:text-sm ${cardo.className} text-black`}
+                                        >
                                             gkpjewellers1997 @gmail.com
                                         </p>
                                     </div>
@@ -508,13 +531,17 @@ export default function Home() {
                                     <p
                                         className={`text-sm md:text-sm ${cardo.className} text-black`}
                                     >
-                                        Open Monday to Saturday <br /> 10AM - 9PM
+                                        Open Monday to Saturday <br /> 10AM -
+                                        9PM
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <form onSubmit={onSubmit} className="bg-[#2C1338] text-white p-4 mt-5 md:mt-0 md:w-[50%] mx-auto shadow-md text-center">
+                    <form
+                        onSubmit={onSubmit}
+                        className="bg-[#2C1338] text-white p-4 mt-5 md:mt-0 md:w-[50%] mx-auto shadow-md text-center"
+                    >
                         <h2
                             className={`text-center text-xl mt-2 mb-8 ${montserrat.className}`}
                         >
@@ -571,16 +598,33 @@ export default function Home() {
                                     <UploadCloud className="w-10 h-10 text-gray-500" />
                                 </div>
 
-                                <p className={`text-gray-700 ${montserrat.className}`}>Drag your documents, photos or videos here to start uploading.</p>
-                                <p className={`text-gray-500 my-2 ${montserrat.className}`}>———— OR ————</p>
-                                <button className={`bg-[#288CFD] text-white px-6 py-2 rounded-full hover:bg-blue-600 ${montserrat.className}`}>
+                                <p
+                                    className={`text-gray-700 ${montserrat.className}`}
+                                >
+                                    Drag your documents, photos or videos here
+                                    to start uploading.
+                                </p>
+                                <p
+                                    className={`text-gray-500 my-2 ${montserrat.className}`}
+                                >
+                                    ———— OR ————
+                                </p>
+                                <button
+                                    className={`bg-[#288CFD] text-white px-6 py-2 rounded-full hover:bg-blue-600 ${montserrat.className}`}
+                                >
                                     Browse files
                                 </button>
                             </div>
                         </div>
 
-
-                        <input type="file" id="imageUpload" name="image" accept="image/*" className="hidden" ref={fileInputRef} />
+                        <input
+                            type="file"
+                            id="imageUpload"
+                            name="image"
+                            accept="image/*"
+                            className="hidden"
+                            ref={fileInputRef}
+                        />
 
                         <button
                             type="submit"
@@ -605,7 +649,6 @@ export default function Home() {
             </div>
             <Footer />
             <Rights />
-
         </div>
     );
 }

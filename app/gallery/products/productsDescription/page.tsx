@@ -23,12 +23,20 @@ function ProductsDescription() {
     const searchParams = useSearchParams();
     const encodedId = searchParams.get("productId");
     const productId = encodedId ? decodeURIComponent(encodedId) : "";
-    const [product, setProduct] = useState<{ productId: string; name: string; description: string, imageUrl: string, weight: string, carat: string, size: string }>();
+    const [product, setProduct] = useState<{
+        productId: string;
+        name: string;
+        description: string;
+        imageUrl: string;
+        weight: string;
+        carat: string;
+        size: string;
+    }>();
     useEffect(() => {
         getProduct(productId).then((res: any) => {
             setProduct(res);
         });
-    }, [])
+    }, []);
     return (
         <div className="bg-[#FFFCF8]">
             <Header />
@@ -75,7 +83,9 @@ function ProductsDescription() {
                             {product?.name}
                         </h1>
                     </div>
-                    <p className={`mt-4 text-center md:text-left text-lg text-gray-700 leading-relaxed ${cardo.className}`}>
+                    <p
+                        className={`mt-4 text-center md:text-left text-lg text-gray-700 leading-relaxed ${cardo.className}`}
+                    >
                         {product?.description}
                     </p>
                 </div>
@@ -129,19 +139,29 @@ function ProductsDescription() {
             </div>
 
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-center items-center mt-10">
-                <p className={`text-gray-800 text-center md:text-left text-base md:text-lg mr-0 md:mr-2 ${montserrat.className}`}>For any questions or inquiries about our products,</p>
+                <p
+                    className={`text-gray-800 text-center md:text-left text-base md:text-lg mr-0 md:mr-2 ${montserrat.className}`}
+                >
+                    For any questions or inquiries about our products,
+                </p>
                 <button
                     className={`flex gap-2 bg-purple-500 text-white px-10 md:px-5 py-2 rounded-full shadow-lg transition-all duration-300 transform hover:bg-purple-600 hover:scale-105 focus:ring-4 focus:ring-purple-300 my-5 text-center ${cardo.className}`}
                     onClick={() => {
                         const ownerNumber = "9842831542";
                         const message = encodeURIComponent(
-                            `Hello, I'm interested in *${product?.name}* (ID: ${productId}, URL: ${window.location.href}). Can you provide more details?`
+                            `Hello, I'm interested in *${product?.name}* (ID: ${productId}, URL: ${window.location.href}). Can you provide more details?`,
                         );
                         const whatsappURL = `https://wa.me/${ownerNumber}?text=${message}`;
                         window.open(whatsappURL, "_blank");
                     }}
                 >
-                    <Image src="/SocialMediaIcons/Whatsapp.svg" alt="Enquire" width={24} height={24}/> Enquire
+                    <Image
+                        src="/SocialMediaIcons/Whatsapp.svg"
+                        alt="Enquire"
+                        width={24}
+                        height={24}
+                    />{" "}
+                    Enquire
                 </button>
             </div>
 
@@ -156,5 +176,5 @@ export default function Display() {
         <Suspense>
             <ProductsDescription />
         </Suspense>
-    )
+    );
 }

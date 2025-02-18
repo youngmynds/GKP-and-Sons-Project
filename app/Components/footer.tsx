@@ -1,7 +1,7 @@
 import Image from "next/image";
-import InstaCard from './instagramPostsCard'
+import InstaCard from "./instagramPostsCard";
 import { Montserrat, Cardo } from "next/font/google";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
@@ -14,7 +14,7 @@ const cardo = Cardo({
 });
 
 export default function Footer() {
-    const router = useRouter()
+    const router = useRouter();
     const Items = [
         { src: "/Collections/pendants.png", title: "PENDANTS" },
         { src: "/Collections/chains.png", title: "CHAINS" },
@@ -26,7 +26,7 @@ export default function Footer() {
         if (section) {
             section.scrollIntoView({ behavior: "smooth" });
         } else {
-            router.push('/#' + id);
+            router.push("/#" + id);
         }
     };
 
@@ -50,7 +50,11 @@ export default function Footer() {
                     <div className={`pl-4 border-l-4 mb-2`}>
                         <p className={`text-gold`}>Follow Us</p>
                         <div className="flex gap-4 mt-1">
-                            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                            <a
+                                href="https://www.facebook.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <Image
                                     src="/SocialMediaIcons/Facebook.svg"
                                     alt="Facebook"
@@ -58,7 +62,11 @@ export default function Footer() {
                                     height="12"
                                 />
                             </a>
-                            <a href="https://www.instagram.com/gkp.jewellers.cbe?igsh=MXZpZXo5cDQ3ZHVteQ==" target="_blank" rel="noopener noreferrer">
+                            <a
+                                href="https://www.instagram.com/gkp.jewellers.cbe?igsh=MXZpZXo5cDQ3ZHVteQ=="
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <Image
                                     src="/SocialMediaIcons/Instagram.svg"
                                     alt="Instagram"
@@ -66,7 +74,11 @@ export default function Footer() {
                                     height="25"
                                 />
                             </a>
-                            <a href="https://www.youtube.com/@gkpjewellers7161" target="_blank" rel="noopener noreferrer">
+                            <a
+                                href="https://www.youtube.com/@gkpjewellers7161"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <Image
                                     src="/SocialMediaIcons/Youtube.svg"
                                     alt="Youtube"
@@ -74,7 +86,11 @@ export default function Footer() {
                                     height="30"
                                 />
                             </a>
-                            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                            <a
+                                href="https://www.linkedin.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 <Image
                                     src="/SocialMediaIcons/Linkedin.svg"
                                     alt="Linkedin"

@@ -12,8 +12,8 @@ import { getbyCat } from "../../utils/queries";
 import { useEffect, Suspense } from "react";
 
 const dancingScript = Dancing_Script({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // Adjust as needed
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700"], // Adjust as needed
 });
 
 const montserrat = Montserrat({
@@ -31,33 +31,36 @@ function Products() {
     const searchParams = useSearchParams();
     const encodedcat = searchParams.get("cat");
     const cat = encodedcat ? decodeURIComponent(encodedcat) : "";
-    console.log(cat)
-    const [displayedItems, setDisplayedItems] = useState<{ productId: string; src: string; title: string }[]>([]);
-    const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
+    console.log(cat);
+    const [displayedItems, setDisplayedItems] = useState<
+        { productId: string; src: string; title: string }[]
+    >([]);
+    const [selectedSubcategory, setSelectedSubcategory] = useState<string>("");
     const [subcategory, setSubcategory] = useState<string[]>([]);
     useEffect(() => {
         let subcat: any = new Set();
         getbyCat(cat).then((res: any) => {
-            console.log(res)
+            console.log(res);
             res?.map((item: any) => {
-                subcat.add(item.subcategory)
-            })
-            subcat = Array.from(subcat)
-            setSubcategory(subcat as string[])
-            setSelectedSubcategory(subcat[0] as string)
-        })
-    }, [])
+                subcat.add(item.subcategory);
+            });
+            subcat = Array.from(subcat);
+            setSubcategory(subcat as string[]);
+            setSelectedSubcategory(subcat[0] as string);
+        });
+    }, []);
 
     useEffect(() => {
         getbyCat(cat, selectedSubcategory).then((res: any) => {
-
-            setDisplayedItems(res.map((item: any) => ({
-                productId: item.productId,
-                src: item.imageUrl,
-                title: item.name,
-            })))
-        })
-    }, [selectedSubcategory])
+            setDisplayedItems(
+                res.map((item: any) => ({
+                    productId: item.productId,
+                    src: item.imageUrl,
+                    title: item.name,
+                })),
+            );
+        });
+    }, [selectedSubcategory]);
 
     return (
         <div className="bg-[#FFFCF8]">
@@ -102,10 +105,11 @@ function Products() {
             <div className="max-w-7xl mx-auto flex justify-center md:mt-10 gap-8">
                 {subcategory.map((item, index) => (
                     <button
-                        className={`border-b-2 ${selectedSubcategory === `${item}`
-                            ? "border-b-gold text-black"
-                            : "border-transparent text-gray-400"
-                            } text-lg md:text-2xl ${cardo.className}`}
+                        className={`border-b-2 ${
+                            selectedSubcategory === `${item}`
+                                ? "border-b-gold text-black"
+                                : "border-transparent text-gray-400"
+                        } text-lg md:text-2xl ${cardo.className}`}
                         onClick={() => {
                             setSelectedSubcategory(item);
                         }}
@@ -123,8 +127,12 @@ function Products() {
                         src={item.src}
                         title={item.title}
                         onClick={() => {
-                            const encodedId = encodeURIComponent(item.productId);
-                            router.push(`/gallery/products/productsDescription/?productId=${encodedId}`);
+                            const encodedId = encodeURIComponent(
+                                item.productId,
+                            );
+                            router.push(
+                                `/gallery/products/productsDescription/?productId=${encodedId}`,
+                            );
                         }}
                     />
                 ))}
@@ -140,5 +148,5 @@ export default function Display() {
         <Suspense>
             <Products />
         </Suspense>
-    )
+    );
 }

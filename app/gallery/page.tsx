@@ -11,10 +11,9 @@ import { useEffect, useState } from "react";
 import { getbyCat, getCategories } from "../utils/queries";
 
 const dancingScript = Dancing_Script({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // Adjust as needed
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700"], // Adjust as needed
 });
-
 
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
@@ -37,7 +36,7 @@ export default function Gallery() {
 
             const itemsData = categories.map((cat, index) => ({
                 title: cat,
-                src: images[index] || ""
+                src: images[index] || "",
             }));
 
             setItems(itemsData);
@@ -86,18 +85,23 @@ export default function Gallery() {
                 </p>
             </div>
             <div className="max-w-7xl mx-auto flex flex-wrap justify-evenly gap-0 mt-5 md:mt-10">
-                {Items.length > 0 && Items.map((item, index) => (
-                    <Card
-                        key={index}
-                        src={item.src}
-                        title={item.title}
-                        productId={item.title}
-                        onClick={() => {
-                                const encodedTitle = encodeURIComponent(item.title);
-                                router.push(`/gallery/products/?cat=${encodedTitle}`);
-                        }}
-                    />
-                ))}
+                {Items.length > 0 &&
+                    Items.map((item, index) => (
+                        <Card
+                            key={index}
+                            src={item.src}
+                            title={item.title}
+                            productId={item.title}
+                            onClick={() => {
+                                const encodedTitle = encodeURIComponent(
+                                    item.title,
+                                );
+                                router.push(
+                                    `/gallery/products/?cat=${encodedTitle}`,
+                                );
+                            }}
+                        />
+                    ))}
             </div>
             <Footer />
             <Rights />

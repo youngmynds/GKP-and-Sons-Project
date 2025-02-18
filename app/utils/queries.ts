@@ -9,7 +9,7 @@ import {
     deleteDoc,
     doc,
     serverTimestamp,
-    orderBy
+    orderBy,
 } from "firebase/firestore";
 import db from "./firebase";
 import { toast } from "react-toastify";
@@ -36,23 +36,20 @@ export async function getbyCat(category?: string, subcategory?: string) {
                 q = query(
                     products,
                     where("category", "==", category),
-                    where("subcategory", "==", subcategory)
+                    where("subcategory", "==", subcategory),
                 );
             } else {
-                q = query(
-                    products,
-                    where("category", "==", category)
-                );
+                q = query(products, where("category", "==", category));
             }
         } else {
-            q = query(products)
+            q = query(products);
         }
         const querySnapshot = await getDocs(q);
         let data: Product[] = [];
         querySnapshot.docs.forEach((doc) => {
             data.push(doc.data() as Product);
-        })
-        console.log(data)
+        });
+        console.log(data);
         return data;
     } catch (e) {
         console.log("Error in getting products by category", e);
@@ -62,16 +59,18 @@ export async function getbyCat(category?: string, subcategory?: string) {
 
 export async function addImageSlider(imageUrl: string) {
     try {
-        if (imageUrl == "") toast.error("Add a URL")
+        if (imageUrl == "") toast.error("Add a URL");
 
         const products = collection(db, "imageSlider");
-        await addDoc(products, { imageUrl: imageUrl, createdAt: serverTimestamp() });
+        await addDoc(products, {
+            imageUrl: imageUrl,
+            createdAt: serverTimestamp(),
+        });
         return toast.success("Success in adding image slider");
     } catch (e: any) {
         toast.error("Error in adding image slider", e);
     }
 }
-
 
 export async function deleteImageSlider(imageUrl: string) {
     try {
@@ -100,11 +99,11 @@ export async function getImageSlider() {
         let q = query(imageSlider, orderBy("createdAt", "asc"));
         // let q = query(imageSlider)
         let querySnapshot = await getDocs(q);
-        let data: string[] = []
+        let data: string[] = [];
         querySnapshot.forEach((doc) => {
-            console.log(doc.data())
+            console.log(doc.data());
             data.push(doc.data().imageUrl);
-        })
+        });
         return data;
     } catch (e: any) {
         toast.error("Error in getting image slider", e);
@@ -117,16 +116,18 @@ export async function writebyCat(product: Product) {
         let productId: number = 0;
         if (data.length > 0) {
             data.forEach((element) => {
-                console.log("element", element)
-                productId = Math.max(parseInt(element.productId?.split(category)[1] as string), productId);
-                console.log("productId", productId)
-            })
-        }
-        else {
+                console.log("element", element);
+                productId = Math.max(
+                    parseInt(element.productId?.split(category)[1] as string),
+                    productId,
+                );
+                console.log("productId", productId);
+            });
+        } else {
             productId = 1;
         }
         product.productId = category + String(productId + 1);
-        console.log(" final produuctId", product.productId)
+        console.log(" final produuctId", product.productId);
         const docRef = await addDoc(collection(db, "products"), product);
     } catch (e) {
         console.log("Error in adding product", e);
@@ -166,7 +167,6 @@ export async function getSubCategories() {
         return [];
     }
 }
-
 
 export async function deleteProduct(productId1: string) {
     try {
@@ -210,4 +210,3 @@ export async function getProduct(productId: string) {
         return null;
     }
 }
-

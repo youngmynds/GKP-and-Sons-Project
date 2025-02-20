@@ -226,3 +226,77 @@ export async function editProduct(productId: string, updatedProduct: Product) {
         return;
     }
 }
+
+export async function addInstafeeds(imageUrl: string, instaUrl: string) {
+    try {
+        if (imageUrl == "" || instaUrl == "") toast.error("Add a URL");
+
+        const instafeeds = collection(db, "instafeeds");
+        await addDoc(instafeeds, {
+            imageUrl: imageUrl,
+            instaUrl: instaUrl,
+        });
+        return toast.success("Success in adding instafeeds");
+    } catch (e: any) {
+        toast.error("Error in adding instafeeds", e);
+    }
+}
+
+export async function deleteInstaFeeds(imageUrl: string) {
+    try {
+        console.log("Deleting image:", imageUrl);
+        
+        const instafeeds = collection(db, "instafeeds");
+        const q = query(instafeeds, where("imageUrl", "==", imageUrl));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            toast.error("No matching image found in Firestore.");
+            return;
+        }
+
+        await deleteDoc(querySnapshot.docs[0].ref);
+        toast.success("Successfully deleted image from instafeeds");
+        return;
+    } catch (e: any) {
+        console.error("Error in deleteInstaFeeds:", e);
+        toast.error("Error in deleting instafeeds: " + e.message);
+    }
+}
+
+export async function getInstaFeeds() {
+    try {
+        const instafeeds = collection(db, "instafeeds");
+        const q = query(instafeeds);
+        const querySnapshot = await getDocs(q);
+        let data: string[] = [];
+        querySnapshot.forEach((doc) => {
+            data.push(doc.data().imageUrl);
+        })
+        console.log("Data", data);
+        return data;
+    } catch (e) {
+        console.error("Error in getting instafeeds", e);
+        return [];
+    }
+}
+
+export async function getInstaFeedsFooter(){
+    try {
+        const instafeeds = collection(db, "instafeeds");
+        const q = query(instafeeds);
+        const querySnapshot = await getDocs(q);
+        let data: Object[] = [];
+        querySnapshot.forEach((doc) => {
+            const instaObject = {
+                imageUrl: doc.data().imageUrl,
+                instaUrl: doc.data().instaUrl
+            }
+            data.push(instaObject);
+        })
+        return data;
+    } catch (e) {
+        console.error("Error in getting instafeeds", e);
+        return [];
+    }
+}

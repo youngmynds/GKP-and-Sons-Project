@@ -2,6 +2,8 @@ import Image from "next/image";
 import InstaCard from "./instagramPostsCard";
 import { Montserrat, Cardo } from "next/font/google";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getInstaFeeds, getInstaFeedsFooter } from "../utils/queries";
 
 const montserrat = Montserrat({
     weight: ["100", "300", "400", "700", "900"],
@@ -15,6 +17,7 @@ const cardo = Cardo({
 
 export default function Footer() {
     const router = useRouter();
+    const [items, setItems] = useState<{ imageUrl: string, instaUrl: string }[]>([]);
     const Items = [
         { src: "/Collections/pendants.png", title: "PENDANTS" },
         { src: "/Collections/chains.png", title: "CHAINS" },
@@ -29,6 +32,11 @@ export default function Footer() {
             router.push("/#" + id);
         }
     };
+    useEffect(() => {
+        getInstaFeedsFooter().then((data) => {
+            setItems(data as { imageUrl: string, instaUrl: string }[]);
+        })
+    }, [])
 
     return (
         <div className="md:flex gap-5 pt-10 pb-10 pl-5 md:pl-14 md:pr-14 bg-[#170722] text-gray-300 justify-evenly">
@@ -151,11 +159,15 @@ export default function Footer() {
                     Instagram Feeds
                 </p>
                 <div className="flex flex-wrap gap-3 mt-5">
-                    {Items.map((item, index) => (
+                    {items?.map((item, index) => (
                         <InstaCard
                             key={index}
-                            src={item.src}
-                            title={item.title}
+                            src={item.imageUrl}
+                            title={item.imageUrl}
+                            instaUrl={item.instaUrl}
+                            onClick={() => {
+                                window.location.href = item.instaUrl
+                            }}
                         />
                     ))}
                 </div>

@@ -16,6 +16,9 @@ import {
     addImageSlider,
     getbyCat,
     editProduct,
+    getInstaFeeds,
+    addInstafeeds,
+    deleteInstaFeeds,
 } from "../utils/queries";
 import { useRouter } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
@@ -51,6 +54,8 @@ const AdminPage: React.FC = () => {
     const [delcat, setDelCat] = useState<string>("All");
     const [delsubcat, setDelSubCat] = useState<string>("All");
     const [editProductId, setEditProductId] = useState<string>('');
+    const [instaUrl, setInstaUrl] = useState<string>("");
+    const [instaImageUrl, setInstaImageUrl] = useState<string>("");
     const validurl = (image) => {
         try {
             const url = new URL(image);
@@ -73,7 +78,6 @@ const AdminPage: React.FC = () => {
                 weight: weight,
                 size: size,
                 carat: carat,
-
             }
             await editProduct(editProductId, updatedProduct)
         } catch (e) {
@@ -125,6 +129,12 @@ const AdminPage: React.FC = () => {
             setImageURL("");
             setSelectedCategory("");
             setSelectedSubcategory("");
+        }
+        if (operations === "instafeeds") {
+            getInstaFeeds().then((data: string[]) => {
+                console.log(data);
+                setImageSlider(data);
+            });
         }
     }, [operations]);
 
@@ -206,6 +216,12 @@ const AdminPage: React.FC = () => {
                                 onClick={() => setOperations("deleteProduct")}
                             >
                                 Delete Product
+                            </button>
+                            <button
+                                className="px-4 py-2 bg-[#2C3E50] text-[#FFFFFF] rounded shadow w-full"
+                                onClick={() => setOperations("instafeeds")}
+                            >
+                                Insta Feed
                             </button>
                         </div>
                     </div>
@@ -634,6 +650,83 @@ const AdminPage: React.FC = () => {
                                 </button>
                             </div>
                         )
+                    ) || ((operations === "instafeeds") && (
+                        <div className="ml-52 justify-center items-center flex flex-col space-y-4">
+                            <div className="flex flex-col items-center justify-center space-y-4 mt-10">
+                                <TextField
+                                    label={<span className="font-bold">Image URL from Imgur</span>}
+                                    variant="outlined"
+                                    value={instaImageUrl}
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>,
+                                    ) => setInstaImageUrl(e.target.value)}
+                                    style={{ width: "50%" }}
+                                />
+                                <TextField
+                                    label={<span className="font-bold">Instagram Link</span>}
+                                    variant="outlined"
+                                    value={instaUrl}
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>,
+                                    ) => setInstaUrl(e.target.value)}
+                                    style={{ width: "50%" }}
+                                />
+
+                                <button
+                                    className="flex justify-center items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-1/2"
+                                    onClick={async () => {
+                                        try {
+                                            if (imageSlider.length === 3) {
+                                                toast.error("Can't add more than three insta feeds")
+                                                return;
+                                            }
+                                            await addInstafeeds(instaImageUrl, instaUrl);
+                                            setImageSlider((prev) => [...prev, instaImageUrl])
+                                            toast.success("Succesfully added Insta Feed")
+                                            setInstaImageUrl('')
+                                            setInstaUrl("")
+                                        } catch (e) {
+                                            toast.error("Error in adding InstaFeed")
+                                        }
+                                    }}
+                                >
+                                    <Plus size={18} />
+                                    Add Image
+                                </button>
+                                <div className="flex flex-wrap justify-center gap-4">
+                                    {imageSlider?.map((item) => (
+                                        <div
+                                            key={item}
+                                            className="relative"
+                                            style={{ width: "50%" }}
+                                        >
+                                            <button
+                                                className="absolute top-2 right-2 bg-gray-500 text-white p-1 rounded-full"
+                                                onClick={async () => {
+                                                    if (imageSlider.length === 1) {
+                                                        toast.error("Can't have less than 1 insta feed")
+                                                        return;
+                                                    }
+                                                    await deleteInstaFeeds(item);
+                                                    setImageSlider((prev) => prev.filter((img) => img !== item));
+                                                }}
+                                            >
+                                                <X size={20} />
+                                            </button>
+                                            <Image
+                                                src={item}
+                                                alt={item}
+                                                width={500}
+                                                height={300}
+                                                className="w-full h-auto object-cover rounded-lg shadow-md"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )
+
                     )}
             </>
         )

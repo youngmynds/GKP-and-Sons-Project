@@ -15,6 +15,7 @@ import {
     getProductId,
     addImageSlider,
     getbyCat,
+    editProduct,
 } from "../utils/queries";
 import { useRouter } from "next/navigation";
 import secureLocalStorage from "react-secure-storage";
@@ -49,7 +50,7 @@ const AdminPage: React.FC = () => {
     const [delProducts, setDelProducts] = useState<Product[]>([]);
     const [delcat, setDelCat] = useState<string>("All");
     const [delsubcat, setDelSubCat] = useState<string>("All");
-
+    const [editProductId, setEditProductId] = useState<string>('');
     const validurl = (image) => {
         try {
             const url = new URL(image);
@@ -59,6 +60,26 @@ const AdminPage: React.FC = () => {
         }
     };
 
+    async function edit() {
+        try {
+            const updatedProduct: Product = {
+                name: imageName,
+                category: selectedCategory,
+                subcategory: selectedSubcategory,
+                description: imageDescription,
+                imageUrl: imageURL,
+                isImageSlider: false,
+                productId: editProductId,
+                weight: weight,
+                size: size,
+                carat: carat,
+
+            }
+            await editProduct(editProductId, updatedProduct)
+        } catch (e) {
+            toast.error("Error in deleting product")
+        }
+    }
     useEffect(() => {
         const auth = secureLocalStorage.getItem("auth");
         if (!auth) router.push("/login");
@@ -68,6 +89,15 @@ const AdminPage: React.FC = () => {
         if (operations === "addProduct") {
             getCategories().then((data) => setCategories(data));
             getSubCategories().then((data) => setSubcategories(data));
+            setEditProductId("")
+            setCarat("");
+            setSize("");
+            setWeight("");
+            setImageName("");
+            setImageDescription("");
+            setImageURL("");
+            setSelectedCategory("");
+            setSelectedSubcategory("");
         }
         if (operations === "deleteProduct") {
             getCategories().then((data) => {
@@ -86,6 +116,15 @@ const AdminPage: React.FC = () => {
             getImageSlider().then((data) => {
                 setImageSlider(data as string[]);
             });
+            setEditProductId("")
+            setCarat("");
+            setSize("");
+            setWeight("");
+            setImageName("");
+            setImageDescription("");
+            setImageURL("");
+            setSelectedCategory("");
+            setSelectedSubcategory("");
         }
     }, [operations]);
 
@@ -102,6 +141,7 @@ const AdminPage: React.FC = () => {
         });
         setFilteredDelProducts(filtered);
     }, [delcat, delsubcat, delProducts]);
+
 
     async function deleteimage(image: string) {
         try {
@@ -135,7 +175,6 @@ const AdminPage: React.FC = () => {
     return (
         secureLocalStorage.getItem("auth") === "true" && (
             <>
-                {/* Sidebar */}
                 <div className="bg-[#fff0c7] text-white py-8 px-4 shadow-md w-[20%] h-screen fixed flex flex-col justify-between items-center">
                     <div className="w-full">
                         <p
@@ -198,8 +237,7 @@ const AdminPage: React.FC = () => {
                                 />
                             )}
                             onInputChange={(_, value) => {
-                                // Triggered when the user types in the input
-                                setSelectedCategory(value); // Update the selected category with typed input
+                                setSelectedCategory(value);
                                 console.log("Input Changed:", value);
                             }}
                             value={selectedCategory}
@@ -438,14 +476,27 @@ const AdminPage: React.FC = () => {
                                                             } catch (e: any) {
                                                                 toast.error(
                                                                     "Error in deleting product: " +
-                                                                        e.message,
+                                                                    e.message,
                                                                 );
                                                             }
                                                         }}
                                                     >
                                                         <X size={20} />
                                                     </button>
-
+                                                    <button className="absolute top-2 right-2 mt-14 bg-gold text-orange-100 p-2 rounded-lg shadow-md hover:scale-100" onClick={() => {
+                                                        setOperations('editProduct')
+                                                        setCarat(item.carat ? item.carat : '');
+                                                        setSize(item.size ? item.size : '');
+                                                        setWeight(item.weight ? item.weight : '');
+                                                        setImageName(item.name);
+                                                        setImageDescription(item.description);
+                                                        setImageURL(item.imageUrl);
+                                                        setSelectedCategory(item.category);
+                                                        setSelectedSubcategory(item.subcategory)
+                                                        setEditProductId(item.productId ? item.productId : '')
+                                                    }}>
+                                                        Edit
+                                                    </button>
                                                     <Image
                                                         src={item.imageUrl}
                                                         alt="Product"
@@ -466,7 +517,124 @@ const AdminPage: React.FC = () => {
                                     </div>
                                 </div>
                             </>
-                        ))}
+                        )) || (operations === "editProduct" && (
+                            <div className="ml-52 flex flex-col space-y-5 items-center justify-center">
+                                <div className="mt-5"></div>
+                                <Autocomplete
+                                    style={{ width: "50%" }}
+                                    options={categories}
+                                    freeSolo
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="Type or select Categories"
+                                            variant="outlined"
+                                        />
+                                    )}
+                                    onInputChange={(_, value) => {
+                                        setSelectedCategory(value);
+                                        console.log("Input Changed:", value);
+                                    }}
+                                    value={selectedCategory}
+                                />
+                                <Autocomplete
+                                    style={{ width: "50%" }}
+                                    options={subcategories}
+                                    freeSolo
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="Type or select Subcategories"
+                                            variant="outlined"
+                                        />
+                                    )}
+                                    value={selectedSubcategory}
+                                    onInputChange={(_, value) => {
+                                        setSelectedSubcategory(value);
+                                        console.log("Subcat Input Changed:", value);
+                                    }}
+                                />
+                                <TextField
+                                    label="Product Name"
+                                    variant="outlined"
+                                    className="w-[50%]"
+                                    value={imageName}
+                                    onChange={(e) => setImageName(e.target.value)}
+                                />
+                                <TextField
+                                    label="Product Description"
+                                    variant="outlined"
+                                    className="w-[50%]"
+                                    value={imageDescription}
+                                    onChange={(e) =>
+                                        setImageDescription(e.target.value)
+                                    }
+                                />
+                                <TextField
+                                    label="Product Image URL"
+                                    variant="outlined"
+                                    className="w-[50%]"
+                                    value={imageURL}
+                                    onChange={(e) => setImageURL(e.target.value)}
+                                />
+                                <TextField
+                                    label="Enter Product Size"
+                                    variant="outlined"
+                                    className="w-[50%]"
+                                    value={size}
+                                    onChange={(e) => setSize(e.target.value)}
+                                />
+                                <TextField
+                                    label="Enter Weight of Product"
+                                    variant="outlined"
+                                    className="w-[50%]"
+                                    value={weight}
+                                    onChange={(e) => setWeight(e.target.value)}
+                                />
+                                <TextField
+                                    label="Enter Carat of Product"
+                                    variant="outlined"
+                                    className="w-[50%]"
+                                    value={carat}
+                                    onChange={(e) => setCarat(e.target.value)}
+                                />
+                                <button
+                                    className="flex items-center gap-2 justify-center bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded w-1/2"
+                                    onClick={async () => {
+                                        if (
+                                            selectedCategory === "" ||
+                                            selectedSubcategory === "" ||
+                                            imageName === "" ||
+                                            imageDescription === "" ||
+                                            imageURL === "" ||
+                                            carat === "" ||
+                                            size === "" ||
+                                            weight === ""
+                                        ) {
+                                            toast.error("Please fill all the fields");
+                                            return;
+                                        }
+                                        if (!validurl(imageURL))
+                                            return toast.error("Enter Valid URL");
+
+                                        await edit();
+                                        toast.success("Product edited successfully");
+                                        setEditProductId("")
+                                        setCarat("");
+                                        setSize("");
+                                        setWeight("");
+                                        setImageName("");
+                                        setImageDescription("");
+                                        setImageURL("");
+                                        setSelectedCategory("");
+                                        setSelectedSubcategory("");
+                                    }}
+                                >
+                                    Edit Product
+                                </button>
+                            </div>
+                        )
+                    )}
             </>
         )
     );

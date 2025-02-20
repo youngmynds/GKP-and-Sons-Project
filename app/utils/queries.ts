@@ -210,3 +210,19 @@ export async function getProduct(productId: string) {
         return null;
     }
 }
+
+
+
+export async function editProduct(productId: string, updatedProduct: Product) {
+    try {
+        const products = collection(db, "products");
+        const q = query(products, where("productId", "==", productId))
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (doc) => {
+            await updateDoc(doc.ref, updatedProduct);
+        });
+    } catch (e) {
+        console.log(`Error in editing ${productId}`)
+        return;
+    }
+}

@@ -50,29 +50,32 @@ const CustomNextArrow = ({ onClick }: { onClick: () => void }) => (
 );
 
 export default function Home() {
+    const [selectedFile, setSelectedFile] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-    const handleClick = () => {
-        if (fileInputRef.current) {
-            fileInputRef.current.click();
-        }
-    };
+    const [heroImages, setHeroImages] = useState<string[]>([]);
     const router = useRouter();
-    const [heroImages, setheroImages] = useState<string[]>([]);
+
     useEffect(() => {
         getImageSlider().then((data) => {
-            if (data) {
-                setheroImages(data);
-            } else {
-                setheroImages([
+            setHeroImages(
+                data || [
                     "https://i.imgur.com/OJ3Sfnb.jpeg",
                     "https://i.imgur.com/D8G3fGb.jpeg",
                     "https://i.imgur.com/YYgCe75.png",
-                ]);
-            }
+                ]
+            );
         });
     }, []);
 
+    const handleClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files?.length) {
+            setSelectedFile(event.target.files[0].name);
+        }
+    };
     const sliderSettings = {
         dots: true,
         infinite: true,
@@ -82,8 +85,8 @@ export default function Home() {
         autoplay: true,
         autoplaySpeed: 5000,
         arrows: true, // Enable arrows
-        prevArrow: <CustomPrevArrow onClick={() => {}} />, // Custom left arrow
-        nextArrow: <CustomNextArrow onClick={() => {}} />, // Custom right arrow
+        prevArrow: <CustomPrevArrow onClick={() => { }} />, // Custom left arrow
+        nextArrow: <CustomNextArrow onClick={() => { }} />, // Custom right arrow
     };
 
     const settings = {
@@ -542,9 +545,7 @@ export default function Home() {
                         onSubmit={onSubmit}
                         className="bg-[#2C1338] text-white p-4 mt-5 md:mt-0 md:w-[50%] mx-auto shadow-md text-center"
                     >
-                        <h2
-                            className={`text-center text-xl mt-2 mb-8 ${montserrat.className}`}
-                        >
+                        <h2 className={`text-center text-xl mt-2 mb-8 ${montserrat.className}`}>
                             GET IN TOUCH WITH US
                         </h2>
 
@@ -588,25 +589,20 @@ export default function Home() {
                             required
                             name="Message"
                         ></textarea>
+
+                        {/* File Upload Section */}
                         <div
                             className="flex flex-col items-center justify-center border-2 border-dashed border-[#25BAFF] rounded-lg p-6 bg-[#F9FDFF] shadow-md w-full cursor-pointer"
                             onClick={handleClick}
                         >
                             <div className="text-center">
-                                {/* Centering the Icon */}
                                 <div className="flex items-center justify-center mb-2">
                                     <UploadCloud className="w-10 h-10 text-gray-500" />
                                 </div>
-
-                                <p
-                                    className={`text-gray-700 ${montserrat.className}`}
-                                >
-                                    Drag your documents, photos or videos here
-                                    to start uploading.
+                                <p className={`text-gray-700 ${montserrat.className}`}>
+                                    Drag your documents, photos, or videos here to start uploading.
                                 </p>
-                                <p
-                                    className={`text-gray-500 my-2 ${montserrat.className}`}
-                                >
+                                <p className={`text-gray-500 my-2 ${montserrat.className}`}>
                                     ———— OR ————
                                 </p>
                                 <button
@@ -617,6 +613,7 @@ export default function Home() {
                             </div>
                         </div>
 
+                        {/* Hidden File Input */}
                         <input
                             type="file"
                             id="imageUpload"
@@ -624,7 +621,15 @@ export default function Home() {
                             accept="image/*"
                             className="hidden"
                             ref={fileInputRef}
+                            onChange={handleFileChange}
                         />
+
+                        {/* Display Selected File Name */}
+                        {selectedFile && (
+                            <p className="mt-2 text-sm text-gray-300">
+                                Selected File: <span className="font-semibold">{selectedFile}</span>
+                            </p>
+                        )}
 
                         <button
                             type="submit"

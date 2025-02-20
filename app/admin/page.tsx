@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { TextField, Autocomplete } from "@mui/material";
 import { X, Plus } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { Pencil } from "lucide-react"; // Importing the edit icon
 import {
     Product,
     getCategories,
@@ -203,7 +204,7 @@ const AdminPage: React.FC = () => {
                                 className="px-4 py-2 bg-[#2C3E50] text-[#FFFFFF] rounded shadow w-full"
                                 onClick={() => setOperations("addProduct")}
                             >
-                                Add Product
+                                Add Products
                             </button>
                             <button
                                 className="px-4 py-2 bg-[#2C3E50] text-[#FFFFFF] rounded shadow w-full"
@@ -215,13 +216,13 @@ const AdminPage: React.FC = () => {
                                 className="px-4 py-2 bg-[#2C3E50] text-[#FFFFFF] rounded shadow w-full"
                                 onClick={() => setOperations("deleteProduct")}
                             >
-                                Delete Product
+                                Manage Products
                             </button>
                             <button
                                 className="px-4 py-2 bg-[#2C3E50] text-[#FFFFFF] rounded shadow w-full"
                                 onClick={() => setOperations("instafeeds")}
                             >
-                                Insta Feed
+                                Instagram Feeds
                             </button>
                         </div>
                     </div>
@@ -499,7 +500,7 @@ const AdminPage: React.FC = () => {
                                                     >
                                                         <X size={20} />
                                                     </button>
-                                                    <button className="absolute top-2 right-2 mt-14 bg-gold text-orange-100 p-2 rounded-lg shadow-md hover:scale-100" onClick={() => {
+                                                    <button className="absolute top-1 right-3 mt-14 bg-gold text-orange-100 p-2 rounded-full shadow-md hover:scale-100" onClick={() => {
                                                         setOperations('editProduct')
                                                         setCarat(item.carat ? item.carat : '');
                                                         setSize(item.size ? item.size : '');
@@ -511,7 +512,7 @@ const AdminPage: React.FC = () => {
                                                         setSelectedSubcategory(item.subcategory)
                                                         setEditProductId(item.productId ? item.productId : '')
                                                     }}>
-                                                        Edit
+                                                        <Pencil size={20} />
                                                     </button>
                                                     <Image
                                                         src={item.imageUrl}

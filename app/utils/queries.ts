@@ -219,7 +219,7 @@ export async function editProduct(productId: string, updatedProduct: Product) {
         const q = query(products, where("productId", "==", productId))
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(async (doc) => {
-            await updateDoc(doc.ref, updatedProduct);
+            await updateDoc(doc.ref, { ...updatedProduct });
         });
     } catch (e) {
         console.log(`Error in editing ${productId}`)

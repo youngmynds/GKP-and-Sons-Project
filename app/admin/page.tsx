@@ -418,7 +418,7 @@ const AdminPage: React.FC = () => {
                         categories &&
                         subcategories && (
                             <>
-                                <div className="flex flex-col md:flex-row justify-center items-center gap-6  p-4 ">
+                                <div className="ml-52 flex flex-col md:flex-row justify-center items-center gap-6  p-4 ">
                                     <div className="flex flex-col ">
                                         <label className="text-gray-700 font-semibold">
                                             Categories
@@ -461,7 +461,7 @@ const AdminPage: React.FC = () => {
                                 </div>
 
                                 <div className="ml-52 flex flex-col items-center justify-center space-y-4">
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4 ml-10">
                                         {filteredDelProducts?.map(
                                             (item, index) => (
                                                 <div

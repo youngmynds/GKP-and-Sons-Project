@@ -636,15 +636,6 @@ const AdminPage: React.FC = () => {
 
                                         await edit();
                                         toast.success("Product edited successfully");
-                                        setEditProductId("")
-                                        setCarat("");
-                                        setSize("");
-                                        setWeight("");
-                                        setImageName("");
-                                        setImageDescription("");
-                                        setImageURL("");
-                                        setSelectedCategory("");
-                                        setSelectedSubcategory("");
                                     }}
                                 >
                                     Edit Product

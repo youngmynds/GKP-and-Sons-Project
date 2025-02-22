@@ -17,9 +17,9 @@ export default function InstaCard({ src, title , instaUrl }: CardProps) {
                 alt={title}
                 width={500}
                 height={500}
-                className="object-cover"
+                className="object-cover cursor-pointer"
                 onClick={()=>{
-                    window.location.href = instaUrl
+                    window.open(instaUrl, "_blank");
                 }}  
             />
         </div>

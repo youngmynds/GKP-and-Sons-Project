@@ -186,7 +186,7 @@ const AdminPage: React.FC = () => {
     return (
         secureLocalStorage.getItem("auth") === "true" && (
             <>
-                <div className="bg-[#fff0c7] text-white py-8 px-4 shadow-md w-[20%] h-screen fixed flex flex-col justify-between items-center">
+                <div className="bg-[#fee9b1] text-white py-8 px-4 shadow-md w-[20%] h-screen fixed flex flex-col justify-between items-center">
                     <div className="w-full">
                         <p
                             className={`text-xl text-[#5A3E2B] ${montserrat.className}`}
@@ -322,7 +322,7 @@ const AdminPage: React.FC = () => {
                             onChange={(e) => setCarat(e.target.value)}
                         />
                         <button
-                            className="flex items-center gap-2 justify-center bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded w-1/2"
+                            className="flex items-center gap-2 justify-center bg-[#eba52d] hover:bg-[#c58820] text-[#432d0d] hover:text-[#ffe7c2] py-2 px-4 rounded w-1/2"
                             onClick={async () => {
                                 if (
                                     selectedCategory === "" ||
@@ -378,7 +378,7 @@ const AdminPage: React.FC = () => {
                                     style={{ width: "50%" }}
                                 />
                                 <button
-                                    className="flex justify-center items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-1/2"
+                                    className="flex justify-center items-center gap-2 bg-[#eba52d] hover:bg-[#c58820] text-[#432d0d] hover:text-[#ffe7c2] px-4 py-2 rounded-md w-1/2"
                                     onClick={() => {
                                         addImage(imageURL);
                                     }}
@@ -665,7 +665,7 @@ const AdminPage: React.FC = () => {
                                 />
 
                                 <button
-                                    className="flex justify-center items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-1/2"
+                                    className="flex justify-center items-center gap-2 bg-[#eba52d] hover:bg-[#c58820] text-[#432d0d] hover:text-[#ffe7c2] px-4 py-2 rounded-md w-1/2"
                                     onClick={async () => {
                                         try {
                                             if (imageSlider.length === 3) {

@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata = {
     title: "GKP & Sons Jewellers - Premium Gold & Diamond Jewellery",
     description: "Discover exquisite handcrafted jewellery at GKP & Sons Jewellers. Shop our premium gold, diamond, and silver collections online.",
-    keywords: "gold jewellery, diamond rings, silver bracelets, GKP & Sons, fine jewellery, best jewellery shop in Coimbatore, Coimbatore jewellery shop",
+    keywords: "GKP, gkp jewellery, gold jewellery, diamond rings, silver bracelets, GKP & Sons, fine jewellery, best jewellery shop in Coimbatore, Coimbatore jewellery shop",
     author: "GKP & Sons Jewellers",
     url: "https://gkpjewellers.vercel.app/",
     image: "https://9siqqlni71.ufs.sh/f/WMsxN2Pmsk0brk0fa9KeZEG9tWu5kDPCAoaXQvxcsnz8f1YU", // Replace with actual image URL
